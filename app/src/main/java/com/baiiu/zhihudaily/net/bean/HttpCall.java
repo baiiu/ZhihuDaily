@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.net;
+package com.baiiu.zhihudaily.net.bean;
 
 
 import com.android.volley.Request.Method;

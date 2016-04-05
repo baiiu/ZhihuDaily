@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.baiiu.zhihudaily.net.HttpCall;
+import com.baiiu.zhihudaily.net.bean.HttpCall;
 import com.baiiu.zhihudaily.net.util.HttpNetUtil;
 import com.baiiu.zhihudaily.net.util.OkHttpStack;
 import com.baiiu.zhihudaily.util.UIUtil;

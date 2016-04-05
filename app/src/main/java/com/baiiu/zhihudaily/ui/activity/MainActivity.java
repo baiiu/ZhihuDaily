@@ -1,16 +1,37 @@
 package com.baiiu.zhihudaily.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.adapter.DailyNewsAdapter;
 import com.baiiu.zhihudaily.base.BaseActivity;
+import com.baiiu.zhihudaily.net.DailyClient;
+import com.baiiu.zhihudaily.net.http.RequestCallBack;
+import com.baiiu.zhihudaily.pojo.Daily;
+import com.baiiu.zhihudaily.util.LogUtil;
 
-public class MainActivity extends BaseActivity {
+import butterknife.Bind;
+import butterknife.OnClick;
+
+public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+
+
+    @Bind(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
+
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    private DailyNewsAdapter dailyNewsAdapter;
 
     @Override
     public int provideLayoutId() {
@@ -19,15 +40,58 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initOnCreate(Bundle savedInstanceState) {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        refreshLayout.setOnRefreshListener(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        dailyNewsAdapter = new DailyNewsAdapter(this);
+        recyclerView.setAdapter(dailyNewsAdapter);
+
+
+        refreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= 16) {
+                    refreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    refreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+
+                refreshLayout.setRefreshing(true);
+                onRefresh();
             }
         });
     }
+
+    @Override
+    public void onRefresh() {
+        loadData();
+    }
+
+    private void loadData() {
+        DailyClient.getDailyNews(volleyTag, new RequestCallBack<Daily>() {
+            @Override
+            public void onSuccess(Daily response) {
+                refreshLayout.setRefreshing(false);
+                dailyNewsAdapter.setDaily(response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, String errorString) {
+                refreshLayout.setRefreshing(false);
+                LogUtil.d(statusCode + ", " + errorString);
+            }
+        });
+    }
+
+
+    @OnClick(R.id.fab)
+    public void onClick() {
+        Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    //=====================Menu===================================
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -4,7 +4,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.baiiu.zhihudaily.net.ApiResponse;
 import com.baiiu.zhihudaily.net.util.GsonUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +14,7 @@ import java.lang.reflect.Type;
  * Created by baiiu on 15/11/15.
  * 网络回调
  */
-public abstract class RequestCallBack<T extends ApiResponse> implements Listener<String>, ErrorListener {
+public abstract class RequestCallBack<T> implements Listener<String>, ErrorListener {
 
     private Type mType;
 
