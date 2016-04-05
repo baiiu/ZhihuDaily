@@ -6,6 +6,13 @@
     <item name="indicator" type="id" />
     <item name="imageView" type="id" />
     <item name="textView" type="id" />
+    <item name="container" type="id" />
+
 
     <item name="toolbar_title" type="id" />
+    <item name="loading" type="id" />
+    <item name="success" type="id" />
+    <item name="error" type="id" />
+    <item name="nomore" type="id" />
+
 </resources>

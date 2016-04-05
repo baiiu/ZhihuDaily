@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     RecyclerView recyclerView;
 
     private DailyNewsAdapter dailyNewsAdapter;
+    private String mCurrentDate;
 
     @Override
     public int provideLayoutId() {
@@ -46,7 +47,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         dailyNewsAdapter = new DailyNewsAdapter(this);
         recyclerView.setAdapter(dailyNewsAdapter);
-
 
         refreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -69,17 +69,36 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     private void loadData() {
-        DailyClient.getDailyNews(volleyTag, new RequestCallBack<Daily>() {
+        DailyClient.getLatestNews(volleyTag, new RequestCallBack<Daily>() {
             @Override
             public void onSuccess(Daily response) {
                 refreshLayout.setRefreshing(false);
-                dailyNewsAdapter.setDaily(response);
+                mCurrentDate = response.date;
+                dailyNewsAdapter.setDaily(response, true);
             }
 
             @Override
             public void onFailure(int statusCode, String errorString) {
                 refreshLayout.setRefreshing(false);
                 LogUtil.d(statusCode + ", " + errorString);
+            }
+        });
+    }
+
+
+    public void loadMore() {
+        DailyClient.getBeforeNews(volleyTag, mCurrentDate, new RequestCallBack<Daily>() {
+            @Override
+            public void onSuccess(Daily response) {
+                refreshLayout.setRefreshing(false);
+                mCurrentDate = response.date;
+                dailyNewsAdapter.setDaily(response, false);
+            }
+
+            @Override
+            public void onFailure(int statusCode, String errorString) {
+                refreshLayout.setRefreshing(false);
+                dailyNewsAdapter.bindFooter(null);
             }
         });
     }

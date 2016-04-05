@@ -1,5 +1,7 @@
 package com.baiiu.zhihudaily.pojo;
 
+import com.baiiu.zhihudaily.adapter.DailyNewsAdapter;
+
 import java.util.List;
 
 /**
@@ -9,8 +11,12 @@ import java.util.List;
  */
 public class Story {
     public List<String> images;
-    public int type;
+    private int type;
     public String id;
     public String ga_prefix;
     public String title;
+
+    public int mType = DailyNewsAdapter.TYPE_NEWS;
+
+
 }

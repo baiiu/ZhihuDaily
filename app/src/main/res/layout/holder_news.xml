@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <ImageView
         android:id="@id/imageView"
@@ -16,10 +16,14 @@
         android:id="@id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="6dp"
-        android:layout_marginStart="6dp"
-        android:textSize="16sp"
-        tools:text="title" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:padding="3dp"
+        android:textColor="@color/news_title"
+        android:textSize="18sp"
+        tools:text="新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题" />
 
 
 </LinearLayout>

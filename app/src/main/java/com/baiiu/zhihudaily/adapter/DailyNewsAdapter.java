@@ -8,6 +8,9 @@ import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.Daily;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
+import com.baiiu.zhihudaily.ui.activity.MainActivity;
+import com.baiiu.zhihudaily.ui.holder.DateViewHolder;
+import com.baiiu.zhihudaily.ui.holder.FooterViewHolder;
 import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.ui.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
@@ -21,22 +24,41 @@ import java.util.List;
  */
 public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private static final int TYPE_TOPIC = 0;
-    private static final int TYPE_NEWS = 1;
+    public static final int TYPE_TOPIC = 0;
+    public static final int TYPE_NEWS = 1;
+    public static final int TYPE_DATE = 2;
+    public static final int TYPE_FOOTER = 3;
 
-    private Context context;
+    private Context mContext;
+    private FooterViewHolder footerViewHolder;
+
     private List<Story> stories;
     private List<TopStory> topStories;
 
     public DailyNewsAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
-    public void setDaily(Daily daily) {
-        this.stories = daily.stories;
-        this.topStories = daily.top_stories;
+    public void setDaily(Daily daily, boolean lastest) {
+        List<Story> hereStories = daily.stories;
+        bindFooter(hereStories);
 
-        notifyItemRangeChanged(0, getItemCount());
+        if (lastest) {
+            this.topStories = daily.top_stories;
+            this.stories = hereStories;
+            notifyItemRangeChanged(0, getItemCount());
+        } else {
+            //添加Date分割线Story
+            Story story = new Story();
+            story.mType = TYPE_DATE;
+            story.title = daily.date;
+            this.stories.add(story);
+
+            this.stories.addAll(hereStories);
+
+            int startIndex = stories.size() - hereStories.size();
+            notifyItemRangeInserted(topStories == null ? --startIndex : startIndex, hereStories.size() + 1);
+        }
     }
 
 
@@ -45,10 +67,16 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         BaseViewHolder viewHolder = null;
         switch (viewType) {
             case TYPE_TOPIC:
-                viewHolder = new TopicViewHolder(context, parent);
+                viewHolder = new TopicViewHolder(mContext, parent);
                 break;
             case TYPE_NEWS:
-                viewHolder = new NewsViewHolder(context, parent);
+                viewHolder = new NewsViewHolder(mContext, parent);
+                break;
+            case TYPE_DATE:
+                viewHolder = new DateViewHolder(mContext, parent);
+                break;
+            case TYPE_FOOTER:
+                viewHolder = getFooterHolder();
                 break;
         }
 
@@ -63,26 +91,63 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 holder.bind(topStories);
                 break;
             case TYPE_NEWS:
+            case TYPE_DATE:
                 holder.bind(stories.get(CommonUtil.isEmpty(topStories) ? position : --position));
+                break;
+            case TYPE_FOOTER:
+                if (!CommonUtil.isEmpty(stories)) {
+                    if (getFooterHolder().isHasLoadMore()) {
+                        dispatchLoadMore();
+                    }
+                }
                 break;
         }
     }
 
+    private void dispatchLoadMore() {
+        ((MainActivity) mContext).loadMore();
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if (CommonUtil.isEmpty(topStories)) {
-            return TYPE_NEWS;
+        if (position == getItemCount() - 1) {
+            return TYPE_FOOTER;
         }
 
-//        return TYPE_NEWS;
-        return position == 0 ? TYPE_TOPIC : TYPE_NEWS;
+        if (CommonUtil.isEmpty(topStories)) {
+            return stories.get(position).mType;
+        }
 
+        if (position == 0) {
+            return TYPE_TOPIC;
+        }
+
+        return stories.get(--position).mType;
     }
 
     @Override
     public int getItemCount() {
-        int storiesCount = stories == null ? 0 : stories.size();
-        return CommonUtil.isEmpty(topStories) ? storiesCount : storiesCount + 1;
+        if (CommonUtil.isEmpty(stories)) {
+            //未赋值时,不用添加footer
+            return 0;
+        }
+
+        return 1 + stories.size() + (CommonUtil.isEmpty(topStories) ? 0 : 1);//添加footer
+    }
+
+    public FooterViewHolder getFooterHolder() {
+        if (footerViewHolder == null) {
+            footerViewHolder = new FooterViewHolder(mContext);
+        }
+        return footerViewHolder;
+    }
+
+    public void bindFooter(List<Story> list) {
+        if (list == null) {
+            getFooterHolder().bind(FooterViewHolder.ERROR);
+        } else {
+            getFooterHolder().bind(FooterViewHolder.HAS_MORE);
+        }
     }
 
 }
