@@ -46,7 +46,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         if (lastest) {
             this.topStories = daily.top_stories;
             this.stories = hereStories;
-            notifyItemRangeChanged(0, getItemCount());
+            notifyDataSetChanged();
         } else {
             //添加Date分割线Story
             Story story = new Story();

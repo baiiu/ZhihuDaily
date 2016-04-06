@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver;
@@ -65,43 +66,45 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+        mCurrentDate = "";
         loadData();
     }
 
     private void loadData() {
-        DailyClient.getLatestNews(volleyTag, new RequestCallBack<Daily>() {
-            @Override
-            public void onSuccess(Daily response) {
-                refreshLayout.setRefreshing(false);
-                mCurrentDate = response.date;
-                dailyNewsAdapter.setDaily(response, true);
-            }
-
-            @Override
-            public void onFailure(int statusCode, String errorString) {
-                refreshLayout.setRefreshing(false);
-                LogUtil.d(statusCode + ", " + errorString);
-            }
-        });
+        DailyClient.getLatestNews(volleyTag, dailyRequest);
     }
 
 
     public void loadMore() {
-        DailyClient.getBeforeNews(volleyTag, mCurrentDate, new RequestCallBack<Daily>() {
-            @Override
-            public void onSuccess(Daily response) {
+        DailyClient.getBeforeNews(volleyTag, mCurrentDate, dailyRequest);
+    }
+
+    private RequestCallBack<Daily> dailyRequest = new RequestCallBack<Daily>() {
+
+        @Override
+        public void onSuccess(Daily response) {
+            if (TextUtils.isEmpty(mCurrentDate)) {
                 refreshLayout.setRefreshing(false);
-                mCurrentDate = response.date;
+                dailyNewsAdapter.setDaily(response, true);
+            } else {
                 dailyNewsAdapter.setDaily(response, false);
             }
 
-            @Override
-            public void onFailure(int statusCode, String errorString) {
+            mCurrentDate = response.date;
+        }
+
+        @Override
+        public void onFailure(int statusCode, String errorString) {
+            LogUtil.d(statusCode + ", " + errorString);
+
+            if (TextUtils.isEmpty(mCurrentDate)) {
                 refreshLayout.setRefreshing(false);
+                // TODO: 16/4/6  空页面或者错误页面
+            } else {
                 dailyNewsAdapter.bindFooter(null);
             }
-        });
-    }
+        }
+    };
 
 
     @OnClick(R.id.fab)
