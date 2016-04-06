@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily.ui.holder;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.baiiu.zhihudaily.R;
@@ -27,13 +28,13 @@ public class TopicViewHolder extends BaseViewHolder<List<TopStory>> {
     @Bind(R.id.indicator)
     IPageIndicator indicator;
 
-    public TopicViewHolder(Context context, ViewGroup parent) {
-        super(context, R.layout.holder_topic, parent);
+    public TopicViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
+        super(context, R.layout.holder_topic, parent, listener);
     }
 
     @Override
     public void bind(List<TopStory> data) {
-        viewPager.setAdapter(new TopicAdapter(mContext, data));
+        viewPager.setAdapter(new TopicAdapter(mContext, data, mListener));
         indicator.setViewPager(viewPager);
     }
 }

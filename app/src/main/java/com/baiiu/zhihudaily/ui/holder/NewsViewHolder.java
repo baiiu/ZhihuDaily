@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily.ui.holder;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,12 +27,15 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
     TextView textView;
 
 
-    public NewsViewHolder(Context context, ViewGroup parent) {
-        super(context, R.layout.holder_news, parent);
+    public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
+        super(context, R.layout.holder_news, parent, listener);
+        itemView.setId(R.id.item_news);
     }
 
     @Override
     public void bind(Story data) {
+        itemView.setTag(data.id);
+
         Glide.with(mContext)
                 .load(data.images.get(0))
                 .placeholder(R.mipmap.ic_launcher)

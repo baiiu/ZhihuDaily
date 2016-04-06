@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.baiiu.zhihudaily.base.BaseViewHolder;
@@ -28,6 +29,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int TYPE_NEWS = 1;
     public static final int TYPE_DATE = 2;
     public static final int TYPE_FOOTER = 3;
+    private final View.OnClickListener mOnClickListener;
 
     private Context mContext;
     private FooterViewHolder footerViewHolder;
@@ -35,8 +37,9 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<Story> stories;
     private List<TopStory> topStories;
 
-    public DailyNewsAdapter(Context context) {
+    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener) {
         this.mContext = context;
+        this.mOnClickListener = onClickListener;
     }
 
     public void setDaily(Daily daily, boolean lastest) {
@@ -67,10 +70,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         BaseViewHolder viewHolder = null;
         switch (viewType) {
             case TYPE_TOPIC:
-                viewHolder = new TopicViewHolder(mContext, parent);
+                viewHolder = new TopicViewHolder(mContext, parent, mOnClickListener);
                 break;
             case TYPE_NEWS:
-                viewHolder = new NewsViewHolder(mContext, parent);
+                viewHolder = new NewsViewHolder(mContext, parent, mOnClickListener);
                 break;
             case TYPE_DATE:
                 viewHolder = new DateViewHolder(mContext, parent);

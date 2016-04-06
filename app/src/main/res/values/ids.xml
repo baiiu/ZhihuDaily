@@ -5,6 +5,9 @@
     <item name="fab" type="id" />
     <item name="indicator" type="id" />
     <item name="imageView" type="id" />
+    <item name="webView" type="id" />
+    <item name="appbarLayout" type="id" />
+    <item name="collapsingToolbar" type="id" />
     <item name="textView" type="id" />
     <item name="container" type="id" />
 

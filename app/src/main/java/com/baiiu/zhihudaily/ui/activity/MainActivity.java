@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.baiiu.zhihudaily.R;
@@ -23,7 +24,7 @@ import com.baiiu.zhihudaily.util.LogUtil;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
 
     @Bind(R.id.refreshLayout)
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        dailyNewsAdapter = new DailyNewsAdapter(this);
+        dailyNewsAdapter = new DailyNewsAdapter(this, this);
         recyclerView.setAdapter(dailyNewsAdapter);
 
         refreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -113,6 +114,22 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 .setAction("Action", null).show();
     }
 
+
+    @Override
+    public void onClick(View v) {
+        String id = "";
+        switch (v.getId()) {
+            case R.id.item_news:
+                id = (String) v.getTag();
+                break;
+            case R.id.item_topic_news:
+                id = (String) v.getTag(R.id.item_topic_news);
+                break;
+        }
+
+        startActivity(NewsDetailActivity.instance(this, id));
+    }
+
     //=====================Menu===================================
 
     @Override
@@ -131,4 +148,5 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         return super.onOptionsItemSelected(item);
     }
+
 }
