@@ -6,5 +6,7 @@
 
     <color name="black_p50">#7f000000</color>
     <color name="news_title">#DD000000</color>
+    <color name="gray_actor">#e7e7e7</color>
+    <color name="main_item_background">#FFFFFF</color>
 
 </resources>

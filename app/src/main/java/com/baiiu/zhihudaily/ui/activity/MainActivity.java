@@ -24,129 +24,114 @@ import com.baiiu.zhihudaily.util.LogUtil;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class MainActivity extends BaseActivity
+    implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
+  @Bind(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
+  @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
-    @Bind(R.id.refreshLayout)
-    SwipeRefreshLayout refreshLayout;
+  private DailyNewsAdapter dailyNewsAdapter;
+  private String mCurrentDate;
 
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
+  @Override public int provideLayoutId() {
+    return R.layout.activity_main;
+  }
 
-    private DailyNewsAdapter dailyNewsAdapter;
-    private String mCurrentDate;
+  @Override protected void initOnCreate(Bundle savedInstanceState) {
+    refreshLayout.setOnRefreshListener(this);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-    @Override
-    public int provideLayoutId() {
-        return R.layout.activity_main;
-    }
+    dailyNewsAdapter = new DailyNewsAdapter(this, this);
+    recyclerView.setAdapter(dailyNewsAdapter);
 
-    @Override
-    protected void initOnCreate(Bundle savedInstanceState) {
-        refreshLayout.setOnRefreshListener(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        dailyNewsAdapter = new DailyNewsAdapter(this, this);
-        recyclerView.setAdapter(dailyNewsAdapter);
-
-        refreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT >= 16) {
-                    refreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    refreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                }
-
-                refreshLayout.setRefreshing(true);
-                onRefresh();
+    refreshLayout.getViewTreeObserver()
+        .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+          @Override public void onGlobalLayout() {
+            if (Build.VERSION.SDK_INT >= 16) {
+              refreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            } else {
+              refreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
+
+            refreshLayout.setRefreshing(true);
+            onRefresh();
+          }
         });
+  }
+
+  @Override public void onRefresh() {
+    mCurrentDate = "";
+    loadData();
+  }
+
+  private void loadData() {
+    DailyClient.getLatestNews(volleyTag, dailyRequest);
+  }
+
+  public void loadMore() {
+    DailyClient.getBeforeNews(volleyTag, mCurrentDate, dailyRequest);
+  }
+
+  private RequestCallBack<Daily> dailyRequest = new RequestCallBack<Daily>() {
+
+    @Override public void onSuccess(Daily response) {
+      if (TextUtils.isEmpty(mCurrentDate)) {
+        refreshLayout.setRefreshing(false);
+        dailyNewsAdapter.setDaily(response, true);
+      } else {
+        dailyNewsAdapter.setDaily(response, false);
+      }
+
+      mCurrentDate = response.date;
     }
 
-    @Override
-    public void onRefresh() {
-        mCurrentDate = "";
-        loadData();
+    @Override public void onFailure(int statusCode, String errorString) {
+      LogUtil.d(statusCode + ", " + errorString);
+
+      if (TextUtils.isEmpty(mCurrentDate)) {
+        refreshLayout.setRefreshing(false);
+        // TODO: 16/4/6  空页面或者错误页面
+      } else {
+        dailyNewsAdapter.bindFooter(null);
+      }
+    }
+  };
+
+  @OnClick(R.id.fab) public void onClick() {
+    Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null)
+        .show();
+  }
+
+  @Override public void onClick(View v) {
+    String id = "";
+    switch (v.getId()) {
+      case R.id.item_news:
+        id = (String) v.getTag();
+        break;
+      case R.id.item_topic_news:
+        id = (String) v.getTag(R.id.item_topic_news);
+        break;
     }
 
-    private void loadData() {
-        DailyClient.getLatestNews(volleyTag, dailyRequest);
+    startActivity(NewsDetailActivity.instance(this, id));
+  }
+
+  //=====================Menu===================================
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.action_settings) {
+      return true;
     }
 
-
-    public void loadMore() {
-        DailyClient.getBeforeNews(volleyTag, mCurrentDate, dailyRequest);
-    }
-
-    private RequestCallBack<Daily> dailyRequest = new RequestCallBack<Daily>() {
-
-        @Override
-        public void onSuccess(Daily response) {
-            if (TextUtils.isEmpty(mCurrentDate)) {
-                refreshLayout.setRefreshing(false);
-                dailyNewsAdapter.setDaily(response, true);
-            } else {
-                dailyNewsAdapter.setDaily(response, false);
-            }
-
-            mCurrentDate = response.date;
-        }
-
-        @Override
-        public void onFailure(int statusCode, String errorString) {
-            LogUtil.d(statusCode + ", " + errorString);
-
-            if (TextUtils.isEmpty(mCurrentDate)) {
-                refreshLayout.setRefreshing(false);
-                // TODO: 16/4/6  空页面或者错误页面
-            } else {
-                dailyNewsAdapter.bindFooter(null);
-            }
-        }
-    };
-
-
-    @OnClick(R.id.fab)
-    public void onClick() {
-        Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        String id = "";
-        switch (v.getId()) {
-            case R.id.item_news:
-                id = (String) v.getTag();
-                break;
-            case R.id.item_topic_news:
-                id = (String) v.getTag(R.id.item_topic_news);
-                break;
-        }
-
-        startActivity(NewsDetailActivity.instance(this, id));
-    }
-
-    //=====================Menu===================================
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    return super.onOptionsItemSelected(item);
+  }
 }

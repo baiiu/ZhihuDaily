@@ -22,19 +22,15 @@ import butterknife.Bind;
  */
 public class TopicViewHolder extends BaseViewHolder<List<TopStory>> {
 
-    @Bind(R.id.loopViewPager)
-    LoopViewPager viewPager;
+  @Bind(R.id.loopViewPager) LoopViewPager viewPager;
+  @Bind(R.id.indicator) IPageIndicator indicator;
 
-    @Bind(R.id.indicator)
-    IPageIndicator indicator;
+  public TopicViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
+    super(context, R.layout.holder_topic, parent, listener);
+  }
 
-    public TopicViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
-        super(context, R.layout.holder_topic, parent, listener);
-    }
-
-    @Override
-    public void bind(List<TopStory> data) {
-        viewPager.setAdapter(new TopicAdapter(mContext, data, mListener));
-        indicator.setViewPager(viewPager);
-    }
+  @Override public void bind(List<TopStory> data) {
+    viewPager.setAdapter(new TopicAdapter(mContext, data, mListener));
+    indicator.setViewPager(viewPager);
+  }
 }

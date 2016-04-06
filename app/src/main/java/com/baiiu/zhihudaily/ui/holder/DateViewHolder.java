@@ -17,15 +17,13 @@ import butterknife.Bind;
  */
 public class DateViewHolder extends BaseViewHolder<Story> {
 
-    @Bind(R.id.textView)
-    TextView textView;
+  @Bind(R.id.textView) TextView textView;
 
-    public DateViewHolder(Context mContext, ViewGroup parent) {
-        super(mContext, R.layout.holder_date, parent);
-    }
+  public DateViewHolder(Context mContext, ViewGroup parent) {
+    super(mContext, R.layout.holder_date, parent);
+  }
 
-    @Override
-    public void bind(Story data) {
-        textView.setText(data.title);
-    }
+  @Override public void bind(Story data) {
+    textView.setText(data.title);
+  }
 }

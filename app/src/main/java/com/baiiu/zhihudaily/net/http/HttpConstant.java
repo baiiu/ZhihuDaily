@@ -6,8 +6,8 @@ package com.baiiu.zhihudaily.net.http;
  */
 public interface HttpConstant {
 
-    int NO_HTTP = 1000;
-    int ERROR_NOT_KNOWN = 1001;
-    int ERROR_CUSTOM = 1002;
-    String STRING_NO_HTTP = "请检查网络连接";
+  int NO_HTTP = 1000;
+  int ERROR_NOT_KNOWN = 1001;
+  int ERROR_CUSTOM = 1002;
+  String STRING_NO_HTTP = "请检查网络连接";
 }

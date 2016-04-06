@@ -3,8 +3,6 @@ package com.baiiu.zhihudaily.app;
 import android.app.Application;
 import android.content.Context;
 
-import com.squareup.leakcanary.LeakCanary;
-
 /**
  * author: baiiu
  * date: on 16/4/5 11:14
@@ -12,19 +10,16 @@ import com.squareup.leakcanary.LeakCanary;
  */
 public class DailyApplication extends Application {
 
-    private static Context mContext;
+  private static Context mContext;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mContext = getApplicationContext();
+  @Override public void onCreate() {
+    super.onCreate();
+    mContext = getApplicationContext();
 
-        LeakCanary.install(this);
-    }
+    //        LeakCanary.install(this);
+  }
 
-
-    public static Context getContext() {
-        return mContext;
-    }
-
+  public static Context getContext() {
+    return mContext;
+  }
 }

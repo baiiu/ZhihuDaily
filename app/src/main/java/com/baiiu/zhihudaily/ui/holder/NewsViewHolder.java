@@ -20,28 +20,23 @@ import butterknife.Bind;
  */
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
-    @Bind(R.id.imageView)
-    ImageView imageView;
+  @Bind(R.id.imageView) ImageView imageView;
+  @Bind(R.id.textView) TextView textView;
 
-    @Bind(R.id.textView)
-    TextView textView;
+  public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
+    super(context, R.layout.holder_news, parent, listener);
+    itemView.setId(R.id.item_news);
+  }
 
+  @Override public void bind(Story data) {
+    itemView.setTag(data.id);
 
-    public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
-        super(context, R.layout.holder_news, parent, listener);
-        itemView.setId(R.id.item_news);
-    }
+    Glide.with(mContext)
+        .load(data.images.get(0))
+        .placeholder(R.mipmap.ic_launcher)
+        .centerCrop()
+        .into(imageView);
 
-    @Override
-    public void bind(Story data) {
-        itemView.setTag(data.id);
-
-        Glide.with(mContext)
-                .load(data.images.get(0))
-                .placeholder(R.mipmap.ic_launcher)
-                .centerCrop()
-                .into(imageView);
-
-        textView.setText(data.title);
-    }
+    textView.setText(data.title);
+  }
 }

@@ -18,23 +18,23 @@ import java.util.List;
  */
 public class TopicAdapter extends BasePagerAdapter<TopStory> {
 
-    private View.OnClickListener mListener;
+  private View.OnClickListener mListener;
 
-    public TopicAdapter(Context context, List<TopStory> list, View.OnClickListener listener) {
-        super(context, list);
-        this.mListener = listener;
-    }
+  public TopicAdapter(Context context, List<TopStory> list, View.OnClickListener listener) {
+    super(context, list);
+    this.mListener = listener;
+  }
 
-    @Override
-    public View onCreateView(int position) {
-        ImageView imageView = new ImageView(mContext);
-        TopStory topStory = list.get(position);
+  @Override public View onCreateView(int position) {
+    ImageView imageView = new ImageView(mContext);
+    TopStory topStory = list.get(position);
 
-        imageView.setId(R.id.item_topic_news);
-        imageView.setTag(R.id.item_topic_news, topStory.id);
-        imageView.setOnClickListener(mListener);
+    imageView.setId(R.id.item_topic_news);
+    imageView.setTag(R.id.item_topic_news, topStory.id);
+    imageView.setOnClickListener(mListener);
 
-        Glide.with(mContext).load(topStory.image).centerCrop().into(imageView);
-        return imageView;
-    }
+    Glide.with(mContext).load(topStory.image).centerCrop().into(imageView);
+    return imageView;
+  }
+
 }
