@@ -16,7 +16,9 @@ import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.ui.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
 
+import com.baiiu.zhihudaily.util.ReadedListUtil;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author: baiiu
@@ -62,6 +64,17 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
       int startIndex = stories.size() - hereStories.size();
       notifyItemRangeInserted(topStories == null ? --startIndex : startIndex,
           hereStories.size() + 1);
+    }
+
+    Map<String, String> readedMap =
+        ReadedListUtil.getReadedMap(((MainActivity) mContext).volleyTag);
+
+    if (CommonUtil.isEmpty(stories)) {
+      return;
+    }
+
+    for (Story story : stories) {
+      story.isRead = readedMap.get(story.id) != null;
     }
   }
 

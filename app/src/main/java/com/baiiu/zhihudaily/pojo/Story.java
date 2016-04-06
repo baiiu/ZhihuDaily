@@ -10,13 +10,12 @@ import java.util.List;
  * description:
  */
 public class Story {
-    public List<String> images;
-    private int type;
-    public String id;
-    public String ga_prefix;
-    public String title;
+  public List<String> images;
+  private int type;
+  public String id;
+  public String ga_prefix;
+  public String title;
+  public boolean isRead;
 
-    public int mType = DailyNewsAdapter.TYPE_NEWS;
-
-
+  public int mType = DailyNewsAdapter.TYPE_NEWS;
 }

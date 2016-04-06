@@ -1,5 +1,7 @@
 package com.baiiu.zhihudaily.ui.activity;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,17 +14,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-
+import butterknife.Bind;
+import butterknife.OnClick;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.adapter.DailyNewsAdapter;
 import com.baiiu.zhihudaily.base.BaseActivity;
 import com.baiiu.zhihudaily.net.DailyClient;
+import com.baiiu.zhihudaily.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.net.http.RequestCallBack;
 import com.baiiu.zhihudaily.pojo.Daily;
+import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.LogUtil;
-
-import butterknife.Bind;
-import butterknife.OnClick;
+import com.baiiu.zhihudaily.util.ReadedListUtil;
 
 public class MainActivity extends BaseActivity
     implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
@@ -38,6 +41,8 @@ public class MainActivity extends BaseActivity
   }
 
   @Override protected void initOnCreate(Bundle savedInstanceState) {
+    initBroadCast();
+
     refreshLayout.setOnRefreshListener(this);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -108,14 +113,20 @@ public class MainActivity extends BaseActivity
     String id = "";
     switch (v.getId()) {
       case R.id.item_news:
-        id = (String) v.getTag();
+        NewsViewHolder holder = (NewsViewHolder) v.getTag();
+        id = holder.mStroy.id;
+        startActivity(NewsDetailActivity.instance(this, holder.mStroy.id));
+
+        holder.mStroy.isRead = true;
+        dailyNewsAdapter.notifyItemChanged(holder.getAdapterPosition());
         break;
       case R.id.item_topic_news:
         id = (String) v.getTag(R.id.item_topic_news);
+        startActivity(NewsDetailActivity.instance(this, id));
         break;
     }
 
-    startActivity(NewsDetailActivity.instance(this, id));
+    ReadedListUtil.saveToReadedList(volleyTag, id);
   }
 
   //=====================Menu===================================
@@ -133,5 +144,18 @@ public class MainActivity extends BaseActivity
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  private NetWorkReceiver netWorkReceiver;
+
+  private void initBroadCast() {
+    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    netWorkReceiver = new NetWorkReceiver();
+    registerReceiver(netWorkReceiver, filter);
+  }
+
+  @Override protected void onDestroy() {
+    unregisterReceiver(netWorkReceiver);
+    super.onDestroy();
   }
 }

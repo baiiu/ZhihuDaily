@@ -66,5 +66,12 @@ public class UIUtil {
         return LayoutInflater.from(context);
     }
 
+    /**
+     * 获取颜色
+     */
+    public static int getColor(int resId) {
+        return getContext().getResources().getColor(resId);
+    }
+
 
 }

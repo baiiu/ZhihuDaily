@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+  <color name="colorPrimary">#3F51B5</color>
+  <color name="colorPrimaryDark">#303F9F</color>
+  <color name="colorAccent">#FF4081</color>
 
-    <color name="black_p50">#7f000000</color>
-    <color name="news_title">#DD000000</color>
-    <color name="gray_actor">#e7e7e7</color>
-    <color name="main_item_background">#FFFFFF</color>
+  <color name="black_p50">#7f000000</color>
+  <color name="news_title">#DD000000</color>
+  <color name="gray_actor">#e7e7e7</color>
+  <color name="main_item_background">#FFFFFF</color>
+
+
+  <color name="color_normal">#222c38</color>
+  <color name="color_readed">#969fa9</color>
 
 </resources>

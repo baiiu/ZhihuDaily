@@ -33,13 +33,11 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:fitsSystemWindows="true"
+          app:layout_collapseMode="parallax"
+          app:layout_collapseParallaxMultiplier="0.8"
+          app:layout_scrollFlags="scroll|snap|enterAlways|enterAlwaysCollapsed"
           >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_grey"
-            />
 
         <ImageView
             android:id="@id/imageView"
@@ -47,8 +45,13 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            app:layout_collapseMode="parallax"
             tools:src="@mipmap/ic_launcher"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_grey"
             />
 
         <TextView
@@ -76,17 +79,14 @@
       </FrameLayout>
 
       <android.support.v7.widget.Toolbar
-          android:id="@+id/toolbar"
+          android:id="@id/toolbar"
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize"
           app:layout_collapseMode="pin"
           app:popupTheme="@style/AppTheme.PopupOverlay"
           />
-
     </android.support.design.widget.CollapsingToolbarLayout>
-
   </android.support.design.widget.AppBarLayout>
-
 
   <android.support.v4.widget.NestedScrollView
       android:layout_width="match_parent"

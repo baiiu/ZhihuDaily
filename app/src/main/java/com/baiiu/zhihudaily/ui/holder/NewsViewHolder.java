@@ -5,13 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.Story;
+import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.bumptech.glide.Glide;
-
-import butterknife.Bind;
 
 /**
  * author: baiiu
@@ -21,7 +20,9 @@ import butterknife.Bind;
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
   @Bind(R.id.imageView) ImageView imageView;
-  @Bind(R.id.textView) TextView textView;
+  public @Bind(R.id.textView) TextView textView;
+
+  public Story mStroy;
 
   public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
     super(context, R.layout.holder_news, parent, listener);
@@ -29,7 +30,8 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
   }
 
   @Override public void bind(Story data) {
-    itemView.setTag(data.id);
+    itemView.setTag(this);
+    mStroy = data;
 
     Glide.with(mContext)
         .load(data.images.get(0))
@@ -38,5 +40,6 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
         .into(imageView);
 
     textView.setText(data.title);
+    ReadedListUtil.setTextColor(textView, data.isRead);
   }
 }
