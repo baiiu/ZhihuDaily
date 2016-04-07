@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import com.baiiu.zhihudaily.async.MappingConvertUtil;
+import com.baiiu.zhihudaily.async.TinyTaskManager;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
+import com.baiiu.zhihudaily.db.DBManager;
 import com.baiiu.zhihudaily.pojo.Daily;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
@@ -44,13 +47,40 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   }
 
   public void setDaily(Daily daily, boolean lastest) {
+    setDaily(daily, lastest, true);
+  }
+
+  public void setDaily(Daily daily, boolean lastest, boolean needSave) {
     List<Story> hereStories = daily.stories;
     bindFooter(hereStories);
+
+    //标记已读
+    Map<String, String> readedMap =
+        ReadedListUtil.getReadedMap(((MainActivity) mContext).volleyTag);
+
+    if (!CommonUtil.isEmpty(hereStories)) {
+      for (Story story : hereStories) {
+        story.isRead = readedMap.get(String.valueOf(story.id)) != null;
+      }
+    }
+
+    //存储当前的story
+    if (needSave) {
+      saveStories(hereStories, daily.date);
+    }
+
+    if (CommonUtil.isEmpty(hereStories)) {
+      return;
+    }
 
     if (lastest) {
       this.topStories = daily.top_stories;
       this.stories = hereStories;
       notifyDataSetChanged();
+
+      if (needSave) {
+        saveTopStories(this.topStories);
+      }
     } else {
       //添加Date分割线Story
       Story story = new Story();
@@ -63,17 +93,6 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
       int startIndex = stories.size() - hereStories.size();
       notifyItemRangeInserted(topStories == null ? --startIndex : startIndex,
           hereStories.size() + 1);
-    }
-
-    Map<String, String> readedMap =
-        ReadedListUtil.getReadedMap(((MainActivity) mContext).volleyTag);
-
-    if (CommonUtil.isEmpty(stories)) {
-      return;
-    }
-
-    for (Story story : stories) {
-      story.isRead = readedMap.get(story.id) != null;
     }
   }
 
@@ -172,10 +191,27 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   }
 
   public void bindFooter(List<Story> list) {
-    if (list == null) {
+    if (CommonUtil.isEmpty(list)) {
       getFooterHolder().bind(FooterViewHolder.ERROR);
     } else {
       getFooterHolder().bind(FooterViewHolder.HAS_MORE);
     }
+  }
+
+  //=============存储==================
+  private void saveTopStories(final List<TopStory> top_stories) {
+    TinyTaskManager.instance().post(new Runnable() {
+      @Override public void run() {
+        DBManager.instance().saveTopStoryList(MappingConvertUtil.toSavedTopStory(top_stories));
+      }
+    });
+  }
+
+  private void saveStories(final List<Story> stories, final String date) {
+    TinyTaskManager.instance().post(new Runnable() {
+      @Override public void run() {
+        DBManager.instance().saveStoryList(MappingConvertUtil.toSavedStory(stories, date));
+      }
+    });
   }
 }

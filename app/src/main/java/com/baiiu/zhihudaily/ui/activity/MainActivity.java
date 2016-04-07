@@ -19,13 +19,20 @@ import butterknife.OnClick;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.adapter.DailyNewsAdapter;
 import com.baiiu.zhihudaily.base.BaseActivity;
+import com.baiiu.zhihudaily.db.DBManager;
 import com.baiiu.zhihudaily.net.DailyClient;
 import com.baiiu.zhihudaily.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.net.http.RequestCallBack;
+import com.baiiu.zhihudaily.net.util.HttpNetUtil;
 import com.baiiu.zhihudaily.pojo.Daily;
+import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
+import com.baiiu.zhihudaily.util.Constant;
+import com.baiiu.zhihudaily.util.DateUtil;
 import com.baiiu.zhihudaily.util.LogUtil;
+import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
+import java.util.List;
 
 public class MainActivity extends BaseActivity
     implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
@@ -71,11 +78,51 @@ public class MainActivity extends BaseActivity
   }
 
   private void loadData() {
-    DailyClient.getLatestNews(volleyTag, dailyRequest);
+    if (HttpNetUtil.isConnected()) {
+      DailyClient.getLatestNews(volleyTag, dailyRequest);
+    } else {
+      refreshLayout.setRefreshing(false);
+      loadFromLocal(true);
+    }
   }
 
   public void loadMore() {
-    DailyClient.getBeforeNews(volleyTag, mCurrentDate, dailyRequest);
+    if (HttpNetUtil.isConnected()) {
+      DailyClient.getBeforeNews(volleyTag, mCurrentDate, dailyRequest);
+    } else {
+      loadFromLocal(false);
+    }
+  }
+
+  private void loadFromLocal(final boolean latest) {
+    final Daily daily = new Daily();
+
+    List<Story> storyList = null;
+
+    if (latest) {
+      daily.top_stories = DBManager.instance().getTopStoryList();
+
+      String date = PreferenceUtil.instance().get(Constant.LATEST_DATE, "");
+      daily.date = date;
+
+      storyList = DBManager.instance().getStoryList(date);
+    } else {
+      String date = DateUtil.getYesterDayDate(mCurrentDate);
+
+      daily.date = date;
+      storyList = DBManager.instance().getStoryList(date);
+    }
+
+    mCurrentDate = daily.date;
+
+    daily.stories = storyList;
+    //dailyNewsAdapter.setDaily(daily, latest, false);
+
+    recyclerView.postDelayed(new Runnable() {
+      @Override public void run() {
+        dailyNewsAdapter.setDaily(daily, latest, false);
+      }
+    }, 500);
   }
 
   private RequestCallBack<Daily> dailyRequest = new RequestCallBack<Daily>() {
@@ -84,6 +131,9 @@ public class MainActivity extends BaseActivity
       if (TextUtils.isEmpty(mCurrentDate)) {
         refreshLayout.setRefreshing(false);
         dailyNewsAdapter.setDaily(response, true);
+
+        //存储最新日期
+        PreferenceUtil.instance().put(Constant.LATEST_DATE, response.date).commit();
       } else {
         dailyNewsAdapter.setDaily(response, false);
       }
@@ -103,14 +153,8 @@ public class MainActivity extends BaseActivity
     }
   };
 
-  @OnClick(R.id.fab) public void onClick() {
-    Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null)
-        .show();
-  }
-
   @Override public void onClick(View v) {
-    String id = "";
+    long id = 0;
     switch (v.getId()) {
       case R.id.item_news:
         NewsViewHolder holder = (NewsViewHolder) v.getTag();
@@ -121,12 +165,14 @@ public class MainActivity extends BaseActivity
         dailyNewsAdapter.notifyItemChanged(holder.getAdapterPosition());
         break;
       case R.id.item_topic_news:
-        id = (String) v.getTag(R.id.item_topic_news);
+        id = (long) v.getTag(R.id.item_topic_news);
         startActivity(NewsDetailActivity.instance(this, id));
         break;
     }
 
-    ReadedListUtil.saveToReadedList(volleyTag, id);
+    if (id != 0) {
+      ReadedListUtil.saveToReadedList(volleyTag, String.valueOf(id));
+    }
   }
 
   //=====================Menu===================================
@@ -148,6 +194,7 @@ public class MainActivity extends BaseActivity
 
   private NetWorkReceiver netWorkReceiver;
 
+  //=====================网络=====================================
   private void initBroadCast() {
     IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     netWorkReceiver = new NetWorkReceiver();
@@ -157,5 +204,11 @@ public class MainActivity extends BaseActivity
   @Override protected void onDestroy() {
     unregisterReceiver(netWorkReceiver);
     super.onDestroy();
+  }
+
+  @OnClick(R.id.fab) public void onClick() {
+    Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null)
+        .show();
   }
 }

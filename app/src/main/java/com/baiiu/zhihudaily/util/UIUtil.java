@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baiiu.zhihudaily.app.DailyApplication;
+import com.baiiu.zhihudaily.DailyApplication;
 
 
 /**

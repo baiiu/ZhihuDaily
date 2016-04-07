@@ -23,7 +23,7 @@ public class DailyClient implements DailyApiConstant {
         HttpUtil.get().httpGet(getRequestUrl("news/before/" + date), callBack, tag);
     }
 
-    public static void getNewsDetail(String tag, String id, RequestCallBack callBack) {
+    public static void getNewsDetail(String tag, long id, RequestCallBack callBack) {
         HttpUtil.get().httpGet(getRequestUrl("news/" + id), callBack, tag);
     }
 }

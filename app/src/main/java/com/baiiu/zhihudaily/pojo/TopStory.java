@@ -6,9 +6,18 @@ package com.baiiu.zhihudaily.pojo;
  * description:
  */
 public class TopStory {
-    public String image;
-    public int type;
-    public String id;
-    public String ga_prefix;
-    public String title;
+  public String image;
+  public int type;
+  public long id;
+  public String ga_prefix;
+  public String title;
+
+  public TopStory() {
+  }
+
+  public TopStory(long id, String image, String title) {
+    this.image = image;
+    this.title = title;
+    this.id = id;
+  }
 }

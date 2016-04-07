@@ -12,10 +12,19 @@ import java.util.List;
 public class Story {
   public List<String> images;
   private int type;
-  public String id;
+  public long id;
   public String ga_prefix;
   public String title;
   public boolean isRead;
 
   public int mType = DailyNewsAdapter.TYPE_NEWS;
+
+  public Story() {
+  }
+
+  public Story(long id, List<String> images, String title) {
+    this.images = images;
+    this.id = id;
+    this.title = title;
+  }
 }

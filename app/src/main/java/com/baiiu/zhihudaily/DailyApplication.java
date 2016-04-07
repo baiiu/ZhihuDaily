@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.app;
+package com.baiiu.zhihudaily;
 
 import android.app.Application;
 import android.content.Context;
@@ -16,7 +16,7 @@ public class DailyApplication extends Application {
     super.onCreate();
     mContext = getApplicationContext();
 
-    //        LeakCanary.install(this);
+    //LeakCanary.install(this);
   }
 
   public static Context getContext() {

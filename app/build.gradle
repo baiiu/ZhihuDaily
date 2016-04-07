@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        }
+    }
 }
 
 dependencies {
@@ -30,6 +36,7 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'de.greenrobot:greendao:2.1.0'
 
 
     //内存泄露
