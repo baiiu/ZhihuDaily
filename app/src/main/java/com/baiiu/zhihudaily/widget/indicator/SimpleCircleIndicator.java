@@ -25,7 +25,7 @@ public class SimpleCircleIndicator extends View implements IPageIndicator {
     /**
      * 点之间的距离
      */
-    private int mDotInterval = 30;
+    private int mDotInterval = 10;
 
     /**
      * 点的半径

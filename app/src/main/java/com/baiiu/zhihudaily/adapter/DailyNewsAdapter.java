@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.Daily;
 import com.baiiu.zhihudaily.pojo.Story;
@@ -15,7 +14,6 @@ import com.baiiu.zhihudaily.ui.holder.FooterViewHolder;
 import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.ui.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
-
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +33,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
   private Context mContext;
   private FooterViewHolder footerViewHolder;
+  private TopicViewHolder topicViewHolder;
 
   private List<Story> stories;
   private List<TopStory> topStories;
@@ -82,7 +81,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     BaseViewHolder viewHolder = null;
     switch (viewType) {
       case TYPE_TOPIC:
-        viewHolder = new TopicViewHolder(mContext, parent, mOnClickListener);
+        if (topicViewHolder == null) {
+          topicViewHolder = new TopicViewHolder(mContext, parent, mOnClickListener);
+        }
+        viewHolder = topicViewHolder;
         break;
       case TYPE_NEWS:
         viewHolder = new NewsViewHolder(mContext, parent, mOnClickListener);
@@ -115,6 +117,21 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
           }
         }
         break;
+    }
+  }
+
+  @Override public void onViewAttachedToWindow(BaseViewHolder holder) {
+    super.onViewAttachedToWindow(holder);
+    super.onViewDetachedFromWindow(holder);
+    if (holder instanceof TopicViewHolder) {
+      ((TopicViewHolder) holder).start();
+    }
+  }
+
+  @Override public void onViewDetachedFromWindow(BaseViewHolder holder) {
+    super.onViewDetachedFromWindow(holder);
+    if (holder instanceof TopicViewHolder) {
+      ((TopicViewHolder) holder).stop();
     }
   }
 
