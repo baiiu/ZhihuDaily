@@ -8,9 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.async.TinyTaskManager;
 import com.baiiu.zhihudaily.base.BaseActivity;
+import com.baiiu.zhihudaily.db.DBManager;
 import com.baiiu.zhihudaily.net.DailyClient;
 import com.baiiu.zhihudaily.net.http.RequestCallBack;
+import com.baiiu.zhihudaily.net.util.HttpNetUtil;
 import com.baiiu.zhihudaily.pojo.DailyDetail;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.bumptech.glide.Glide;
@@ -33,28 +36,60 @@ public class NewsDetailActivity extends BaseActivity {
   }
 
   @Override protected void initOnCreate(Bundle savedInstanceState) {
-    long id = getIntent().getLongExtra(ID, 0);
+    final long id = getIntent().getLongExtra(ID, 0);
     if (id == 0) {
       //// TODO: 16/4/6 空页面
     } else {
-      loadData(id);
+
+      if (HttpNetUtil.isConnected()) {
+        loadData(id);
+      } else {
+        TinyTaskManager.instance().postAtFrontOfQueue(new Runnable() {
+          @Override public void run() {
+            final DailyDetail dailyDetail = DBManager.instance().getDetialStory(id);
+
+            runOnUiThread(new Runnable() {
+              @Override public void run() {
+                setData(dailyDetail);
+              }
+            });
+          }
+        });
+      }
     }
   }
 
   private void loadData(long id) {
     DailyClient.getNewsDetail(volleyTag, id, new RequestCallBack<DailyDetail>() {
-      @Override public void onSuccess(DailyDetail response) {
-        tv_title.setText(response.title);
-        tv_source.setText(response.image_source);
-        Glide.with(NewsDetailActivity.this).load(response.image).centerCrop().into(imageView);
+      @Override public void onSuccess(final DailyDetail response) {
 
-        webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(response.body, true).toString(),
-            "text/html", "utf-8", null);
+        setData(response);
+
+        TinyTaskManager.instance().post(new Runnable() {
+          @Override public void run() {
+            DBManager.instance().saveDetailStory(response);
+          }
+        });
       }
 
       @Override public void onFailure(int statusCode, String errorString) {
 
       }
     });
+  }
+
+  private void setData(DailyDetail dailyDetail) {
+
+    if (dailyDetail == null) {
+      //// TODO: 16/4/8 空页面
+      return;
+    }
+
+    tv_title.setText(dailyDetail.title);
+    tv_source.setText(dailyDetail.image_source);
+    Glide.with(NewsDetailActivity.this).load(dailyDetail.image).centerCrop().into(imageView);
+
+    webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true).toString(),
+        "text/html", "utf-8", null);
   }
 }

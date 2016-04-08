@@ -202,7 +202,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   private void saveTopStories(final List<TopStory> top_stories) {
     TinyTaskManager.instance().post(new Runnable() {
       @Override public void run() {
-        DBManager.instance().saveTopStoryList(MappingConvertUtil.toSavedTopStory(top_stories));
+        DBManager.instance().saveTopStoryList(top_stories);
       }
     });
   }

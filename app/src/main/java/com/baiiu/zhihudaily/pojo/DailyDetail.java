@@ -8,15 +8,14 @@ import java.util.List;
  * description:
  */
 public class DailyDetail {
-    public String body;
-    public String image_source;
-    public String title;
-    public String image;
-    public String share_url;
-    public List<String> js;
-    public String ga_prefix;
-    public int type;
-    public String id;
-    public List<String> css;
-
+  public String body;
+  public String image_source;
+  public String title;
+  public String image;
+  public String share_url;
+  public List<String> js;
+  public String ga_prefix;
+  public int type;
+  public long id;
+  public List<String> css;
 }

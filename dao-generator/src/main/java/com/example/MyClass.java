@@ -19,6 +19,7 @@ public class MyClass {
     //添加实体
     addTopStory(schema);
     addStory(schema);
+    addStoryDetail(schema);
 
     //生成代码.
 
@@ -41,5 +42,18 @@ public class MyClass {
     savedStory.addStringProperty("image");
     savedStory.addStringProperty("title");
     savedStory.addStringProperty("date");
+  }
+
+  private static void addStoryDetail(Schema schema) {
+    Entity savedDailyDetail = schema.addEntity("SavedDailyDetail");
+
+    savedDailyDetail.addIdProperty();
+    savedDailyDetail.addStringProperty("body");
+    savedDailyDetail.addStringProperty("image_source");
+    savedDailyDetail.addStringProperty("image");
+    savedDailyDetail.addStringProperty("title");
+    savedDailyDetail.addStringProperty("share_url");
+    savedDailyDetail.addStringProperty("js");
+    savedDailyDetail.addStringProperty("css");
   }
 }

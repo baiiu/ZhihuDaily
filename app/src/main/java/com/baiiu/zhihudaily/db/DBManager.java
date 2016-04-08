@@ -3,11 +3,14 @@ package com.baiiu.zhihudaily.db;
 import android.database.sqlite.SQLiteDatabase;
 import baiiu.greendao.gen.DaoMaster;
 import baiiu.greendao.gen.DaoSession;
+import baiiu.greendao.gen.SavedDailyDetail;
+import baiiu.greendao.gen.SavedDailyDetailDao;
 import baiiu.greendao.gen.SavedStory;
 import baiiu.greendao.gen.SavedStoryDao;
 import baiiu.greendao.gen.SavedTopStory;
 import baiiu.greendao.gen.SavedTopStoryDao;
 import com.baiiu.zhihudaily.async.MappingConvertUtil;
+import com.baiiu.zhihudaily.pojo.DailyDetail;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
 import com.baiiu.zhihudaily.util.UIUtil;
@@ -46,21 +49,9 @@ public class DBManager {
     return dbManager;
   }
 
-  private SavedTopStoryDao getSavedTopStoryDao() {
-    return daoSession.getSavedTopStoryDao();
-  }
-
+  //=======================Story================================
   private SavedStoryDao getSavedStoryDao() {
     return daoSession.getSavedStoryDao();
-  }
-
-  public void saveTopStoryList(List<SavedTopStory> list) {
-    getSavedTopStoryDao().insertOrReplaceInTx(list);
-  }
-
-  public List<TopStory> getTopStoryList() {
-    List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
-    return MappingConvertUtil.toTopStory(savedTopStories);
   }
 
   public void saveStoryList(List<SavedStory> list) {
@@ -71,5 +62,35 @@ public class DBManager {
     List<SavedStory> savedStories =
         getSavedStoryDao().queryBuilder().where(SavedStoryDao.Properties.Date.eq(date)).list();
     return MappingConvertUtil.toStory(savedStories);
+  }
+
+  //========================TopStory=====================================
+  private SavedTopStoryDao getSavedTopStoryDao() {
+    return daoSession.getSavedTopStoryDao();
+  }
+
+  public void saveTopStoryList(List<TopStory> list) {
+    getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
+  }
+
+  public List<TopStory> getTopStoryList() {
+    List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
+    return MappingConvertUtil.toTopStory(savedTopStories);
+  }
+
+  //========================DailyDetail=====================================
+  private SavedDailyDetailDao getDailyDetailDao() {
+    return daoSession.getSavedDailyDetailDao();
+  }
+
+  public void saveDetailStory(DailyDetail dailyDetail) {
+    getDailyDetailDao().insertOrReplace(MappingConvertUtil.toSavedDailyDetail(dailyDetail));
+  }
+
+  public DailyDetail getDetialStory(long id) {
+    SavedDailyDetail unique =
+        getDailyDetailDao().queryBuilder().where(SavedDailyDetailDao.Properties.Id.eq(id)).unique();
+
+    return unique == null ? null : MappingConvertUtil.toDailyDetail(unique);
   }
 }

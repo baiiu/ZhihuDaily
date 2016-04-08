@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity
   private void loadFromLocal(final boolean latest) {
     final Daily daily = new Daily();
 
-    List<Story> storyList = null;
+    List<Story> storyList;
 
     if (latest) {
       daily.top_stories = DBManager.instance().getTopStoryList();
@@ -116,7 +116,6 @@ public class MainActivity extends BaseActivity
     mCurrentDate = daily.date;
 
     daily.stories = storyList;
-    //dailyNewsAdapter.setDaily(daily, latest, false);
 
     recyclerView.postDelayed(new Runnable() {
       @Override public void run() {
