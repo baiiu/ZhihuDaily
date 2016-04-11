@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.adapter;
+package com.baiiu.zhihudaily.ui.adapter;
 
 import android.content.Context;
 import android.view.View;

@@ -1,5 +1,6 @@
 package com.baiiu.zhihudaily.util;
 
+import android.text.TextUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +18,10 @@ public class DateUtil {
    * @param date 20160331
    */
   public static String getYesterDayDate(String date) {
+    if (TextUtils.isEmpty(date)) {
+      return null;
+    }
+
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 
     try {

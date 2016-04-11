@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.adapter.TopicAdapter;
+import com.baiiu.zhihudaily.ui.adapter.TopicAdapter;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.TopStory;
 import com.baiiu.zhihudaily.widget.indicator._interface.IPageIndicator;

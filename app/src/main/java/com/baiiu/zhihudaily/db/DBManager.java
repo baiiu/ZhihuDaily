@@ -70,6 +70,7 @@ public class DBManager {
   }
 
   public void saveTopStoryList(List<TopStory> list) {
+    getSavedTopStoryDao().deleteAll();
     getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
   }
 

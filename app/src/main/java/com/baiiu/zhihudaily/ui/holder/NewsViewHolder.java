@@ -9,6 +9,7 @@ import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.Story;
+import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.bumptech.glide.Glide;
 
@@ -33,11 +34,12 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
     itemView.setTag(this);
     mStroy = data;
 
-    Glide.with(mContext)
-        .load(data.images.get(0))
-        .placeholder(R.mipmap.ic_launcher)
-        .centerCrop()
-        .into(imageView);
+    String url = null;
+    if (!CommonUtil.isEmpty(data.images)) {
+      url = data.images.get(0);
+    }
+
+    Glide.with(mContext).load(url).placeholder(R.mipmap.ic_launcher).centerCrop().into(imageView);
 
     textView.setText(data.title);
     ReadedListUtil.setTextColor(textView, data.isRead);

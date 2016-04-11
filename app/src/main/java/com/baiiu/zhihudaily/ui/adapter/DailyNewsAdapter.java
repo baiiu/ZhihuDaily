@@ -1,30 +1,28 @@
-package com.baiiu.zhihudaily.adapter;
+package com.baiiu.zhihudaily.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import com.baiiu.zhihudaily.async.MappingConvertUtil;
-import com.baiiu.zhihudaily.async.TinyTaskManager;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
-import com.baiiu.zhihudaily.db.DBManager;
 import com.baiiu.zhihudaily.pojo.Daily;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
 import com.baiiu.zhihudaily.ui.activity.MainActivity;
 import com.baiiu.zhihudaily.ui.holder.DateViewHolder;
+import com.baiiu.zhihudaily.ui.holder.EmptyViewHolder;
+import com.baiiu.zhihudaily.ui.holder.ErrorViewHolder;
 import com.baiiu.zhihudaily.ui.holder.FooterViewHolder;
+import com.baiiu.zhihudaily.ui.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.ui.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.ui.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.ReadedListUtil;
 import java.util.List;
-import java.util.Map;
 
 /**
  * author: baiiu
  * date: on 16/4/5 14:44
- * description:
+ * description: 第一次set时默认展示Loading页面
  */
 public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -32,6 +30,26 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   public static final int TYPE_NEWS = 1;
   public static final int TYPE_DATE = 2;
   public static final int TYPE_FOOTER = 3;
+
+  /**
+   * 网络错误,并且本地没有存储数据.
+   */
+  private boolean isError = false;
+  public static final int TYPE_ERROR = -1;
+
+  /**
+   * 网络良好,没有数据时
+   */
+  private boolean isEmpty = false;
+  public static final int TYPE_EMPTY = -2;
+
+  /**
+   * 正在加载...<br />
+   * <b>默认展示</b>
+   */
+  private boolean isLoading = true;
+  public static final int TYPE_LOADING = -3;
+
   private final View.OnClickListener mOnClickListener;
 
   private Context mContext;
@@ -46,51 +64,40 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     this.mOnClickListener = onClickListener;
   }
 
-  public void setDaily(Daily daily, boolean lastest) {
-    setDaily(daily, lastest, true);
+  public void setError(boolean error) {
+    this.isError = error;
   }
 
-  public void setDaily(Daily daily, boolean lastest, boolean needSave) {
-    List<Story> hereStories = daily.stories;
-    bindFooter(hereStories);
+  public void setEmpty(boolean empty) {
+    this.isEmpty = empty;
+  }
 
-    //标记已读
-    Map<String, String> readedMap =
-        ReadedListUtil.getReadedMap(((MainActivity) mContext).volleyTag);
+  public void setLoading(boolean loading) {
+    this.isLoading = loading;
+  }
 
-    if (!CommonUtil.isEmpty(hereStories)) {
-      for (Story story : hereStories) {
-        story.isRead = readedMap.get(String.valueOf(story.id)) != null;
-      }
-    }
-
-    //存储当前的story
-    if (needSave) {
-      saveStories(hereStories, daily.date);
-    }
-
-    if (CommonUtil.isEmpty(hereStories)) {
+  public void setDaily(Daily daily, boolean latest) {
+    if (daily == null) {
       return;
     }
 
-    if (lastest) {
-      this.topStories = daily.top_stories;
-      this.stories = hereStories;
-      notifyDataSetChanged();
+    List<Story> hereStories = daily.stories;
 
-      if (needSave) {
-        saveTopStories(this.topStories);
-      }
+    if (latest) {
+      this.stories = hereStories;
+      this.topStories = daily.top_stories;
+      notifyDataSetChanged();
     } else {
-      //添加Date分割线Story
+      //添加分割线Date
       Story story = new Story();
-      story.mType = TYPE_DATE;
+      story.mType = DailyNewsAdapter.TYPE_DATE;
       story.title = daily.date;
       this.stories.add(story);
 
       this.stories.addAll(hereStories);
 
-      int startIndex = stories.size() - hereStories.size();
+      int startIndex = this.stories.size() - hereStories.size();
+
       notifyItemRangeInserted(topStories == null ? --startIndex : startIndex,
           hereStories.size() + 1);
     }
@@ -101,6 +108,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     switch (viewType) {
       case TYPE_TOPIC:
         if (topicViewHolder == null) {
+          //缓存起来
           topicViewHolder = new TopicViewHolder(mContext, parent, mOnClickListener);
         }
         viewHolder = topicViewHolder;
@@ -113,6 +121,15 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         break;
       case TYPE_FOOTER:
         viewHolder = getFooterHolder();
+        break;
+      case TYPE_LOADING:
+        viewHolder = new LoadingViewHolder(mContext, parent);
+        break;
+      case TYPE_EMPTY:
+        viewHolder = new EmptyViewHolder(mContext, parent);
+        break;
+      case TYPE_ERROR:
+        viewHolder = new ErrorViewHolder(mContext, parent);
         break;
     }
 
@@ -136,7 +153,15 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
           }
         }
         break;
+      case TYPE_ERROR:
+        break;
+      case TYPE_EMPTY:
+        break;
     }
+  }
+
+  private void dispatchLoadMore() {
+    ((MainActivity) mContext).loadMore();
   }
 
   @Override public void onViewAttachedToWindow(BaseViewHolder holder) {
@@ -154,11 +179,19 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
   }
 
-  private void dispatchLoadMore() {
-    ((MainActivity) mContext).loadMore();
-  }
-
   @Override public int getItemViewType(int position) {
+    if (isLoading) {
+      return TYPE_LOADING;
+    }
+
+    if (isError) {
+      return TYPE_ERROR;
+    }
+
+    if (isEmpty) {
+      return TYPE_EMPTY;
+    }
+
     if (position == getItemCount() - 1) {
       return TYPE_FOOTER;
     }
@@ -175,6 +208,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   }
 
   @Override public int getItemCount() {
+    if (isLoading || isError || isEmpty) {
+      return 1;
+    }
+
     if (CommonUtil.isEmpty(stories)) {
       //未赋值时,不用添加footer
       return 0;
@@ -196,22 +233,5 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     } else {
       getFooterHolder().bind(FooterViewHolder.HAS_MORE);
     }
-  }
-
-  //=============存储==================
-  private void saveTopStories(final List<TopStory> top_stories) {
-    TinyTaskManager.instance().post(new Runnable() {
-      @Override public void run() {
-        DBManager.instance().saveTopStoryList(top_stories);
-      }
-    });
-  }
-
-  private void saveStories(final List<Story> stories, final String date) {
-    TinyTaskManager.instance().post(new Runnable() {
-      @Override public void run() {
-        DBManager.instance().saveStoryList(MappingConvertUtil.toSavedStory(stories, date));
-      }
-    });
   }
 }

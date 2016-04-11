@@ -1,6 +1,6 @@
 package com.baiiu.zhihudaily.pojo;
 
-import com.baiiu.zhihudaily.adapter.DailyNewsAdapter;
+import com.baiiu.zhihudaily.ui.adapter.DailyNewsAdapter;
 
 import java.util.List;
 
