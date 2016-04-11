@@ -13,6 +13,7 @@ import com.baiiu.zhihudaily.async.MappingConvertUtil;
 import com.baiiu.zhihudaily.pojo.DailyDetail;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
+import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import java.util.List;
 
@@ -55,6 +56,10 @@ public class DBManager {
   }
 
   public void saveStoryList(List<SavedStory> list) {
+    if (CommonUtil.isEmpty(list)) {
+      return;
+    }
+
     getSavedStoryDao().insertOrReplaceInTx(list);
   }
 
@@ -70,6 +75,10 @@ public class DBManager {
   }
 
   public void saveTopStoryList(List<TopStory> list) {
+    if (CommonUtil.isEmpty(list)) {
+      return;
+    }
+
     getSavedTopStoryDao().deleteAll();
     getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
   }

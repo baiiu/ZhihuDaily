@@ -66,10 +66,12 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
   public void setError(boolean error) {
     this.isError = error;
+    this.isLoading = false;
   }
 
   public void setEmpty(boolean empty) {
     this.isEmpty = empty;
+    this.isLoading = false;
   }
 
   public void setLoading(boolean loading) {
@@ -101,6 +103,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
       notifyItemRangeInserted(topStories == null ? --startIndex : startIndex,
           hereStories.size() + 1);
     }
+  }
+
+  public List<Story> getStories() {
+    return stories;
   }
 
   @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

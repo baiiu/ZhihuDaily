@@ -66,7 +66,19 @@ public class MainActivity extends BaseActivity
 
   @Override public void onRefresh() {
     mCurrentDate = "";
-    loadData();
+
+    if (HttpNetUtil.isConnected()) {
+      loadData();
+    } else {
+      refreshLayout.setRefreshing(false);
+      TSnackbar.make(refreshLayout, "网络错误", Prompt.ERROR).show();
+
+      if (CommonUtil.isEmpty(dailyNewsAdapter.getStories())) {
+        //历史数据都没有,展示错误页面
+        dailyNewsAdapter.setError(true);
+        dailyNewsAdapter.notifyDataSetChanged();
+      }
+    }
   }
 
   private void loadData() {
@@ -110,7 +122,7 @@ public class MainActivity extends BaseActivity
           @Override public void run() {
             recyclerView.postDelayed(new Runnable() {
               @Override public void run() {
-                setDaily(daily, latest, false);
+                setDaily(daily, latest, true);
 
                 if (latest) {
                   if (CommonUtil.isEmpty(daily.stories)) {
@@ -138,6 +150,7 @@ public class MainActivity extends BaseActivity
     @Override public void onSuccess(Daily response) {
       if (TextUtils.isEmpty(mCurrentDate)) {
         refreshLayout.setRefreshing(false);
+
         setDaily(response, true);
 
         //存储最新日期
@@ -230,16 +243,16 @@ public class MainActivity extends BaseActivity
 
   //==================== 操作数据 ====================================
   public void setDaily(Daily daily, boolean lastest) {
-    setDaily(daily, lastest, true);
+    setDaily(daily, lastest, false);
   }
 
   /**
    * @param lastest 来自下拉刷新的数据
-   * @param needSave 来自于数据库的数据不需要存储
+   * @param fromLocal 来自于数据库的数据不需要存储
    */
-  public void setDaily(Daily daily, boolean lastest, boolean needSave) {
+  public void setDaily(Daily daily, boolean lastest, boolean fromLocal) {
     List<Story> hereStories = daily.stories;
-    dailyNewsAdapter.bindFooter(hereStories, !needSave);
+    dailyNewsAdapter.bindFooter(hereStories, fromLocal);
 
     /*
      * 标记已读
@@ -256,7 +269,7 @@ public class MainActivity extends BaseActivity
      * 存储当前的story
      */
     mCurrentDate = daily.date;
-    if (needSave) {
+    if (!fromLocal) {
       saveStories(hereStories, daily.date);
     }
 
@@ -265,35 +278,35 @@ public class MainActivity extends BaseActivity
        *下拉刷新
        */
       dailyNewsAdapter.setError(false);
+      dailyNewsAdapter.setEmpty(false);
 
-      if (!CommonUtil.isEmpty(hereStories)) {
-        dailyNewsAdapter.setLoading(false);
-        dailyNewsAdapter.setDaily(daily, true);
-      } else {
-        if (!needSave) {
+      if (CommonUtil.isEmpty(hereStories)) {
+        /*
+         * 数据为空处理
+         */
+        if (fromLocal) {
+          //缓存数据为空,即第一次加载的时候,就是点进来的时候.
+          //上面已经处理.此处不必在处理.可以删掉此段代码.
           return;
         }
-        /*
-         * 判断是空页面还是错误页面
-         */
-        if (HttpNetUtil.isConnected()) {
+
+        TSnackbar.make(refreshLayout, "没有新数据", Prompt.SUCCESS).show();
+
+        if (CommonUtil.isEmpty(dailyNewsAdapter.getStories())) {
+          //历史数据都没有,展现空页面
           dailyNewsAdapter.setEmpty(true);
-        } else {
-          dailyNewsAdapter.setError(true);
+          dailyNewsAdapter.notifyDataSetChanged();
         }
 
-        dailyNewsAdapter.notifyDataSetChanged();
+      } else {
+        /*
+         * 数据不为空,直接添加到当前
+         */
+        dailyNewsAdapter.setLoading(false);
+        dailyNewsAdapter.setDaily(daily, true);
       }
 
-      //if (CommonUtil.isEmpty(hereStories) && dailyNewsAdapter.getItemCount() == 0) {
-      //  //数据为空,并且历史数据也为空
-      //  dailyNewsAdapter.setEmpty(true);
-      //  dailyNewsAdapter.notifyDataSetChanged();
-      //} else {
-      //  TSnackbar.make(refreshLayout, "刷新数据失败", Prompt.ERROR).show();
-      //}
-
-      if (needSave) {
+      if (!fromLocal) {
         saveTopStories(daily.top_stories);
       }
     } else {
