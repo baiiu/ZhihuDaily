@@ -228,8 +228,12 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   }
 
   public void bindFooter(List<Story> list) {
+    bindFooter(list, false);
+  }
+
+  public void bindFooter(List<Story> list, boolean fromLocal) {
     if (CommonUtil.isEmpty(list)) {
-      getFooterHolder().bind(FooterViewHolder.ERROR);
+      getFooterHolder().bind(fromLocal ? FooterViewHolder.NO_MORE : FooterViewHolder.ERROR);
     } else {
       getFooterHolder().bind(FooterViewHolder.HAS_MORE);
     }

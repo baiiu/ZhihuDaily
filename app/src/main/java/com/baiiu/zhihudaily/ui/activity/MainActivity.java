@@ -239,7 +239,7 @@ public class MainActivity extends BaseActivity
    */
   public void setDaily(Daily daily, boolean lastest, boolean needSave) {
     List<Story> hereStories = daily.stories;
-    dailyNewsAdapter.bindFooter(hereStories);
+    dailyNewsAdapter.bindFooter(hereStories, !needSave);
 
     /*
      * 标记已读
