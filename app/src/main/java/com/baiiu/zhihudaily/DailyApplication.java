@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily;
 
 import android.app.Application;
 import android.content.Context;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * author: baiiu
@@ -16,7 +17,7 @@ public class DailyApplication extends Application {
     super.onCreate();
     mContext = getApplicationContext();
 
-    //LeakCanary.install(this);
+    LeakCanary.install(this);
   }
 
   public static Context getContext() {

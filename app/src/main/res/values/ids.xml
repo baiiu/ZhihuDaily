@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="toolbar" type="id" />
-    <item name="refreshLayout" type="id" />
-    <item name="fab" type="id" />
-    <item name="indicator" type="id" />
-    <item name="imageView" type="id" />
-    <item name="webView" type="id" />
-    <item name="appbarLayout" type="id" />
-    <item name="collapsingToolbar" type="id" />
-    <item name="textView" type="id" />
-    <item name="container" type="id" />
+  <item name="toolbar" type="id"/>
+  <item name="refreshLayout" type="id"/>
+  <item name="fab" type="id"/>
+  <item name="indicator" type="id"/>
+  <item name="imageView" type="id"/>
+  <item name="webView" type="id"/>
+  <item name="webViewContainer" type="id"/>
+  <item name="appbarLayout" type="id"/>
+  <item name="collapsingToolbar" type="id"/>
+  <item name="textView" type="id"/>
+  <item name="container" type="id"/>
 
 
-    <item name="toolbar_title" type="id" />
-    <item name="loading" type="id" />
-    <item name="success" type="id" />
-    <item name="error" type="id" />
-    <item name="nomore" type="id" />
+  <item name="toolbar_title" type="id"/>
+  <item name="loading" type="id"/>
+  <item name="success" type="id"/>
+  <item name="error" type="id"/>
+  <item name="nomore" type="id"/>
 
 </resources>

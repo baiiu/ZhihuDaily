@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -28,7 +29,8 @@ public class NewsDetailActivity extends BaseActivity {
   @Bind(R.id.imageView) ImageView imageView;
   @Bind(R.id.tv_title) TextView tv_title;
   @Bind(R.id.tv_source) TextView tv_source;
-  @Bind(R.id.webView) WebView webView;
+  @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
+  private WebView webView;
 
   @Override public int provideLayoutId() {
     setCanSwipeBack(true);
@@ -37,8 +39,13 @@ public class NewsDetailActivity extends BaseActivity {
 
   @Override protected void initOnCreate(Bundle savedInstanceState) {
     final long id = getIntent().getLongExtra(ID, 0);
+
+    webView = new WebView(getApplicationContext());
+    webViewContainer.addView(webView, -1, -1);
+
     if (id == 0) {
-      //// TODO: 16/4/6 空页面
+      //// TODO: 16/4/6 ErrorPage
+
     } else {
 
       if (HttpNetUtil.isConnected()) {
@@ -91,5 +98,15 @@ public class NewsDetailActivity extends BaseActivity {
 
     webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true).toString(),
         "text/html", "utf-8", null);
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    if (webView != null) {
+      webView.removeAllViews();
+      webViewContainer.removeView(webView);
+      webView.destroy();
+      webView = null;
+    }
   }
 }
