@@ -13,10 +13,16 @@
   <item name="container" type="id"/>
 
 
-  <item name="toolbar_title" type="id"/>
-  <item name="loading" type="id"/>
-  <item name="success" type="id"/>
+  <item name="empty" type="id"/>
+  <item name="container_empty" type="id"/>
   <item name="error" type="id"/>
+  <item name="container_error" type="id"/>
+  <item name="loading" type="id"/>
+  <item name="container_loading" type="id"/>
+
+
+  <item name="toolbar_title" type="id"/>
+  <item name="success" type="id"/>
   <item name="nomore" type="id"/>
 
 </resources>

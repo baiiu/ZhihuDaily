@@ -88,6 +88,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     if (latest) {
       this.stories = hereStories;
       this.topStories = daily.top_stories;
+
+      //// TODO: 16/4/12 可以删掉,去除顶部轮播图
+      this.topStories = null;
+
       notifyDataSetChanged();
     } else {
       //添加分割线Date
@@ -209,7 +213,6 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     if (position == 0) {
       return TYPE_TOPIC;
     }
-
     return stories.get(--position).mType;
   }
 

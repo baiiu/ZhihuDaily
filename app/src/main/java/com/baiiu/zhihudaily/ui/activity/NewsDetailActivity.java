@@ -3,6 +3,8 @@ package com.baiiu.zhihudaily.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import com.baiiu.zhihudaily.net.http.RequestCallBack;
 import com.baiiu.zhihudaily.net.util.HttpNetUtil;
 import com.baiiu.zhihudaily.pojo.DailyDetail;
 import com.baiiu.zhihudaily.util.HTMLUtil;
+import com.baiiu.zhihudaily.view.EmptyLayout;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -30,6 +33,8 @@ public class NewsDetailActivity extends BaseActivity {
   @Bind(R.id.tv_title) TextView tv_title;
   @Bind(R.id.tv_source) TextView tv_source;
   @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
+  @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
+
   private WebView webView;
 
   @Override public int provideLayoutId() {
@@ -43,10 +48,19 @@ public class NewsDetailActivity extends BaseActivity {
     webView = new WebView(getApplicationContext());
     webViewContainer.addView(webView, -1, -1);
 
-    if (id == 0) {
-      //// TODO: 16/4/6 ErrorPage
+    WebSettings mWebSettings = webView.getSettings();
+    mWebSettings.setSupportZoom(true);
+    mWebSettings.setUseWideViewPort(true);
+    mWebSettings.setDefaultTextEncodingName("UTF-8");
+    mWebSettings.setLoadsImagesAutomatically(true);
 
+    if (id == 0) {
+      emptyLayout.setVisibility(View.VISIBLE);
+      webViewContainer.setVisibility(View.GONE);
+      emptyLayout.setState(EmptyLayout.TYPE_ERROR);
     } else {
+      emptyLayout.setVisibility(View.GONE);
+      webViewContainer.setVisibility(View.VISIBLE);
 
       if (HttpNetUtil.isConnected()) {
         loadData(id);
@@ -80,7 +94,9 @@ public class NewsDetailActivity extends BaseActivity {
       }
 
       @Override public void onFailure(int statusCode, String errorString) {
-
+        emptyLayout.setVisibility(View.VISIBLE);
+        webViewContainer.setVisibility(View.GONE);
+        emptyLayout.setState(EmptyLayout.TYPE_ERROR);
       }
     });
   }
@@ -88,7 +104,9 @@ public class NewsDetailActivity extends BaseActivity {
   private void setData(DailyDetail dailyDetail) {
 
     if (dailyDetail == null) {
-      //// TODO: 16/4/8 空页面
+      emptyLayout.setVisibility(View.VISIBLE);
+      webViewContainer.setVisibility(View.GONE);
+      emptyLayout.setState(EmptyLayout.TYPE_EMPTY);
       return;
     }
 
