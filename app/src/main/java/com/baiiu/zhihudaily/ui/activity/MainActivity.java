@@ -64,7 +64,23 @@ public class MainActivity extends BaseActivity
     dailyNewsAdapter = new DailyNewsAdapter(this, this);
     recyclerView.setAdapter(dailyNewsAdapter);
 
+
     loadFromLocal(true);
+
+
+    //refreshLayout.getViewTreeObserver()
+    //    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    //      @Override public void onGlobalLayout() {
+    //        if (Build.VERSION.SDK_INT >= 16) {
+    //          refreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+    //        } else {
+    //          refreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+    //        }
+    //
+    //        refreshLayout.setRefreshing(true);
+    //        onRefresh();
+    //      }
+    //    });
   }
 
   @Override public void onRefresh() {

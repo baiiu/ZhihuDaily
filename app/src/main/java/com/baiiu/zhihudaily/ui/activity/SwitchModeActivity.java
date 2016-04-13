@@ -33,24 +33,5 @@ public class SwitchModeActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
       }
     }, 500);
-
-    //AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-    //alphaAnimation.setDuration(500);
-    //alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
-    //  @Override public void onAnimationStart(Animation animation) {
-    //
-    //  }
-    //
-    //  @Override public void onAnimationEnd(Animation animation) {
-    //    finish();
-    //    overridePendingTransition(0, 0);
-    //  }
-    //
-    //  @Override public void onAnimationRepeat(Animation animation) {
-    //
-    //  }
-    //});
-
-    //imageView.startAnimation(alphaAnimation);
   }
 }
