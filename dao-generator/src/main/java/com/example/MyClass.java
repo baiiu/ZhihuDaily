@@ -42,6 +42,7 @@ public class MyClass {
     savedStory.addStringProperty("image");
     savedStory.addStringProperty("title");
     savedStory.addStringProperty("date");
+    savedStory.addIntProperty("position");
   }
 
   private static void addStoryDetail(Schema schema) {

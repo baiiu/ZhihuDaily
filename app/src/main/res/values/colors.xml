@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
-
   <color name="black_p50">#7f000000</color>
-  <color name="news_title">#DD000000</color>
   <color name="gray_actor">#e7e7e7</color>
-  <color name="main_item_background">#FFFFFF</color>
 
 
-  <color name="color_normal">#222c38</color>
-  <color name="color_readed">#969fa9</color>
+  <!--DayTheme-->
+  <color name="colorPrimary_Day">#3F51B5</color>
+  <color name="colorPrimaryDark_Day">#303F9F</color>
+  <color name="colorAccent_Day">#FF4081</color>
+  <color name="window_bg_Day">#FFFFFF</color>
+  <color name="main_item_background_Day">#FFFFFF</color>
+  <color name="news_read_Day">#42000000</color>
+  <color name="news_unread_Day">#DD000000</color>
+
+  <!--NightTheme-->
+
+  <color name="colorPrimary_Night">#212121</color>
+  <color name="colorPrimaryDark_Night">#DD000000</color>
+  <color name="colorAccent_Night">#FF4081</color>
+  <color name="window_bg_Night">#FF424242</color>
+  <color name="main_item_background_Night">#616161</color>
+  <color name="news_title_Night">#DDFFFFFF</color>
+  <color name="news_read_Night">#42FFFFFF</color>
+  <color name="news_unread_Night">#DDFFFFFF</color>
 
 </resources>

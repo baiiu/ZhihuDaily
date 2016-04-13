@@ -65,7 +65,7 @@ public class DBManager {
 
   public List<Story> getStoryList(String date) {
     List<SavedStory> savedStories =
-        getSavedStoryDao().queryBuilder().where(SavedStoryDao.Properties.Date.eq(date)).list();
+        getSavedStoryDao().queryBuilder().where(SavedStoryDao.Properties.Date.eq(date)).orderAsc(SavedStoryDao.Properties.Position).list();
     return MappingConvertUtil.toStory(savedStories);
   }
 

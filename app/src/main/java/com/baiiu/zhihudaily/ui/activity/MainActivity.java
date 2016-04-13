@@ -1,5 +1,6 @@
 package com.baiiu.zhihudaily.ui.activity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import butterknife.Bind;
 import butterknife.OnClick;
+import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.Prompt;
+import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.async.MappingConvertUtil;
@@ -212,10 +215,24 @@ public class MainActivity extends BaseActivity
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
+    switch (item.getItemId()) {
+      case R.id.action_settings:
+        return true;
+      case R.id.action_theme:
+        if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+          setTheme(R.style.NightTheme);
+          PreferenceUtil.instance().put(Constant.UI_MODE, false).commit();
+        } else {
+          setTheme(R.style.DayTheme);
+          PreferenceUtil.instance().put(Constant.UI_MODE, true).commit();
+        }
 
-    if (id == R.id.action_settings) {
-      return true;
+        Constant.bitmap = ScreenUtil.snapShotWithoutStatusBar(this);
+        startActivity(new Intent(this, SwitchModeActivity.class));
+        overridePendingTransition(0, 0);
+
+        recreate();
+        return true;
     }
 
     return super.onOptionsItemSelected(item);
@@ -231,6 +248,7 @@ public class MainActivity extends BaseActivity
   }
 
   @Override protected void onDestroy() {
+    LUtils.clear();
     unregisterReceiver(netWorkReceiver);
     super.onDestroy();
   }
@@ -297,7 +315,6 @@ public class MainActivity extends BaseActivity
           dailyNewsAdapter.setEmpty(true);
           dailyNewsAdapter.notifyDataSetChanged();
         }
-
       } else {
         /*
          * 数据不为空,直接添加到当前

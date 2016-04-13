@@ -28,7 +28,12 @@ public class ReadedListUtil {
   }
 
   public static void setTextColor(TextView textView, boolean isRead) {
-    textView.setTextColor(
-        isRead ? UIUtil.getColor(R.color.color_readed) : UIUtil.getColor(R.color.color_normal));
+    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+      textView.setTextColor(isRead ? UIUtil.getColor(R.color.news_read_Day)
+          : UIUtil.getColor(R.color.news_unread_Day));
+    } else {
+      textView.setTextColor(isRead ? UIUtil.getColor(R.color.news_read_Night)
+          : UIUtil.getColor(R.color.news_unread_Night));
+    }
   }
 }

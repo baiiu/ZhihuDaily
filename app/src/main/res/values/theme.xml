@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Base application theme. -->
+  <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+  </style>
+
+  <style name="AppTheme" parent="Base.AppTheme"/>
+
+  <style name="DayTheme" parent="AppTheme">
+    <!--调色板-->
+    <item name="colorPrimary">@color/colorPrimary_Day</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark_Day</item>
+    <item name="colorAccent">@color/colorAccent_Day</item>
+
+
+    <!--页面背景-->
+    <item name="android:windowBackground">@color/window_bg_Day</item>
+
+
+    <!--其他-->
+    <item name="main_item_background">@color/main_item_background_Day</item>
+    <item name="news_read">@color/news_read_Day</item>
+    <item name="news_unread">@color/news_unread_Day</item>
+
+  </style>
+
+
+  <style name="NightTheme" parent="AppTheme">
+    <!--调色板-->
+    <item name="colorPrimary">@color/colorPrimary_Night</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark_Night</item>
+    <item name="colorAccent">@color/colorAccent_Night</item>
+
+    <!--页面背景-->
+    <item name="android:windowBackground">@color/window_bg_Night</item>
+
+    <!--其他-->
+    <item name="main_item_background">@color/main_item_background_Night</item>
+    <item name="news_read">@color/news_read_Day</item>
+    <item name="news_unread">@color/news_unread_Day</item>
+
+
+  </style>
+
+</resources>

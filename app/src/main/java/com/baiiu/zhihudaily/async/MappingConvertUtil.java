@@ -22,7 +22,7 @@ public class MappingConvertUtil {
     if (CommonUtil.isEmpty(topStories)) {
       return null;
     }
-    
+
     List<SavedTopStory> savedTopStories = new ArrayList<>();
     for (TopStory topStory : topStories) {
       savedTopStories.add(new SavedTopStory(topStory.id, topStory.image, topStory.title));
@@ -50,12 +50,15 @@ public class MappingConvertUtil {
     }
 
     List<SavedStory> savedStories = new ArrayList<>();
+    int i = 0;
     for (Story story : stories) {
       List<String> images = story.images;
 
       savedStories.add(
           new SavedStory(story.id, CommonUtil.isEmpty(images) ? "" : story.images.get(0),
-              story.title, date));
+              story.title, date, i));
+
+      ++i;
     }
 
     return savedStories;

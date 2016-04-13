@@ -10,6 +10,7 @@ public class SavedStory {
     private String image;
     private String title;
     private String date;
+    private Integer position;
 
     public SavedStory() {
     }
@@ -18,11 +19,12 @@ public class SavedStory {
         this.id = id;
     }
 
-    public SavedStory(Long id, String image, String title, String date) {
+    public SavedStory(Long id, String image, String title, String date, Integer position) {
         this.id = id;
         this.image = image;
         this.title = title;
         this.date = date;
+        this.position = position;
     }
 
     public Long getId() {
@@ -55,6 +57,14 @@ public class SavedStory {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
 }

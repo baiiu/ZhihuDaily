@@ -10,13 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.net.http.HttpUtil;
-import com.baiiu.zhihudaily.view.SwipeBackLayout;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.net.http.HttpUtil;
+import com.baiiu.zhihudaily.util.Constant;
+import com.baiiu.zhihudaily.util.PreferenceUtil;
+import com.baiiu.zhihudaily.view.SwipeBackLayout;
 
 /**
  * Created by baiiu on 15/11/16.
@@ -32,6 +32,12 @@ public abstract class BaseActivity extends AppCompatActivity
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+      setTheme(R.style.DayTheme);
+    } else {
+      setTheme(R.style.NightTheme);
+    }
+
     setContentView(provideLayoutId());
 
     ButterKnife.bind(this);

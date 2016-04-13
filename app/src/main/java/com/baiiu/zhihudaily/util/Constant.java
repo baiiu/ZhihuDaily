@@ -1,11 +1,15 @@
 package com.baiiu.zhihudaily.util;
 
+import android.graphics.Bitmap;
+
 /**
  * author: baiiu
  * date: on 16/4/7 19:03
  * description:
  */
-public interface Constant {
+public class Constant {
+  public static final String LATEST_DATE = "Latest_Date";
+  public static final String UI_MODE = "Ui_mode";
 
-  String LATEST_DATE = "Latest_Date";
+  public static Bitmap bitmap;
 }
