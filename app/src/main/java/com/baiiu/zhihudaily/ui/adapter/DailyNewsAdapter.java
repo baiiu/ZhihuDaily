@@ -176,7 +176,6 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
   @Override public void onViewAttachedToWindow(BaseViewHolder holder) {
     super.onViewAttachedToWindow(holder);
-    super.onViewDetachedFromWindow(holder);
     if (holder instanceof TopicViewHolder) {
       ((TopicViewHolder) holder).start();
     }

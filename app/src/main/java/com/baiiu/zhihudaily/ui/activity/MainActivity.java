@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,9 +63,7 @@ public class MainActivity extends BaseActivity
     dailyNewsAdapter = new DailyNewsAdapter(this, this);
     recyclerView.setAdapter(dailyNewsAdapter);
 
-
     loadFromLocal(true);
-
 
     //refreshLayout.getViewTreeObserver()
     //    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -270,9 +267,7 @@ public class MainActivity extends BaseActivity
   }
 
   @OnClick(R.id.fab) public void onClick() {
-    Snackbar.make(refreshLayout, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null)
-        .show();
+    recyclerView.smoothScrollToPosition(0);
   }
 
   //==================== 操作数据 ====================================

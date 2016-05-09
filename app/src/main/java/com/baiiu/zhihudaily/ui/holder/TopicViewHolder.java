@@ -27,7 +27,7 @@ public class TopicViewHolder extends BaseViewHolder<List<TopStory>> {
   private TopicAdapter topicAdapter;
 
   public TopicViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
-    super(context, R.layout.holder_topic, parent, listener);
+    super(context, R.layout.holder_topic, parent, listener, false);
   }
 
   @Override public void bind(List<TopStory> data) {
