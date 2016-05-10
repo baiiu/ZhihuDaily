@@ -1,3 +1,3 @@
 ## ZhihuDaily
 
-this is a project to use MVP to review the code.
+this is a project to learn sth.
