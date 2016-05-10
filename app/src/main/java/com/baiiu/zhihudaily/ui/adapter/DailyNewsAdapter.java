@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import com.baiiu.zhihudaily._interface.IRefreshLoadMore;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.pojo.Daily;
 import com.baiiu.zhihudaily.pojo.Story;
 import com.baiiu.zhihudaily.pojo.TopStory;
-import com.baiiu.zhihudaily.ui.activity.MainActivity;
 import com.baiiu.zhihudaily.ui.holder.DateViewHolder;
 import com.baiiu.zhihudaily.ui.holder.EmptyViewHolder;
 import com.baiiu.zhihudaily.ui.holder.ErrorViewHolder;
@@ -50,7 +50,8 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   private boolean isLoading = true;
   public static final int TYPE_LOADING = -3;
 
-  private final View.OnClickListener mOnClickListener;
+  private View.OnClickListener mOnClickListener;
+  private IRefreshLoadMore mRefreshLoadMore;
 
   private Context mContext;
   private FooterViewHolder footerViewHolder;
@@ -59,9 +60,11 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   private List<Story> stories;
   private List<TopStory> topStories;
 
-  public DailyNewsAdapter(Context context, View.OnClickListener onClickListener) {
+  public DailyNewsAdapter(Context context, View.OnClickListener onClickListener,
+      IRefreshLoadMore refreshLoadMore) {
     this.mContext = context;
     this.mOnClickListener = onClickListener;
+    this.mRefreshLoadMore = refreshLoadMore;
   }
 
   public void setError(boolean error) {
@@ -171,19 +174,21 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
   }
 
   private void dispatchLoadMore() {
-    ((MainActivity) mContext).loadMore();
+    if (mRefreshLoadMore != null) {
+      mRefreshLoadMore.loadMore();
+    }
   }
 
   @Override public void onViewAttachedToWindow(BaseViewHolder holder) {
     super.onViewAttachedToWindow(holder);
-    if (holder instanceof TopicViewHolder) {
+    if (holder != null && holder instanceof TopicViewHolder) {
       ((TopicViewHolder) holder).start();
     }
   }
 
   @Override public void onViewDetachedFromWindow(BaseViewHolder holder) {
     super.onViewDetachedFromWindow(holder);
-    if (holder instanceof TopicViewHolder) {
+    if (holder != null && holder instanceof TopicViewHolder) {
       ((TopicViewHolder) holder).stop();
     }
   }
