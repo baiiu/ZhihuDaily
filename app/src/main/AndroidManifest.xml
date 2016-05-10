@@ -26,7 +26,8 @@
 
     <activity
         android:name=".ui.activity.NewsDetailActivity"
-        android:theme="@style/AppTheme.Transparent"/>
+        android:theme="@style/DayTransparentTheme"/>
+
     <activity android:name=".ui.activity.SwitchModeActivity"/>
 
   </application>

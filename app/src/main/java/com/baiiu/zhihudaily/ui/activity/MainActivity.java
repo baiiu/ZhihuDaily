@@ -50,6 +50,12 @@ public class MainActivity extends BaseActivity
   private String mCurrentDate;
 
   @Override public int provideLayoutId() {
+    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+      setTheme(R.style.DayTheme);
+    } else {
+      setTheme(R.style.NightTheme);
+    }
+
     return R.layout.activity_main;
   }
 

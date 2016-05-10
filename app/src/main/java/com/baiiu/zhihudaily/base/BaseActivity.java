@@ -14,8 +14,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.net.http.HttpUtil;
-import com.baiiu.zhihudaily.util.Constant;
-import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.view.SwipeBackLayout;
 
 /**
@@ -32,11 +30,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-      setTheme(R.style.DayTheme);
-    } else {
-      setTheme(R.style.NightTheme);
-    }
 
     setContentView(provideLayoutId());
 

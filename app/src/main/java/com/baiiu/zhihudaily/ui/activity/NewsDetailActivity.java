@@ -18,7 +18,9 @@ import com.baiiu.zhihudaily.net.DailyClient;
 import com.baiiu.zhihudaily.net.http.RequestCallBack;
 import com.baiiu.zhihudaily.net.util.HttpNetUtil;
 import com.baiiu.zhihudaily.pojo.DailyDetail;
+import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.HTMLUtil;
+import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
 import com.bumptech.glide.Glide;
 
@@ -39,6 +41,13 @@ public class NewsDetailActivity extends BaseActivity {
 
   @Override public int provideLayoutId() {
     setCanSwipeBack(true);
+
+    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+      setTheme(R.style.DayTransparentTheme);
+    } else {
+      setTheme(R.style.NightTransparentTheme);
+    }
+
     return R.layout.activity_news_detail;
   }
 

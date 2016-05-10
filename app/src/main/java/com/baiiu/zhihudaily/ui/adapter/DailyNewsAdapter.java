@@ -89,7 +89,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
       this.stories = hereStories;
       this.topStories = daily.top_stories;
 
-      //// TODO: 16/4/12 可以删掉,去除顶部轮播图
+      //// TODO: 16/4/12 可以删掉,添加顶部轮播图
       this.topStories = null;
 
       notifyDataSetChanged();
