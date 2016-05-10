@@ -36,5 +36,4 @@ public class TopicAdapter extends BasePagerAdapter<TopStory> {
     Glide.with(mContext).load(topStory.image).centerCrop().into(imageView);
     return imageView;
   }
-
 }
