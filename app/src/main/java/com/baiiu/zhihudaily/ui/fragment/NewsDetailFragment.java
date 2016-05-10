@@ -2,13 +2,10 @@ package com.baiiu.zhihudaily.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.async.TinyTaskManager;
@@ -21,7 +18,6 @@ import com.baiiu.zhihudaily.pojo.DailyDetail;
 import com.baiiu.zhihudaily.ui.activity.NewsDetailActivity;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
-import com.bumptech.glide.Glide;
 
 /**
  * author: baiiu
@@ -31,12 +27,8 @@ import com.bumptech.glide.Glide;
 public class NewsDetailFragment extends BaseFragment {
   public static final String NEWS_ID = "id";
 
-  @Bind(R.id.imageView) ImageView imageView;
-  @Bind(R.id.tv_title) TextView tv_title;
-  @Bind(R.id.tv_source) TextView tv_source;
   @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
   @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
-  @Bind(R.id.toolbar) Toolbar toolbar;
 
   private long id;
 
@@ -65,9 +57,6 @@ public class NewsDetailFragment extends BaseFragment {
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-
-    ((NewsDetailActivity) mContext).setSupportActionBar(toolbar);
-    ((NewsDetailActivity) mContext).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     webView = new WebView(mContext.getApplicationContext());
     webViewContainer.addView(webView, -1, -1);
@@ -134,9 +123,8 @@ public class NewsDetailFragment extends BaseFragment {
       return;
     }
 
-    tv_title.setText(dailyDetail.title);
-    tv_source.setText(dailyDetail.image_source);
-    Glide.with(mContext).load(dailyDetail.image).centerCrop().into(imageView);
+    ((NewsDetailActivity) mContext).setTopContent(dailyDetail.title, dailyDetail.image_source,
+        dailyDetail.image);
 
     webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true).toString(),
         "text/html", "utf-8", null);

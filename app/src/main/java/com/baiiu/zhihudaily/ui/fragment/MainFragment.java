@@ -194,7 +194,7 @@ public class MainFragment extends BaseFragment implements IRefreshLoadMore, View
       case R.id.item_news:
         NewsViewHolder holder = (NewsViewHolder) v.getTag();
         id = holder.mStroy.id;
-        startActivity(NewsDetailActivity.instance(mContext, holder.mStroy.id));
+        startActivity(NewsDetailActivity.instance(mContext, holder.mStroy));
 
         holder.mStroy.isRead = true;
         dailyNewsAdapter.notifyItemChanged(holder.getAdapterPosition());
