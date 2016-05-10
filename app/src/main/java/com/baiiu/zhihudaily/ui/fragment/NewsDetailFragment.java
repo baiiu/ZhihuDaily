@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -35,6 +36,8 @@ public class NewsDetailFragment extends BaseFragment {
   @Bind(R.id.tv_source) TextView tv_source;
   @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
   @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
+  @Bind(R.id.toolbar) Toolbar toolbar;
+
   private long id;
 
   public static NewsDetailFragment instance(long newsId) {
@@ -62,6 +65,9 @@ public class NewsDetailFragment extends BaseFragment {
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
+
+    ((NewsDetailActivity) mContext).setSupportActionBar(toolbar);
+    ((NewsDetailActivity) mContext).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     webView = new WebView(mContext.getApplicationContext());
     webViewContainer.addView(webView, -1, -1);
