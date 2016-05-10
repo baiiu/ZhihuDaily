@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsList;
+package com.baiiu.zhihudaily.newsList.view;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 

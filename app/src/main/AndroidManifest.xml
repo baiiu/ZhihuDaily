@@ -16,7 +16,7 @@
       android:supportsRtl="true"
       android:theme="@style/DayTheme">
     <activity
-        android:name=".newsList.view.MainActivity">
+        android:name=".newsList.view.NewsListActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

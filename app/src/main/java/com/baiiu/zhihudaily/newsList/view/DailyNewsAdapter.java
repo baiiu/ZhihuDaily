@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import com.baiiu.zhihudaily.newsList.IRefreshLoadMore;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;

@@ -12,38 +12,44 @@ import butterknife.Bind;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsList.IRefreshLoadMore;
 import com.baiiu.zhihudaily.data.async.MappingConvertUtil;
 import com.baiiu.zhihudaily.data.async.TinyTaskManager;
-import com.baiiu.zhihudaily.view.base.BaseFragment;
 import com.baiiu.zhihudaily.data.db.DBManager;
 import com.baiiu.zhihudaily.data.net.DailyClient;
 import com.baiiu.zhihudaily.data.net.http.RequestCallBack;
 import com.baiiu.zhihudaily.data.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
+import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.TopStory;
-import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.DateUtil;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
+import com.baiiu.zhihudaily.view.base.BaseFragment;
 import java.util.List;
 import java.util.Map;
 
-public class MainFragment extends BaseFragment implements IRefreshLoadMore, View.OnClickListener {
+public class NewsListFragment extends BaseFragment
+    implements IRefreshLoadMore, View.OnClickListener, NewsListContract.View {
 
-  public static MainFragment instance() {
-    return new MainFragment();
+  public static NewsListFragment instance() {
+    return new NewsListFragment();
   }
 
+  private NewsListContract.Presenter mNewsListPresenter;
   @Bind(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
   @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
   private DailyNewsAdapter dailyNewsAdapter;
   private String mCurrentDate;
+
+  @Override public void setPresenter(NewsListContract.Presenter newsListPresenter) {
+    this.mNewsListPresenter = newsListPresenter;
+  }
 
   @Override public int provideLayoutId() {
     return R.layout.fragment_main;
@@ -56,7 +62,7 @@ public class MainFragment extends BaseFragment implements IRefreshLoadMore, View
     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-    dailyNewsAdapter = new DailyNewsAdapter(mContext, this,this);
+    dailyNewsAdapter = new DailyNewsAdapter(mContext, this, this);
     recyclerView.setAdapter(dailyNewsAdapter);
 
     getActivity().findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -122,7 +128,7 @@ public class MainFragment extends BaseFragment implements IRefreshLoadMore, View
 
         daily.stories = storyList;
 
-        ((MainActivity) mContext).runOnUiThread(new Runnable() {
+        ((NewsListActivity) mContext).runOnUiThread(new Runnable() {
           @Override public void run() {
             recyclerView.postDelayed(new Runnable() {
               @Override public void run() {

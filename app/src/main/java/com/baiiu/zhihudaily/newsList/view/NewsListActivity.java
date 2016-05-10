@@ -9,13 +9,19 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.view.base.BaseActivity;
 import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Activity将变成全局的Controller
+ * 1. 负责创建View和Presenter
+ * 2. 并负责绑定View和Presenter
+ */
+public class NewsListActivity extends BaseActivity {
 
   @Override public int provideLayoutId() {
     if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
@@ -30,13 +36,28 @@ public class MainActivity extends BaseActivity {
   @Override protected void initOnCreate(Bundle savedInstanceState) {
     initBroadCast();
 
+    //1. 创建Fragment
+    NewsListFragment newsListFragment = NewsListFragment.instance();
     getSupportFragmentManager().beginTransaction()
-        .replace(R.id.container, MainFragment.instance(), "MainFragment")
+        .replace(R.id.container, newsListFragment, "MainFragment")
         .commit();
+
+    /*
+    2.创建Presenter,并在Presenter构造函数中绑定View.这样View中持有Presenter,Presenter中持有View
+    */
+
+    /*
+    这个绑定方式也可以在View(Fragment)中绑定,放在Activity绑定是突出了Activity的Controller作用.
+    之后使用依赖注入可能不用这么费劲.
+     */
+    NewsListPresenter newsListPresenter = new NewsListPresenter(newsListFragment);
   }
 
-
   //=====================Menu===================================
+  /*
+  个人认为,Menu里面涉及的操作全部是View相关,所拥有的逻辑也仅仅是与UI相关,但不与业务逻辑UI相关,所以放在Activity中实现.
+  这样的好处是:在业务变化时需要替换Fragment时,不需要修改这段代码.
+   */
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_main, menu);
