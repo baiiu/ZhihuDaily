@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context="com.baiiu.zhihudaily.ui.activity.NewsDetailActivity"
+    tools:context=".newsDetail.view.NewsDetailActivity"
     >
 
   <android.support.design.widget.AppBarLayout

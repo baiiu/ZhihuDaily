@@ -6,14 +6,14 @@
     android:orientation="vertical"
     >
 
-  <com.baiiu.zhihudaily.widget.loopvp.LoopViewPager
+  <com.baiiu.zhihudaily.view.widget.loopvp.LoopViewPager
       android:id="@+id/loopViewPager"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:scale="0.6"
       />
 
-  <com.baiiu.zhihudaily.widget.indicator.SimpleCircleIndicator
+  <com.baiiu.zhihudaily.view.widget.indicator.SimpleCircleIndicator
       android:id="@id/indicator"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

@@ -16,7 +16,7 @@
       android:supportsRtl="true"
       android:theme="@style/DayTheme">
     <activity
-        android:name=".ui.activity.MainActivity">
+        android:name=".newsList.view.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -25,10 +25,10 @@
     </activity>
 
     <activity
-        android:name=".ui.activity.NewsDetailActivity"
+        android:name=".newsDetail.view.NewsDetailActivity"
         android:theme="@style/DayTransparentTheme"/>
 
-    <activity android:name=".ui.activity.SwitchModeActivity"/>
+    <activity android:name=".util.SwitchModeActivity"/>
 
   </application>
 
