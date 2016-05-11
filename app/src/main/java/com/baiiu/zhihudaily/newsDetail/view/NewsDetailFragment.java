@@ -8,13 +8,13 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.async.TinyTaskManager;
+import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
-import com.baiiu.zhihudaily.data.db.DBManager;
-import com.baiiu.zhihudaily.data.net.DailyClient;
-import com.baiiu.zhihudaily.data.net.http.RequestCallBack;
-import com.baiiu.zhihudaily.data.net.util.HttpNetUtil;
-import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
+import com.baiiu.zhihudaily.util.db.DBManager;
+import com.baiiu.zhihudaily.util.net.DailyClient;
+import com.baiiu.zhihudaily.util.net.http.RequestCallBack;
+import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.data.newsDetailData.DailyDetail;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
 
@@ -93,7 +93,7 @@ public class NewsDetailFragment extends BaseFragment {
   }
 
   private void loadData(long id) {
-    DailyClient.getNewsDetail(volleyTag, id, new RequestCallBack<DailyDetail>() {
+    DailyClient.getNewsDetail(id, new RequestCallBack<DailyDetail>() {
       @Override public void onSuccess(final DailyDetail response) {
 
         setData(response);

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
-import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.data.newsListData.Story;
 
 import butterknife.Bind;
 

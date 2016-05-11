@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.net.http.HttpUtil;
+import com.baiiu.zhihudaily.util.net.http.HttpUtil;
 import com.baiiu.zhihudaily.view.SwipeBackLayout;
 
 /**

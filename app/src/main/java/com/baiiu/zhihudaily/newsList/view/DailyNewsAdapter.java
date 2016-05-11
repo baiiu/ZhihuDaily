@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
-import com.baiiu.zhihudaily.newsList.model.TopStory;
+import com.baiiu.zhihudaily.data.newsListData.Daily;
+import com.baiiu.zhihudaily.data.newsListData.Story;
+import com.baiiu.zhihudaily.data.newsListData.TopStory;
 import com.baiiu.zhihudaily.newsList.view.holder.DateViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.EmptyViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.ErrorViewHolder;
@@ -80,12 +80,16 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     this.isLoading = loading;
   }
 
+  // latest true:下拉刷新,false上拉加载
   public void setDaily(Daily daily, boolean latest) {
     if (daily == null) {
       return;
     }
 
     List<Story> hereStories = daily.stories;
+    if (CommonUtil.isEmpty(hereStories)) {
+      return;
+    }
 
     if (latest) {
       this.stories = hereStories;
@@ -111,8 +115,8 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
   }
 
-  public List<Story> getStories() {
-    return stories;
+  public boolean isDataEmpty() {
+    return CommonUtil.isEmpty(stories);
   }
 
   @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -237,10 +241,6 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
       footerViewHolder = new FooterViewHolder(mContext);
     }
     return footerViewHolder;
-  }
-
-  public void bindFooter(List<Story> list) {
-    bindFooter(list, false);
   }
 
   public void bindFooter(List<Story> list, boolean fromLocal) {

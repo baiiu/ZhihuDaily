@@ -7,9 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import butterknife.ButterKnife;
-import com.baiiu.zhihudaily.data.net.http.HttpUtil;
+import com.baiiu.zhihudaily.util.net.http.HttpUtil;
 
 /**
  * Created by baiiu on 2015/11/16.
@@ -28,8 +27,6 @@ public abstract class BaseFragment extends Fragment {
     super.onAttach(context);
     this.mContext = context;
   }
-
-  @Nullable public TextView textView;
 
   @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
