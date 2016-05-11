@@ -34,18 +34,6 @@ public class NewsListFragment extends BaseFragment
   @Bind(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
   @Bind(R.id.recyclerView) RecyclerView recyclerView;
 
-  @Override public void setPresenter(NewsListContract.Presenter newsListPresenter) {
-    this.mNewsListPresenter = newsListPresenter;
-  }
-
-  @Override public void showSuccessInfo(String info) {
-    TSnackbar.make(refreshLayout, info, Prompt.SUCCESS).show();
-  }
-
-  @Override public void showErrorInfo(String info) {
-    TSnackbar.make(refreshLayout, info, Prompt.ERROR).show();
-  }
-
   @Override public int provideLayoutId() {
     return R.layout.fragment_main;
   }
@@ -90,6 +78,18 @@ public class NewsListFragment extends BaseFragment
     if (id != 0) {
       ReadedListUtil.saveToReadedList(NewsListRepository.READ_LIST, String.valueOf(id));
     }
+  }
+
+  @Override public void setPresenter(NewsListContract.Presenter newsListPresenter) {
+    this.mNewsListPresenter = newsListPresenter;
+  }
+
+  @Override public void showSuccessInfo(String info) {
+    TSnackbar.make(refreshLayout, info, Prompt.SUCCESS).show();
+  }
+
+  @Override public void showErrorInfo(String info) {
+    TSnackbar.make(refreshLayout, info, Prompt.ERROR).show();
   }
 
   @Override public void showLoadingPage() {

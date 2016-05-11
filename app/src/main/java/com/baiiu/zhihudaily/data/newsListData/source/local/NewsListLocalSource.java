@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class NewsListLocalSource implements INewsListDataSource {
 
-  @Override public void loadNewsList(final String date, final boolean loadMore,
+  @Override public void loadNewsList(final String date, final boolean refresh,
       final LoadNewsListCallback callback) {
     TinyTaskManager.instance().postAtFrontOfQueue(new Runnable() {
       @Override public void run() {
 
         String cursorDate = date;
-        if (loadMore) {
+        if (!refresh) {
           cursorDate = DateUtil.getYesterDayDate(cursorDate);
         }
 

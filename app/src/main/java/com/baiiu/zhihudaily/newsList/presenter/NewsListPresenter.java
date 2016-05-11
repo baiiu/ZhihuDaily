@@ -33,21 +33,21 @@ public class NewsListPresenter implements NewsListContract.Presenter {
   @Override public void start() {
     mNewsListView.showLoadingPage();
     //第一次,从本地加载
-    loadNewsList(false, false);
+    loadNewsList(false, true);
   }
 
-  @Override public void loadNewsList(final boolean fromRemote, final boolean loadMore) {
+  @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
 
     //设置是否从远端拉取数据
     newsListRepository.refreshNewsList(fromRemote);
 
-    newsListRepository.loadNewsList("", loadMore, new INewsListDataSource.LoadNewsListCallback() {
+    newsListRepository.loadNewsList("", refresh, new INewsListDataSource.LoadNewsListCallback() {
       @Override public void onSuccess(Daily daily) {
         if (daily == null) {
           return;
         }
 
-        if (!loadMore) {
+        if (refresh) {
           mNewsListView.showLoadingIndicator(false);
         }
 
@@ -60,17 +60,13 @@ public class NewsListPresenter implements NewsListContract.Presenter {
               mNewsListView.showErrorInfo("拉取数据为空");
             }
           } else {
-            mNewsListView.showNews(daily, !loadMore);
+            mNewsListView.showNews(daily, refresh);
           }
 
           mNewsListView.bindFooter(daily.stories, false);
         } else {
           //本地的数据
-          if (loadMore) {
-            mNewsListView.showNews(daily, false);
-            mNewsListView.bindFooter(daily.stories, true);
-          } else {
-
+          if (refresh) {
             if (CommonUtil.isEmpty(daily.stories)) {
               //本地都没有缓存
               mNewsListView.showLoadingIndicator(false);
@@ -87,6 +83,9 @@ public class NewsListPresenter implements NewsListContract.Presenter {
                 }
               }, 1000);
             }
+          } else {
+            mNewsListView.showNews(daily, false);
+            mNewsListView.bindFooter(daily.stories, true);
           }
         }
       }
@@ -107,16 +106,16 @@ public class NewsListPresenter implements NewsListContract.Presenter {
 
   @Override public void loadMore() {
     if (HttpNetUtil.isConnected()) {
-      loadNewsList(true, true);
+      loadNewsList(true, false);
     } else {
-      loadNewsList(false, true);
+      loadNewsList(false, false);
     }
   }
 
   @Override public void onRefresh() {
     if (HttpNetUtil.isConnected()) {
       //刷新数据时从网络拉取
-      loadNewsList(true, false);
+      loadNewsList(true, true);
     } else {
       mNewsListView.showLoadingIndicator(false);
       mNewsListView.showErrorInfo("网络未连接");

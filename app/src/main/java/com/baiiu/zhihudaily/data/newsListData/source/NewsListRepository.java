@@ -42,8 +42,8 @@ public class NewsListRepository implements INewsListDataSource {
     return new NewsListRepository();
   }
 
-  @Override public void loadNewsList(String date, boolean loadMore, LoadNewsListCallback callback) {
-    if (!loadMore) {
+  @Override public void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback) {
+    if (refresh) {
       //下拉刷新时,reset
       mCurrentDate = null;
     }
@@ -52,16 +52,16 @@ public class NewsListRepository implements INewsListDataSource {
       mCurrentDate = PreferenceUtil.instance().get(Constant.LATEST_DATE, "");
     }
 
-    loadList(mCurrentDate, loadMore, callback);
+    loadList(mCurrentDate, refresh, callback);
   }
 
-  private void loadList(String date, final boolean loadMore, final LoadNewsListCallback callback) {
+  private void loadList(String date, final boolean refresh, final LoadNewsListCallback callback) {
 
     if (mFromRemote) {
 
-      mNewsListRemoteSource.loadNewsList(date, loadMore, new LoadNewsListCallback() {
+      mNewsListRemoteSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
         @Override public void onSuccess(Daily daily) {
-          if (!loadMore) {
+          if (refresh) {
             PreferenceUtil.instance().put(Constant.LATEST_DATE, daily.date).commit();
           }
 
@@ -76,7 +76,7 @@ public class NewsListRepository implements INewsListDataSource {
       });
     } else {
 
-      mNewsListLocalSource.loadNewsList(date, loadMore, new LoadNewsListCallback() {
+      mNewsListLocalSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
         @Override public void onSuccess(Daily daily) {
           mCurrentDate = daily.date;
           markRead(daily.stories);

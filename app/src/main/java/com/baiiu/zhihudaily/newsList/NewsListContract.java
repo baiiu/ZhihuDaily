@@ -45,6 +45,6 @@ public interface NewsListContract {
 
   interface Presenter extends BasePresenter, IRefreshLoadMore {
     //update true时从网络加载数据
-    void loadNewsList(boolean fromRemote, boolean loadMore);
+    void loadNewsList(boolean fromRemote, boolean refresh);
   }
 }

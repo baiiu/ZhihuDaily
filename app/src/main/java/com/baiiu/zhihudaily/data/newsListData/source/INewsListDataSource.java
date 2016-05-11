@@ -9,7 +9,7 @@ import com.baiiu.zhihudaily.data.newsListData.Daily;
  */
 public interface INewsListDataSource {
 
-  void loadNewsList(String date, boolean loadMore, LoadNewsListCallback callback);
+  void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback);
 
   interface LoadNewsListCallback {
     void onSuccess(Daily daily);
