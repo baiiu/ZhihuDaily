@@ -20,11 +20,13 @@ import java.util.List;
 public class NewsListRemoteSource implements INewsListDataSource {
 
   @Override
-  public void loadNewsList(String date, boolean loadMore, final LoadNewsListCallback callback) {
-    if (loadMore) {
-      DailyClient.getBeforeNews(date, new RequestCallBack<Daily>() {
+  public void loadNewsList(String date, boolean refresh, final LoadNewsListCallback callback) {
+    if (refresh) {
+      DailyClient.getLatestNews(new RequestCallBack<Daily>() {
+
         @Override public void onSuccess(Daily response) {
           callback.onSuccess(response);
+
           if (response != null) {
             saveStories(response.stories, response.date);
             saveTopStories(response.top_stories);
@@ -36,11 +38,10 @@ public class NewsListRemoteSource implements INewsListDataSource {
         }
       });
     } else {
-      DailyClient.getLatestNews(new RequestCallBack<Daily>() {
 
+      DailyClient.getBeforeNews(date, new RequestCallBack<Daily>() {
         @Override public void onSuccess(Daily response) {
           callback.onSuccess(response);
-
           if (response != null) {
             saveStories(response.stories, response.date);
             saveTopStories(response.top_stories);

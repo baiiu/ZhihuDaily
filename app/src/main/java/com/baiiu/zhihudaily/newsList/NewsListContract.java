@@ -2,10 +2,9 @@ package com.baiiu.zhihudaily.newsList;
 
 import com.baiiu.zhihudaily.BasePresenter;
 import com.baiiu.zhihudaily.BaseView;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.data.newsListData.Daily;
+import com.baiiu.zhihudaily.data.newsListData.Story;
 import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
-import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import java.util.List;
 
 /**
@@ -41,15 +40,11 @@ public interface NewsListContract {
     void bindFooter(List<Story> list, boolean fromLocal);
 
     //开启新页面
-    void showNewsDetail(Story story);
-
-    void showNewsReaded(int position, boolean isRead);
+    void showNewsDetail(Daily daily);
   }
 
   interface Presenter extends BasePresenter, IRefreshLoadMore {
     //update true时从网络加载数据
-    void loadNewsList(boolean fromRemote, boolean loadMore);
-
-    void openNewsDetail(NewsViewHolder holder);
+    void loadNewsList(boolean fromRemote, boolean refresh);
   }
 }
