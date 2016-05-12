@@ -3,71 +3,79 @@
     android:id="@id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    >
 
-    <!--加载更多-->
-    <LinearLayout
-        android:id="@id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+  <!--加载更多-->
+  <LinearLayout
+      android:id="@id/loading"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:gravity="center"
+      android:visibility="invisible"
+      >
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:gravity="center"
-        android:visibility="visible">
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="加载更多"
+        android:textColor="#ff717171"
+        android:textSize="14sp"
+        />
+  </LinearLayout>
 
-        <ProgressBar
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+  <!--网络错误-->
+  <LinearLayout
+      android:id="@id/error"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:gravity="center"
+      android:visibility="invisible"
+      >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="加载更多"
-            android:textColor="#ff717171"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!--网络错误-->
-    <LinearLayout
-        android:id="@id/error"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:gravity="center"
-        android:visibility="invisible">
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="加载错误"
+        android:textColor="#ff717171"
+        android:textSize="14sp"
+        />
+  </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="加载错误"
-            android:textColor="#ff717171"
-            android:textSize="14sp" />
-    </LinearLayout>
+  <LinearLayout
+      android:id="@id/nomore"
+      android:layout_width="match_parent"
+      android:layout_height="45dp"
+      android:gravity="center"
+      android:visibility="invisible"
+      >
 
-    <LinearLayout
-        android:id="@id/nomore"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+    <TextView
+        android:id="@+id/tv_no_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:gravity="center"
-        android:visibility="invisible">
-
-        <TextView
-            android:id="@+id/tv_no_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="没有更多"
-            android:textColor="#ff717171"
-            android:textSize="14sp" />
-    </LinearLayout>
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="没有更多"
+        android:textColor="#ff717171"
+        android:textSize="14sp"
+        />
+  </LinearLayout>
 
 </FrameLayout>

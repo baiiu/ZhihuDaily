@@ -1,6 +1,8 @@
 package com.baiiu.zhihudaily.util;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.LayoutRes;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,6 +20,54 @@ public class UIUtil {
    **/
   public static Context getContext() {
     return DailyApplication.getContext();
+  }
+
+  public static Handler mMainHandler;
+
+  /**
+   * 获取到主线程Handler对象,一系列handler对象用于线程切换
+   **/
+  public static Handler getMainThreadHandler() {
+    if (mMainHandler == null) {
+      mMainHandler = new Handler(Looper.getMainLooper());
+    }
+    return mMainHandler;
+  }
+
+  /**
+   * 在主线程执行runnable
+   */
+  public static boolean post(Runnable runnable) {
+    return getMainThreadHandler().post(runnable);
+  }
+
+  /**
+   * 延时在主线程执行runnable
+   */
+  public static boolean postDelayed(Runnable runnable, long delayMillis) {
+    return getMainThreadHandler().postDelayed(runnable, delayMillis);
+  }
+
+  /**
+   * 从主线程looper里面移除runnable
+   */
+  public static void removeCallbacks(Runnable runnable) {
+    getMainThreadHandler().removeCallbacks(runnable);
+  }
+
+  public static boolean isInMainThread() {
+    return Looper.myLooper() == Looper.getMainLooper();
+  }
+
+  /**
+   * 在主线程执行
+   **/
+  public static void runInMainThread(Runnable runnable) {
+    if (isInMainThread()) {
+      runnable.run();
+    } else {
+      post(runnable);
+    }
   }
 
   /**
