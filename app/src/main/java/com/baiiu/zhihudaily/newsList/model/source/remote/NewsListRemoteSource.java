@@ -1,9 +1,9 @@
-package com.baiiu.zhihudaily.data.newsListData.source.remote;
+package com.baiiu.zhihudaily.newsList.model.source.remote;
 
-import com.baiiu.zhihudaily.data.newsListData.Daily;
-import com.baiiu.zhihudaily.data.newsListData.Story;
-import com.baiiu.zhihudaily.data.newsListData.TopStory;
-import com.baiiu.zhihudaily.data.newsListData.source.INewsListDataSource;
+import com.baiiu.zhihudaily.newsList.model.Daily;
+import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.newsList.model.TopStory;
+import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.async.MappingConvertUtil;
 import com.baiiu.zhihudaily.util.async.TinyTaskManager;

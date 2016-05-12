@@ -1,10 +1,12 @@
 package com.baiiu.zhihudaily.newsList.presenter;
 
-import com.baiiu.zhihudaily.data.newsListData.Daily;
-import com.baiiu.zhihudaily.data.newsListData.source.INewsListDataSource;
-import com.baiiu.zhihudaily.data.newsListData.source.NewsListRepository;
+import com.baiiu.zhihudaily.newsList.model.Daily;
+import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
+import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
+import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
+import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
 
@@ -24,7 +26,7 @@ public class NewsListPresenter implements NewsListContract.Presenter {
     this.mNewsListView = newsListView;
 
     //View绑定Presenter,也可以写在Activity中
-    //newsListView.setPresenter(this);
+    newsListView.setPresenter(this);
 
     //持有 NewsList数据操作类,硬编码注入
     newsListRepository = NewsListRepository.instance();
@@ -103,6 +105,18 @@ public class NewsListPresenter implements NewsListContract.Presenter {
         }
       }
     });
+  }
+
+  @Override public void openNewsDetail(NewsViewHolder holder) {
+    mNewsListView.showNewsDetail(holder.mStroy);
+
+    holder.mStroy.isRead = true;
+    mNewsListView.showNewsReaded(holder.getAdapterPosition(), true);
+    //已读
+    long id = holder.mStroy.id;
+    if (id != 0) {
+      ReadedListUtil.saveToReadedList(NewsListRepository.READ_LIST, String.valueOf(id));
+    }
   }
 
   @Override public void loadMore() {

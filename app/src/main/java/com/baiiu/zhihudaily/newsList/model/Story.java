@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.data.newsListData;
+package com.baiiu.zhihudaily.newsList.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

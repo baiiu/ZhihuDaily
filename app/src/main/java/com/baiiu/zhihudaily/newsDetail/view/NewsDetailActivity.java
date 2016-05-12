@@ -8,8 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.view.base.BaseActivity;
-import com.baiiu.zhihudaily.data.newsListData.Story;
+import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
@@ -57,9 +58,19 @@ public class NewsDetailActivity extends BaseActivity {
           CommonUtil.isEmpty(story.images) ? null : story.images.get(0));
     }
 
-    getSupportFragmentManager().beginTransaction()
-        .replace(R.id.container, NewsDetailFragment.instance(id), "newsDetailFragment")
-        .commit();
+    NewsDetailFragment newsDetailFragment =
+        (NewsDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+
+    if (newsDetailFragment == null) {
+      newsDetailFragment = NewsDetailFragment.instance(id);
+
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, newsDetailFragment, "newsDetailFragment")
+          .commit();
+    }
+
+    //进行绑定
+    new NewsDetailPresenter(newsDetailFragment);
   }
 
   public void setTopContent(String title, String image_source, String image) {

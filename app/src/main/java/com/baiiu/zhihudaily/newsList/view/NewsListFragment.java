@@ -11,13 +11,11 @@ import butterknife.Bind;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.newsListData.Daily;
-import com.baiiu.zhihudaily.data.newsListData.Story;
-import com.baiiu.zhihudaily.data.newsListData.source.NewsListRepository;
+import com.baiiu.zhihudaily.newsList.model.Daily;
+import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
 import java.util.List;
 
@@ -75,20 +73,12 @@ public class NewsListFragment extends BaseFragment
     switch (v.getId()) {
       case R.id.item_news:
         NewsViewHolder holder = (NewsViewHolder) v.getTag();
-        id = holder.mStroy.id;
-        startActivity(NewsDetailActivity.instance(mContext, holder.mStroy));
-
-        holder.mStroy.isRead = true;
-        dailyNewsAdapter.notifyItemChanged(holder.getAdapterPosition());
+        mNewsListPresenter.openNewsDetail(holder);
         break;
       case R.id.item_topic_news:
         id = (long) v.getTag(R.id.item_topic_news);
         startActivity(NewsDetailActivity.instance(mContext, id));
         break;
-    }
-
-    if (id != 0) {
-      ReadedListUtil.saveToReadedList(NewsListRepository.READ_LIST, String.valueOf(id));
     }
   }
 
@@ -125,7 +115,11 @@ public class NewsListFragment extends BaseFragment
     dailyNewsAdapter.bindFooter(list, fromLocal);
   }
 
-  @Override public void showNewsDetail(Daily daily) {
+  @Override public void showNewsDetail(Story story) {
+    startActivity(NewsDetailActivity.instance(mContext, story));
+  }
 
+  @Override public void showNewsReaded(int position, boolean isRead) {
+    dailyNewsAdapter.notifyItemChanged(position, isRead);
   }
 }

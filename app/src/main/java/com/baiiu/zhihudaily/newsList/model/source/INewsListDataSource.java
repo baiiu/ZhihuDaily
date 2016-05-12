@@ -1,6 +1,6 @@
-package com.baiiu.zhihudaily.data.newsListData.source;
+package com.baiiu.zhihudaily.newsList.model.source;
 
-import com.baiiu.zhihudaily.data.newsListData.Daily;
+import com.baiiu.zhihudaily.newsList.model.Daily;
 
 /**
  * author: baiiu

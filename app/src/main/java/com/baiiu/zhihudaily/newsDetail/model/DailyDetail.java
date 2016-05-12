@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.data.newsDetailData;
+package com.baiiu.zhihudaily.newsDetail.model;
 
 import java.util.List;
 

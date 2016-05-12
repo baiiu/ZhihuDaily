@@ -1,8 +1,8 @@
-package com.baiiu.zhihudaily.data.newsListData.source.local;
+package com.baiiu.zhihudaily.newsList.model.source.local;
 
-import com.baiiu.zhihudaily.data.newsListData.Daily;
-import com.baiiu.zhihudaily.data.newsListData.Story;
-import com.baiiu.zhihudaily.data.newsListData.source.INewsListDataSource;
+import com.baiiu.zhihudaily.newsList.model.Daily;
+import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.util.DateUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.async.TinyTaskManager;

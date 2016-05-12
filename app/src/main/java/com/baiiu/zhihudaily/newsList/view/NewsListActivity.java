@@ -10,11 +10,11 @@ import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
-import com.baiiu.zhihudaily.view.base.BaseActivity;
-import com.baiiu.zhihudaily.util.net.http.NetWorkReceiver;
-import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
+import com.baiiu.zhihudaily.util.SwitchModeActivity;
+import com.baiiu.zhihudaily.util.net.http.NetWorkReceiver;
+import com.baiiu.zhihudaily.view.base.BaseActivity;
 
 /**
  * Activity将变成全局的Controller
@@ -36,11 +36,18 @@ public class NewsListActivity extends BaseActivity {
   @Override protected void initOnCreate(Bundle savedInstanceState) {
     initBroadCast();
 
-    //1. 创建Fragment
-    NewsListFragment newsListFragment = NewsListFragment.instance();
-    getSupportFragmentManager().beginTransaction()
-        .replace(R.id.container, newsListFragment, "MainFragment")
-        .commit();
+    //1. 创建Fragment,这样写Activity在重新创建时不用重建Fragment
+    NewsListFragment newsListFragment =
+        (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+    if (newsListFragment == null) {
+      newsListFragment = NewsListFragment.instance();
+
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, newsListFragment, "MainFragment")
+          .commit();
+    }
+
+    //newsListFragment.setRetainInstance(true);
 
     /*
     2.创建Presenter,并在Presenter构造函数中绑定View.
@@ -50,7 +57,7 @@ public class NewsListActivity extends BaseActivity {
     //Presenter绑定View
     NewsListPresenter newsListPresenter = new NewsListPresenter(newsListFragment);
     //View绑定Presenter
-    newsListFragment.setPresenter(newsListPresenter);
+    //newsListFragment.setPresenter(newsListPresenter);
 
     //这个绑定方式也可以在View(Fragment)中绑定,放在Activity绑定是突出了Activity的Controller作用.之后使用依赖注入可能不用这么费劲.
   }

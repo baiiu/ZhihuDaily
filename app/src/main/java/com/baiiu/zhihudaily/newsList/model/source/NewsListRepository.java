@@ -1,10 +1,10 @@
-package com.baiiu.zhihudaily.data.newsListData.source;
+package com.baiiu.zhihudaily.newsList.model.source;
 
 import android.text.TextUtils;
-import com.baiiu.zhihudaily.data.newsListData.Daily;
-import com.baiiu.zhihudaily.data.newsListData.Story;
-import com.baiiu.zhihudaily.data.newsListData.source.local.NewsListLocalSource;
-import com.baiiu.zhihudaily.data.newsListData.source.remote.NewsListRemoteSource;
+import com.baiiu.zhihudaily.newsList.model.Daily;
+import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.newsList.model.source.local.NewsListLocalSource;
+import com.baiiu.zhihudaily.newsList.model.source.remote.NewsListRemoteSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
