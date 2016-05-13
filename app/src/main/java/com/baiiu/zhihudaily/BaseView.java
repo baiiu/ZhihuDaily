@@ -23,4 +23,5 @@ public interface BaseView<T> {
   void showSuccessInfo(String info);
 
   void showErrorInfo(String info);
+
 }

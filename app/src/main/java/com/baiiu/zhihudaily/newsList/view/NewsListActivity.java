@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
+import com.baiiu.zhihudaily.newsList.presenter.NewsListFragment;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
@@ -46,20 +46,6 @@ public class NewsListActivity extends BaseActivity {
           .replace(R.id.container, newsListFragment, "MainFragment")
           .commit();
     }
-
-    //newsListFragment.setRetainInstance(true);
-
-    /*
-    2.创建Presenter,并在Presenter构造函数中绑定View.
-    这样View中持有Presenter,Presenter中持有View,双向关联
-    */
-
-    //Presenter绑定View
-    NewsListPresenter newsListPresenter = new NewsListPresenter(newsListFragment);
-    //View绑定Presenter
-    //newsListFragment.setPresenter(newsListPresenter);
-
-    //这个绑定方式也可以在View(Fragment)中绑定,放在Activity绑定是突出了Activity的Controller作用.之后使用依赖注入可能不用这么费劲.
   }
 
   //=====================Menu===================================
