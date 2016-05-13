@@ -7,14 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.baiiu.zhihudaily.mvpbase.view.IFragmentViewDelegate;
+import com.baiiu.zhihudaily.mvpbase.view.IFragmentView;
 
 /**
  * author: baiiu
  * date: on 16/5/13 14:40
  * description:
  */
-public abstract class BasePresenterFragment<V extends IFragmentViewDelegate> extends Fragment {
+public abstract class BasePresenterFragment<V extends IFragmentView> extends Fragment {
 
   protected V viewDelegate;
   protected Context mContext;
@@ -29,12 +29,17 @@ public abstract class BasePresenterFragment<V extends IFragmentViewDelegate> ext
       @Nullable Bundle savedInstanceState) {
 
     try {
+      //Presenter绑定View
       if (viewDelegate == null) {
         viewDelegate = getDelegateViewClass().newInstance();
         viewDelegate.onCreateView(inflater, container);
       }
 
+      //View绑定Presenter
+      viewDelegate.setPresenter(this);
+
       initOnCreateView();
+
       return viewDelegate.getRootView();
     } catch (java.lang.InstantiationException e) {
       e.printStackTrace();

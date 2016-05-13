@@ -8,10 +8,10 @@ import butterknife.Bind;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.mvpbase.view.BaseFragmentViewDelegate;
-import com.baiiu.zhihudaily.newsList.NewsListContract;
+import com.baiiu.zhihudaily.mvpbase.view.BaseFragmentView;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.newsList.presenter.NewsListFragment;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ import java.util.List;
  * date: on 16/5/13 14:55
  * description:
  */
-public class NewsListView extends BaseFragmentViewDelegate<NewsListContract.Presenter> {
+public class NewsListView extends BaseFragmentView<NewsListFragment> {
 
 
   @Bind(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;

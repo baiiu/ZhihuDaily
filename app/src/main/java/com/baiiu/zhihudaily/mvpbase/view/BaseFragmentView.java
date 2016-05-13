@@ -11,13 +11,14 @@ import butterknife.ButterKnife;
  * date: on 16/5/13 14:57
  * description:
  */
-public abstract class BaseFragmentViewDelegate<T> implements IFragmentViewDelegate<T> {
+public abstract class BaseFragmentView<T> implements IFragmentView<T> {
 
   protected T mPresenter;
 
   protected View mRootView;
   protected Context mContext;
 
+  //绑定Presenter
   @Override public void setPresenter(T presenter) {
     this.mPresenter = presenter;
   }

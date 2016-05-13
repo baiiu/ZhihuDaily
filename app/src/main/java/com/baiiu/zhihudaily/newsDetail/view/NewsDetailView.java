@@ -8,9 +8,9 @@ import butterknife.Bind;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.mvpbase.view.BaseFragmentViewDelegate;
-import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
+import com.baiiu.zhihudaily.mvpbase.view.BaseFragmentView;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
+import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailFragment;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
 
@@ -19,7 +19,7 @@ import com.baiiu.zhihudaily.view.EmptyLayout;
  * date: on 16/5/13 16:42
  * description:
  */
-public class NewsDetailView extends BaseFragmentViewDelegate<NewsDetailContract.Presenter> {
+public class NewsDetailView extends BaseFragmentView<NewsDetailFragment> {
 
   private WebView webView;
   @Bind(R.id.webViewContainer) FrameLayout webViewContainer;

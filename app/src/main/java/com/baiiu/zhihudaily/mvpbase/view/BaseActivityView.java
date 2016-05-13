@@ -20,7 +20,7 @@ import com.baiiu.zhihudaily.view.SwipeBackLayout;
  * date: on 16/5/13 14:12
  * description:
  */
-public abstract class BaseActivityViewDelegate implements IActivityViewDelegate, SwipeBackLayout.SwipeBackListener {
+public abstract class BaseActivityView implements IActivityView, SwipeBackLayout.SwipeBackListener {
   protected View mRootView;
   protected Context mContext;
 

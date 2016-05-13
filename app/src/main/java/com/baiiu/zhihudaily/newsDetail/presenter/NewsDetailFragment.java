@@ -3,7 +3,6 @@ package com.baiiu.zhihudaily.newsDetail.presenter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.baiiu.zhihudaily.mvpbase.presenter.BasePresenterFragment;
-import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.newsDetail.model.INewsDetailRepository;
 import com.baiiu.zhihudaily.newsDetail.model.NewsDetailRepository;
@@ -14,8 +13,7 @@ import com.baiiu.zhihudaily.newsDetail.view.NewsDetailView;
  * date: on 16/5/10 17:34
  * description:
  */
-public class NewsDetailFragment extends BasePresenterFragment<NewsDetailView>
-    implements NewsDetailContract.Presenter {
+public class NewsDetailFragment extends BasePresenterFragment<NewsDetailView> {
   public static final String NEWS_ID = "id";
 
   private NewsDetailRepository mNewsDetailRepository;
@@ -28,7 +26,6 @@ public class NewsDetailFragment extends BasePresenterFragment<NewsDetailView>
     newsDetailFragment.setArguments(bundle);
     return newsDetailFragment;
   }
-
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -69,8 +66,6 @@ public class NewsDetailFragment extends BasePresenterFragment<NewsDetailView>
 
   @Override public void onDestroy() {
     super.onDestroy();
-
     viewDelegate.destoryView();
-
   }
 }

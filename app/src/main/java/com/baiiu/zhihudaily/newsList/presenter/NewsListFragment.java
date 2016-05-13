@@ -6,10 +6,10 @@ import android.view.View;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.mvpbase.presenter.BasePresenterFragment;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
-import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
+import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
 import com.baiiu.zhihudaily.newsList.view.NewsListView;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
@@ -18,7 +18,7 @@ import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
 
 public class NewsListFragment extends BasePresenterFragment<NewsListView>
-    implements NewsListContract.Presenter {
+    implements IRefreshLoadMore, android.view.View.OnClickListener {
 
   private NewsListRepository newsListRepository;
 
@@ -35,10 +35,6 @@ public class NewsListFragment extends BasePresenterFragment<NewsListView>
     newsListRepository = NewsListRepository.instance();
   }
 
-  @Override protected void initOnCreateView() {
-    viewDelegate.setPresenter(this);
-  }
-
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
@@ -47,7 +43,7 @@ public class NewsListFragment extends BasePresenterFragment<NewsListView>
     loadNewsList(false, true);
   }
 
-  @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
+  public void loadNewsList(final boolean fromRemote, final boolean refresh) {
 
     //设置是否从远端拉取数据
     newsListRepository.refreshNewsList(fromRemote);

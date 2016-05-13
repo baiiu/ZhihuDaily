@@ -12,7 +12,7 @@ import com.baiiu.zhihudaily.BaseView;
  * date: on 16/5/13 10:35
  * description:
  */
-public interface IActivityViewDelegate extends BaseView {
+public interface IActivityView extends BaseView {
   void onCreateView(LayoutInflater inflater, ViewGroup container);
 
   View getRootView();

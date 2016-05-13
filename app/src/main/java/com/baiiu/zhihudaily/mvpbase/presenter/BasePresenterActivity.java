@@ -5,14 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import com.baiiu.zhihudaily.mvpbase.view.IActivityViewDelegate;
+import com.baiiu.zhihudaily.mvpbase.view.IActivityView;
 
 /**
  * author: baiiu
  * date: on 16/5/13 10:39
  * description:
  */
-public abstract class BasePresenterActivity<V extends IActivityViewDelegate> extends AppCompatActivity {
+public abstract class BasePresenterActivity<V extends IActivityView> extends AppCompatActivity {
   protected V viewDelegate;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
