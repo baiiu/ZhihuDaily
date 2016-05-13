@@ -10,6 +10,8 @@ import android.view.ViewGroup;
  * description:
  */
 public interface IFragmentViewDelegate<T> {
+  void setPresenter(T presenter);
+
   void onCreateView(LayoutInflater inflater, ViewGroup container);
 
   View getRootView();

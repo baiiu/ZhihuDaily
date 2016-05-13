@@ -1,11 +1,7 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.BasePresenter;
 import com.baiiu.zhihudaily.BaseView;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
-import java.util.List;
 
 /**
  * auther: baiiu
@@ -25,26 +21,10 @@ import java.util.List;
 public interface NewsListContract {
 
   interface View extends BaseView<Presenter> {
-    void showLoadingPage();
-
-    void showLoadingIndicator(boolean show);
-
-    void showNews(Daily daily, boolean update);
-
-    void showEmptyPage();
-
-    void showErrorPage();
-
-    boolean isDataEmpty();
-
-    void bindFooter(List<Story> list, boolean fromLocal);
-
-    void showNewsReaded(int position, boolean isRead);
   }
 
-  interface Presenter extends BasePresenter, IRefreshLoadMore, android.view.View.OnClickListener {
+  interface Presenter extends IRefreshLoadMore, android.view.View.OnClickListener {
     //update true时从网络加载数据
     void loadNewsList(boolean fromRemote, boolean loadMore);
-
   }
 }

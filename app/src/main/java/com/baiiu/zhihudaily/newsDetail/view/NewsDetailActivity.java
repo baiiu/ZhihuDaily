@@ -8,12 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
-import com.baiiu.zhihudaily.view.base.BaseActivity;
+import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailFragment;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
+import com.baiiu.zhihudaily.view.base.BaseActivity;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -68,9 +68,6 @@ public class NewsDetailActivity extends BaseActivity {
           .replace(R.id.container, newsDetailFragment, "newsDetailFragment")
           .commit();
     }
-
-    //进行绑定
-    new NewsDetailPresenter(newsDetailFragment);
   }
 
   public void setTopContent(String title, String image_source, String image) {

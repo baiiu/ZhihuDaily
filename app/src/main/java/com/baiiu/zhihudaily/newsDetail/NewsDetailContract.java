@@ -1,9 +1,6 @@
 package com.baiiu.zhihudaily.newsDetail;
 
-import android.os.Bundle;
-import com.baiiu.zhihudaily.BasePresenter;
 import com.baiiu.zhihudaily.BaseView;
-import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 
 /**
  * author: baiiu
@@ -13,14 +10,8 @@ import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 public class NewsDetailContract {
 
   public interface View extends BaseView<Presenter> {
-    void showErrorPage();
-
-    void showLoadingPage();
-
-    void showNewsDetail(DailyDetail dailyDetail);
   }
 
-  public interface Presenter extends BasePresenter {
-    void processArguments(Bundle arguments);
+  public interface Presenter {
   }
 }

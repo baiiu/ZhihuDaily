@@ -11,10 +11,16 @@ import butterknife.ButterKnife;
  * date: on 16/5/13 14:57
  * description:
  */
-public abstract class BaseFragmentViewDelegate implements IFragmentViewDelegate {
+public abstract class BaseFragmentViewDelegate<T> implements IFragmentViewDelegate<T> {
+
+  protected T mPresenter;
 
   protected View mRootView;
   protected Context mContext;
+
+  @Override public void setPresenter(T presenter) {
+    this.mPresenter = presenter;
+  }
 
   @Override public void onCreateView(LayoutInflater inflater, ViewGroup container) {
     mRootView = inflater.inflate(provideLayoutId(), container, false);

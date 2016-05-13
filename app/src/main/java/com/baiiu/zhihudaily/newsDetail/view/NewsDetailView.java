@@ -1,7 +1,5 @@
 package com.baiiu.zhihudaily.newsDetail.view;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,49 +8,28 @@ import butterknife.Bind;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.mvpbase.view.BaseFragmentViewDelegate;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
-import com.baiiu.zhihudaily.view.base.BaseFragment;
 
 /**
  * author: baiiu
- * date: on 16/5/10 17:34
+ * date: on 16/5/13 16:42
  * description:
  */
-public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.View {
-  public static final String NEWS_ID = "id";
-
-  private NewsDetailContract.Presenter mNewsDetailPresenter;
-
-  @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
-  @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
-
-  private long id;
-
-  public static NewsDetailFragment instance(long newsId) {
-    NewsDetailFragment newsDetailFragment = new NewsDetailFragment();
-    Bundle bundle = new Bundle();
-    bundle.putLong(NEWS_ID, newsId);
-    newsDetailFragment.setArguments(bundle);
-    return newsDetailFragment;
-  }
+public class NewsDetailView extends BaseFragmentViewDelegate<NewsDetailContract.Presenter> {
 
   private WebView webView;
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    Bundle arguments = getArguments();
-    mNewsDetailPresenter.processArguments(arguments);
-  }
+  @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
+  @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
 
   @Override public int provideLayoutId() {
     return R.layout.fragment_news_detail;
   }
 
-  @Override protected void initOnCreateView() {
+  @Override public void initView() {
     webView = new WebView(mContext.getApplicationContext());
     webViewContainer.addView(webView, -1, -1);
 
@@ -63,46 +40,27 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     mWebSettings.setLoadsImagesAutomatically(true);
   }
 
-  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    mNewsDetailPresenter.start();
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    if (webView != null) {
-      webView.removeAllViews();
-      webViewContainer.removeView(webView);
-      webView.destroy();
-      webView = null;
-    }
-  }
-
-  @Override public void setPresenter(NewsDetailContract.Presenter presenter) {
-    this.mNewsDetailPresenter = presenter;
-  }
-
-  @Override public void showSuccessInfo(String info) {
+  public void showSuccessInfo(String info) {
     TSnackbar.make(webViewContainer, info, Prompt.SUCCESS).show();
   }
 
-  @Override public void showErrorInfo(String info) {
+  public void showErrorInfo(String info) {
     TSnackbar.make(webViewContainer, info, Prompt.ERROR).show();
   }
 
-  @Override public void showErrorPage() {
+  public void showErrorPage() {
     emptyLayout.setVisibility(View.VISIBLE);
     webViewContainer.setVisibility(View.GONE);
     emptyLayout.setState(EmptyLayout.TYPE_ERROR);
   }
 
-  @Override public void showLoadingPage() {
+  public void showLoadingPage() {
     emptyLayout.setVisibility(View.VISIBLE);
     webViewContainer.setVisibility(View.GONE);
     emptyLayout.setState(EmptyLayout.TYPE_LOADING);
   }
 
-  @Override public void showNewsDetail(DailyDetail dailyDetail) {
+  public void showNewsDetail(DailyDetail dailyDetail) {
     emptyLayout.setVisibility(View.GONE);
     webViewContainer.setVisibility(View.VISIBLE);
 
@@ -111,5 +69,14 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
     webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true).toString(),
         "text/html", "utf-8", null);
+  }
+
+  public void destoryView() {
+    if (webView != null) {
+      webView.removeAllViews();
+      webViewContainer.removeView(webView);
+      webView.destroy();
+      webView = null;
+    }
   }
 }

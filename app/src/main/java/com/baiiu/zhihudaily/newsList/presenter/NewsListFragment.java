@@ -39,7 +39,9 @@ public class NewsListFragment extends BasePresenterFragment<NewsListView>
     viewDelegate.setPresenter(this);
   }
 
-  @Override public void start() {
+  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
     viewDelegate.showLoadingPage();
     //第一次,从本地加载
     loadNewsList(false, true);

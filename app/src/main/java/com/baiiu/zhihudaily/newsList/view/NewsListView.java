@@ -19,9 +19,8 @@ import java.util.List;
  * date: on 16/5/13 14:55
  * description:
  */
-public class NewsListView extends BaseFragmentViewDelegate {
+public class NewsListView extends BaseFragmentViewDelegate<NewsListContract.Presenter> {
 
-  private NewsListContract.Presenter mNewsListPresenter;
 
   @Bind(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
   @Bind(R.id.recyclerView) RecyclerView recyclerView;
@@ -32,12 +31,13 @@ public class NewsListView extends BaseFragmentViewDelegate {
     return R.layout.fragment_main;
   }
 
+
   @Override public void initView() {
-    refreshLayout.setOnRefreshListener(mNewsListPresenter);
+    refreshLayout.setOnRefreshListener(mPresenter);
     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-    dailyNewsAdapter = new DailyNewsAdapter(mContext, mNewsListPresenter, mNewsListPresenter);
+    dailyNewsAdapter = new DailyNewsAdapter(mContext, mPresenter, mPresenter);
     recyclerView.setAdapter(dailyNewsAdapter);
 
     //mRootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -45,12 +45,6 @@ public class NewsListView extends BaseFragmentViewDelegate {
     //    recyclerView.smoothScrollToPosition(0);
     //  }
     //});
-
-    mNewsListPresenter.start();
-  }
-
-  public void setPresenter(NewsListContract.Presenter presenter) {
-    this.mNewsListPresenter = presenter;
   }
 
   public void showSuccessInfo(String info) {
