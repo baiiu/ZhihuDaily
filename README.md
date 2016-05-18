@@ -6,6 +6,8 @@ The step-by-step evolution of the project is in one by one different branch and 
 一步一步重构代码进化过程展现在各个分支和master上的tag,从这些分支上可以看到使用MVP的代码是多么清晰.
 And more practise to be continued...
 
+博客说明: [Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)
+
 ## Branches
 - the `master` branch has a lot of tags, and the first version code is on it.
 - the `branch_basic`,which master tag is v1.0,  use an original way to complete the project,which means all code is in the Activity and with no fragments.
