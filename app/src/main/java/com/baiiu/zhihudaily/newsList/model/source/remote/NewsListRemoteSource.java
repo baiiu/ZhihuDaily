@@ -30,8 +30,8 @@ public class NewsListRemoteSource implements INewsListDataSource {
           callback.onSuccess(body);
 
           if (body != null) {
-            //saveStories(body.stories, body.date);
-            //saveTopStories(body.top_stories);
+            saveStories(body.stories, body.date);
+            saveTopStories(body.top_stories);
           }
         }
 
