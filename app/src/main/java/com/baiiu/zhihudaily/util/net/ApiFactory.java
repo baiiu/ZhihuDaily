@@ -10,13 +10,13 @@ import com.baiiu.zhihudaily.util.net.retrofit.RetrofitClient;
 public enum ApiFactory {
   INSTANCE;
 
-  private final DailyAPI dailyAPI;
+  private static DailyAPI dailyAPI;
 
-  ApiFactory() {
-    dailyAPI = RetrofitClient.INSTANCE.getRetrofit().create(DailyAPI.class);
-  }
+  public static DailyAPI getDailyAPI() {
+    if (dailyAPI == null) {
+      dailyAPI = RetrofitClient.INSTANCE.getRetrofit().create(DailyAPI.class);
+    }
 
-  public DailyAPI getDailyAPI() {
     return dailyAPI;
   }
 }

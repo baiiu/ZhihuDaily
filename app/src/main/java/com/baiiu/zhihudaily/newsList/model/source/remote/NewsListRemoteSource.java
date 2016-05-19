@@ -24,7 +24,7 @@ public class NewsListRemoteSource implements INewsListDataSource {
   @Override
   public void loadNewsList(String date, boolean refresh, final LoadNewsListCallback callback) {
     if (refresh) {
-      ApiFactory.INSTANCE.getDailyAPI().newsLatest().enqueue(new Callback<Daily>() {
+      ApiFactory.getDailyAPI().newsLatest().enqueue(new Callback<Daily>() {
         @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
           Daily body = response.body();
           callback.onSuccess(body);
@@ -41,7 +41,7 @@ public class NewsListRemoteSource implements INewsListDataSource {
       });
     } else {
 
-      ApiFactory.INSTANCE.getDailyAPI().newsBefore(date).enqueue(new Callback<Daily>() {
+      ApiFactory.getDailyAPI().newsBefore(date).enqueue(new Callback<Daily>() {
         @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
           Daily body = response.body();
           callback.onSuccess(body);
