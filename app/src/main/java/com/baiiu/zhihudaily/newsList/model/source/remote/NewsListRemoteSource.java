@@ -8,9 +8,11 @@ import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.async.MappingConvertUtil;
 import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.util.db.DBManager;
-import com.baiiu.zhihudaily.util.net.DailyClient;
-import com.baiiu.zhihudaily.util.net.http.RequestCallBack;
+import com.baiiu.zhihudaily.util.net.ApiFactory;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * author: baiiu
@@ -22,33 +24,34 @@ public class NewsListRemoteSource implements INewsListDataSource {
   @Override
   public void loadNewsList(String date, boolean refresh, final LoadNewsListCallback callback) {
     if (refresh) {
-      DailyClient.getLatestNews(new RequestCallBack<Daily>() {
+      ApiFactory.INSTANCE.getDailyAPI().newsLatest().enqueue(new Callback<Daily>() {
+        @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
+          Daily body = response.body();
+          callback.onSuccess(body);
 
-        @Override public void onSuccess(Daily response) {
-          callback.onSuccess(response);
-
-          if (response != null) {
-            saveStories(response.stories, response.date);
-            saveTopStories(response.top_stories);
+          if (body != null) {
+            //saveStories(body.stories, body.date);
+            //saveTopStories(body.top_stories);
           }
         }
 
-        @Override public void onFailure(int statusCode, String errorString) {
+        @Override public void onFailure(Call<Daily> call, Throwable t) {
           callback.onFailure();
         }
       });
     } else {
 
-      DailyClient.getBeforeNews(date, new RequestCallBack<Daily>() {
-        @Override public void onSuccess(Daily response) {
-          callback.onSuccess(response);
-          if (response != null) {
-            saveStories(response.stories, response.date);
-            saveTopStories(response.top_stories);
+      ApiFactory.INSTANCE.getDailyAPI().newsBefore(date).enqueue(new Callback<Daily>() {
+        @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
+          Daily body = response.body();
+          callback.onSuccess(body);
+          if (body != null) {
+            saveStories(body.stories, body.date);
+            saveTopStories(body.top_stories);
           }
         }
 
-        @Override public void onFailure(int statusCode, String errorString) {
+        @Override public void onFailure(Call<Daily> call, Throwable t) {
           callback.onFailure();
         }
       });

@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.util.net.http.HttpUtil;
 import com.baiiu.zhihudaily.view.SwipeBackLayout;
 
 /**
@@ -68,7 +67,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    HttpUtil.get().cancelAll(volleyTag);
   }
 
   //===============================swipeBack,在ProvideLayoutId前调用==============================================

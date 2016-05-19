@@ -1,10 +1,8 @@
-package com.baiiu.zhihudaily.util.net.util;
+package com.baiiu.zhihudaily.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import com.baiiu.zhihudaily.util.UIUtil;
 
 
 public class HttpNetUtil {

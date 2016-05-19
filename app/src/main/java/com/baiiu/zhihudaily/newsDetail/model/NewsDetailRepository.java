@@ -1,11 +1,13 @@
 package com.baiiu.zhihudaily.newsDetail.model;
 
+import com.baiiu.zhihudaily.util.HttpNetUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.util.db.DBManager;
-import com.baiiu.zhihudaily.util.net.DailyClient;
-import com.baiiu.zhihudaily.util.net.http.RequestCallBack;
-import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.net.ApiFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * author: baiiu
@@ -25,13 +27,14 @@ public class NewsDetailRepository implements INewsDetailRepository {
   }
 
   private void loadFromRemote(long id, final LoadNewsDetailCallback callback) {
-    DailyClient.getNewsDetail(id, new RequestCallBack<DailyDetail>() {
-      @Override public void onSuccess(DailyDetail response) {
-        callback.onSuccess(response);
-        saveData(response);
+    ApiFactory.INSTANCE.getDailyAPI().newsDetail(id).enqueue(new Callback<DailyDetail>() {
+      @Override public void onResponse(Call<DailyDetail> call, Response<DailyDetail> response) {
+        DailyDetail body = response.body();
+        callback.onSuccess(body);
+        saveData(body);
       }
 
-      @Override public void onFailure(int statusCode, String errorString) {
+      @Override public void onFailure(Call<DailyDetail> call, Throwable t) {
         callback.onFailure();
       }
     });

@@ -9,7 +9,7 @@ import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
-import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.HttpNetUtil;
 import java.util.List;
 import java.util.Map;
 

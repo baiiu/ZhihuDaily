@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.HttpNetUtil;
 
 
 /**

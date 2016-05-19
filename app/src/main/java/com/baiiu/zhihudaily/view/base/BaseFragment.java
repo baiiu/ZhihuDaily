@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import com.baiiu.zhihudaily.util.net.http.HttpUtil;
 
 /**
  * Created by baiiu on 2015/11/16.
@@ -54,6 +53,5 @@ public abstract class BaseFragment extends Fragment {
 
   @Override public void onStop() {
     super.onStop();
-    HttpUtil.get().cancelAll(volleyTag);
   }
 }

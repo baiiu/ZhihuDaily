@@ -8,7 +8,7 @@ import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.net.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.HttpNetUtil;
 
 /**
  * auther: baiiu
