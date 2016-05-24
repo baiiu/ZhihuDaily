@@ -13,6 +13,7 @@ import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
+import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.view.base.BaseActivity;
 
@@ -34,6 +35,15 @@ public class NewsListActivity extends BaseActivity {
   }
 
   @Override protected void initOnCreate(Bundle savedInstanceState) {
+
+    if (LUtils.hasKitKat()) {
+      if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+        LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+      } else {
+        LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
+      }
+    }
+
     initBroadCast();
 
     //1. 创建Fragment,这样写Activity在重新创建时不用重建Fragment

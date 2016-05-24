@@ -48,7 +48,7 @@ import android.view.ViewGroup;
     return instance;
   }
 
-  public void setActivity(Activity activity) {
+  private void setActivity(Activity activity) {
     this.mActivity = activity;
   }
 
