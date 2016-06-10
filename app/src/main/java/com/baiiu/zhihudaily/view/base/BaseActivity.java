@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.view.SwipeBackLayout;
@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
   public final String volleyTag = getClass().getName();
 
-  @Nullable @Bind(R.id.toolbar) public Toolbar toolbar;
+  @Nullable @BindView(R.id.toolbar) public Toolbar toolbar;
   protected ActionBar actionBar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {

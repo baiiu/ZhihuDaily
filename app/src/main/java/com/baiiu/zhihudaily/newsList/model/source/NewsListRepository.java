@@ -20,94 +20,92 @@ import java.util.Map;
  */
 public class NewsListRepository implements INewsListDataSource {
 
-  public static final String READ_LIST = "read_list";
+    public static final String READ_LIST = "read_list";
 
-  private NewsListLocalSource mNewsListLocalSource;
-  private NewsListRemoteSource mNewsListRemoteSource;
+    private NewsListLocalSource mNewsListLocalSource;
+    private NewsListRemoteSource mNewsListRemoteSource;
 
-  /**
-   * 从网络加载数据
-   */
-  private boolean mFromRemote = true;
+    /**
+     * 从网络加载数据
+     */
+    private boolean mFromRemote = true;
 
-  private String mCurrentDate;
+    private String mCurrentDate;
 
-  private NewsListRepository() {
-    //硬编码注入
-    mNewsListLocalSource = new NewsListLocalSource();
-    mNewsListRemoteSource = new NewsListRemoteSource();
-  }
-
-  public static NewsListRepository instance() {
-    return new NewsListRepository();
-  }
-
-  @Override public void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback) {
-    if (refresh) {
-      //下拉刷新时,reset
-      mCurrentDate = null;
+    private NewsListRepository() {
+        //硬编码注入
+        mNewsListLocalSource = new NewsListLocalSource();
+        mNewsListRemoteSource = new NewsListRemoteSource();
     }
 
-    if (TextUtils.isEmpty(mCurrentDate)) {
-      mCurrentDate = PreferenceUtil.instance().get(Constant.LATEST_DATE, "");
+    public static NewsListRepository instance() {
+        return new NewsListRepository();
     }
 
-    loadList(mCurrentDate, refresh, callback);
-  }
-
-  private void loadList(String date, final boolean refresh, final LoadNewsListCallback callback) {
-
-    if (mFromRemote) {
-
-      mNewsListRemoteSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
-        @Override public void onSuccess(Daily daily) {
-          if (refresh) {
-            PreferenceUtil.instance().put(Constant.LATEST_DATE, daily.date).commit();
-          }
-
-          mCurrentDate = daily.date;
-          markRead(daily.stories);
-          callback.onSuccess(daily);
+    @Override public void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback) {
+        if (refresh) {
+            //下拉刷新时,reset
+            mCurrentDate = null;
         }
 
-        @Override public void onFailure() {
-          callback.onFailure();
-        }
-      });
-    } else {
-
-      mNewsListLocalSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
-        @Override public void onSuccess(Daily daily) {
-          mCurrentDate = daily.date;
-          markRead(daily.stories);
-
-          callback.onSuccess(daily);
+        if (TextUtils.isEmpty(mCurrentDate)) {
+            mCurrentDate = PreferenceUtil.instance().get(Constant.LATEST_DATE, "");
         }
 
-        @Override public void onFailure() {
-          callback.onFailure();
-        }
-      });
+        loadList(mCurrentDate, refresh, callback);
     }
-  }
 
-  /**
-   * 标记已读
-   */
-  private void markRead(List<Story> list) {
-    Map<String, String> readedMap = ReadedListUtil.getReadedMap(READ_LIST);
+    private void loadList(String date, final boolean refresh, final LoadNewsListCallback callback) {
 
-    if (!CommonUtil.isEmpty(list)) {
-      for (Story story : list) {
-        story.isRead = readedMap.get(String.valueOf(story.id)) != null;
-      }
+        if (mFromRemote) {
+            mNewsListRemoteSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
+                @Override public void onSuccess(Daily daily) {
+                    if (refresh) {
+                        PreferenceUtil.instance().put(Constant.LATEST_DATE, daily.date).commit();
+                    }
+
+                    mCurrentDate = daily.date;
+                    markRead(daily.stories);
+                    callback.onSuccess(daily);
+                }
+
+                @Override public void onFailure() {
+                    callback.onFailure();
+                }
+            });
+        } else {
+            mNewsListLocalSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
+                @Override public void onSuccess(Daily daily) {
+                    mCurrentDate = daily.date;
+                    markRead(daily.stories);
+
+                    callback.onSuccess(daily);
+                }
+
+                @Override public void onFailure() {
+                    callback.onFailure();
+                }
+            });
+        }
     }
-  }
 
-  /**
-   * 控制是否从远端拉去数据
-   */
-  public void refreshNewsList(boolean fromRemote) {
-    this.mFromRemote = fromRemote && HttpNetUtil.isConnected();
-  }
+    /**
+     * 标记已读
+     */
+    private void markRead(List<Story> list) {
+        Map<String, String> readedMap = ReadedListUtil.getReadedMap(READ_LIST);
+
+        if (!CommonUtil.isEmpty(list)) {
+            for (Story story : list) {
+                story.isRead = readedMap.get(String.valueOf(story.id)) != null;
+            }
+        }
+    }
+
+    /**
+     * 控制是否从远端拉去数据
+     */
+    public void refreshNewsList(boolean fromRemote) {
+        this.mFromRemote = fromRemote && HttpNetUtil.isConnected();
+    }
 }

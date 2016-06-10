@@ -3,12 +3,10 @@ package com.baiiu.zhihudaily.newsList.view.holder;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
-
+import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.baiiu.zhihudaily.util.UIUtil;
-
-import butterknife.Bind;
+import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 
 /**
  * Created by baiiu on 2015/11/21.
@@ -22,9 +20,9 @@ public class FooterViewHolder extends BaseViewHolder<Integer> {
 
   private int mCurrentState = -1;
 
-  @Bind(R.id.loading) LinearLayout loadingView;
-  @Bind(R.id.error) LinearLayout errorView;
-  @Bind(R.id.nomore) LinearLayout noMoreView;
+  @BindView(R.id.loading) LinearLayout loadingView;
+  @BindView(R.id.error) LinearLayout errorView;
+  @BindView(R.id.nomore) LinearLayout noMoreView;
 
   public FooterViewHolder(Context context) {
     super(UIUtil.inflate(context, R.layout.holder_footer));

@@ -17,9 +17,9 @@ import retrofit2.http.Path;
  */
 public interface DailyAPI {
 
-  @GET("news/latest") Call<Daily> newsLatest();
+    @GET("news/latest") Call<Daily> newsLatest();
 
-  @GET("news/before/{date}") Call<Daily> newsBefore(@Path("date") String date);
+    @GET("news/before/{date}") Call<Daily> newsBefore(@Path("date") String date);
 
-  @GET("news/{id}") Call<DailyDetail> newsDetail(@Path("id") long id);
+    @GET("news/{id}") Call<DailyDetail> newsDetail(@Path("id") long id);
 }

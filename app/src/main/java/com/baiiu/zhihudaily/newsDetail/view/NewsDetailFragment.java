@@ -6,7 +6,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import butterknife.Bind;
+import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
@@ -26,8 +26,8 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
   private NewsDetailContract.Presenter mNewsDetailPresenter;
 
-  @Bind(R.id.webViewContainer) FrameLayout webViewContainer;
-  @Bind(R.id.emptyLayout) EmptyLayout emptyLayout;
+  @BindView(R.id.webViewContainer) FrameLayout webViewContainer;
+  @BindView(R.id.emptyLayout) EmptyLayout emptyLayout;
 
   private long id;
 

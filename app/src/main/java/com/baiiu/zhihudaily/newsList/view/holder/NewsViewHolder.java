@@ -5,12 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
+import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.bumptech.glide.Glide;
 
 /**
@@ -20,8 +20,8 @@ import com.bumptech.glide.Glide;
  */
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
-  @Bind(R.id.imageView) ImageView imageView;
-  public @Bind(R.id.textView) TextView textView;
+  @BindView(R.id.imageView) ImageView imageView;
+  public @BindView(R.id.textView) TextView textView;
 
   public Story mStroy;
 

@@ -3,12 +3,10 @@ package com.baiiu.zhihudaily.newsList.view.holder;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.baiiu.zhihudaily.newsList.model.Story;
-
-import butterknife.Bind;
+import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 
 /**
  * author: baiiu
@@ -17,7 +15,7 @@ import butterknife.Bind;
  */
 public class DateViewHolder extends BaseViewHolder<Story> {
 
-  @Bind(R.id.textView) TextView textView;
+  @BindView(R.id.textView) TextView textView;
 
   public DateViewHolder(Context mContext, ViewGroup parent) {
     super(mContext, R.layout.holder_date, parent);

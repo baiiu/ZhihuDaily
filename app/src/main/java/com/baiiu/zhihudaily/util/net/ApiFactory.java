@@ -8,15 +8,15 @@ import com.baiiu.zhihudaily.util.net.retrofit.RetrofitClient;
  * description:
  */
 public enum ApiFactory {
-  INSTANCE;
+    INSTANCE;
 
-  private static DailyAPI dailyAPI;
+    private static DailyAPI dailyAPI;
 
-  public static DailyAPI getDailyAPI() {
-    if (dailyAPI == null) {
-      dailyAPI = RetrofitClient.INSTANCE.getRetrofit().create(DailyAPI.class);
+    public static DailyAPI getDailyAPI() {
+        if (dailyAPI == null) {
+            dailyAPI = RetrofitClient.INSTANCE.getRetrofit().create(DailyAPI.class);
+        }
+
+        return dailyAPI;
     }
-
-    return dailyAPI;
-  }
 }

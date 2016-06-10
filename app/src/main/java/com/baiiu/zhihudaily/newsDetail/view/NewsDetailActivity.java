@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.Bind;
+import butterknife.BindView;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
@@ -23,9 +23,9 @@ public class NewsDetailActivity extends BaseActivity {
 
   public static final String CONTENT_STORY = "content_story";
 
-  @Bind(R.id.imageView) ImageView imageView;
-  @Bind(R.id.tv_title) TextView tv_title;
-  @Bind(R.id.tv_source) TextView tv_source;
+  @BindView(R.id.imageView) ImageView imageView;
+  @BindView(R.id.tv_title) TextView tv_title;
+  @BindView(R.id.tv_source) TextView tv_source;
 
   public static Intent instance(Context context, long id) {
     return new Intent(context, NewsDetailActivity.class).putExtra(NewsDetailFragment.NEWS_ID, id);
