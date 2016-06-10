@@ -2,7 +2,9 @@ package com.baiiu.zhihudaily;
 
 import android.app.Application;
 import android.content.Context;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * author: baiiu
@@ -11,16 +13,25 @@ import com.squareup.leakcanary.LeakCanary;
  */
 public class DailyApplication extends Application {
 
-  private static Context mContext;
+    private static Context mContext;
+    private RefWatcher refWatcher;
 
-  @Override public void onCreate() {
-    super.onCreate();
-    mContext = getApplicationContext();
+    @Override public void onCreate() {
+        super.onCreate();
+        mContext = getApplicationContext();
 
-    LeakCanary.install(this);
-  }
+        refWatcher = LeakCanary.install(this);
 
-  public static Context getContext() {
-    return mContext;
-  }
+        Logger.init();
+    }
+
+    public static Context getContext() {
+        return mContext;
+    }
+
+
+    public RefWatcher getRefWatcher() {
+        return refWatcher;
+    }
+
 }

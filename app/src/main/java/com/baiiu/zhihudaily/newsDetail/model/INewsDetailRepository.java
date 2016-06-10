@@ -1,5 +1,7 @@
 package com.baiiu.zhihudaily.newsDetail.model;
 
+import rx.Observable;
+
 /**
  * author: baiiu
  * date: on 16/5/12 15:48
@@ -7,11 +9,6 @@ package com.baiiu.zhihudaily.newsDetail.model;
  */
 public interface INewsDetailRepository {
 
-  void loadNewsDetail(long id, LoadNewsDetailCallback callback);
+    Observable<DailyDetail> loadNewsDetail(long id);
 
-  interface LoadNewsDetailCallback {
-    void onSuccess(DailyDetail daily);
-
-    void onFailure();
-  }
 }

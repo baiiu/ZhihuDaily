@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'android-apt'
+apply plugin: 'com.fernandocejas.frodo'
 
 android {
     compileSdkVersion 23
@@ -33,6 +34,10 @@ android {
     }
 }
 
+frodo {
+    enabled = true
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':tsnackbar')
@@ -60,17 +65,18 @@ dependencies {
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'
 
-    //okHttp
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-
     //stetho
     compile 'com.facebook.stetho:stetho:1.3.1'
     compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
 
-    //retrofit
+
+    //网络
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
 
     //Rx
     compile 'io.reactivex:rxjava:1.1.5'
@@ -83,4 +89,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'
     compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'
     compile 'com.hwangjr.rxbus:rxbus:1.0.3'
+
+    //logger
+    compile 'com.github.orhanobut:logger:1.12'
 }

@@ -15,13 +15,13 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  */
 public class DateViewHolder extends BaseViewHolder<Story> {
 
-  @BindView(R.id.textView) TextView textView;
+    @BindView(R.id.textView) TextView textView;
 
-  public DateViewHolder(Context mContext, ViewGroup parent) {
-    super(mContext, R.layout.holder_date, parent);
-  }
+    public DateViewHolder(Context mContext, ViewGroup parent) {
+        super(mContext, R.layout.holder_date, parent);
+    }
 
-  @Override public void bind(Story data) {
-    textView.setText(data.title);
-  }
+    @Override public void bind(Story data) {
+        textView.setText(data.title);
+    }
 }

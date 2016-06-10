@@ -12,11 +12,11 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  */
 public class EmptyViewHolder extends BaseViewHolder<String> {
 
-  public EmptyViewHolder(Context mContext, ViewGroup parent) {
-    super(mContext, R.layout.holder_empty, parent);
-  }
+    public EmptyViewHolder(Context mContext, ViewGroup parent) {
+        super(mContext, R.layout.holder_empty, parent);
+    }
 
-  @Override public void bind(String data) {
+    @Override public void bind(String data) {
 
-  }
+    }
 }

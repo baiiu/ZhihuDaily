@@ -1,11 +1,8 @@
 package com.baiiu.zhihudaily.util.net.retrofit;
 
-import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.net.retrofit.interceptor.OnOffLineCachedInterceptor;
 import com.baiiu.zhihudaily.util.net.retrofit.interceptor.UserAgentInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import java.util.concurrent.TimeUnit;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -27,7 +24,7 @@ enum OKHttpFactory {
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    Cache cache = new Cache(UIUtil.getContext().getCacheDir(), 10 * 1024 * 1024);
+    //Cache cache = new Cache(UIUtil.getContext().getCacheDir(), 10 * 1024 * 1024);
 
     okHttpClient = new OkHttpClient.Builder()
         //打印请求log
@@ -40,11 +37,11 @@ enum OKHttpFactory {
         .addInterceptor(new UserAgentInterceptor(HttpHelper.getUserAgent()))
 
         //必须是设置Cache目录
-        .cache(cache)
+        //.cache(cache)
 
         //走缓存
-        .addInterceptor(new OnOffLineCachedInterceptor())
-        .addNetworkInterceptor(new OnOffLineCachedInterceptor())
+        //.addInterceptor(new OnOffLineCachedInterceptor())
+        //.addNetworkInterceptor(new OnOffLineCachedInterceptor())
 
         //失败重连
         .retryOnConnectionFailure(true)

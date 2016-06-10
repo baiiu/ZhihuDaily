@@ -24,83 +24,87 @@ import java.util.List;
  */
 public class DBManager {
 
-  private static final String DB_NAME = "daily-db";
+    private static final String DB_NAME = "daily-db";
 
-  private static DBManager dbManager;
-  private DaoSession daoSession;
-  private final SQLiteDatabase db;
+    private static DBManager dbManager;
+    private DaoSession daoSession;
+    private final SQLiteDatabase db;
 
-  private DBManager() {
-    DaoMaster.DevOpenHelper helper =
-        new DaoMaster.DevOpenHelper(UIUtil.getContext(), DB_NAME, null);
-    db = helper.getWritableDatabase();
-    DaoMaster daoMaster = new DaoMaster(db);
-    daoSession = daoMaster.newSession();
-  }
+    private DBManager() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(UIUtil.getContext(), DB_NAME, null);
+        db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+    }
 
-  public static DBManager instance() {
-    if (dbManager == null) {
-      synchronized (DBManager.class) {
+    public static DBManager instance() {
         if (dbManager == null) {
-          dbManager = new DBManager();
+            synchronized (DBManager.class) {
+                if (dbManager == null) {
+                    dbManager = new DBManager();
+                }
+            }
         }
-      }
+
+        return dbManager;
     }
 
-    return dbManager;
-  }
-
-  //=======================Story================================
-  private SavedStoryDao getSavedStoryDao() {
-    return daoSession.getSavedStoryDao();
-  }
-
-  public void saveStoryList(List<SavedStory> list) {
-    if (CommonUtil.isEmpty(list)) {
-      return;
+    //=======================Story================================
+    private SavedStoryDao getSavedStoryDao() {
+        return daoSession.getSavedStoryDao();
     }
 
-    getSavedStoryDao().insertOrReplaceInTx(list);
-  }
+    public void saveStoryList(List<SavedStory> list) {
+        if (CommonUtil.isEmpty(list)) {
+            return;
+        }
 
-  public List<Story> getStoryList(String date) {
-    List<SavedStory> savedStories =
-        getSavedStoryDao().queryBuilder().where(SavedStoryDao.Properties.Date.eq(date)).orderAsc(SavedStoryDao.Properties.Position).list();
-    return MappingConvertUtil.toStory(savedStories);
-  }
-
-  //========================TopStory=====================================
-  private SavedTopStoryDao getSavedTopStoryDao() {
-    return daoSession.getSavedTopStoryDao();
-  }
-
-  public void saveTopStoryList(List<TopStory> list) {
-    if (CommonUtil.isEmpty(list)) {
-      return;
+        getSavedStoryDao().insertOrReplaceInTx(list);
     }
 
-    getSavedTopStoryDao().deleteAll();
-    getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
-  }
+    public List<Story> getStoryList(String date) {
+        List<SavedStory> savedStories = getSavedStoryDao()
+                .queryBuilder()
+                .where(SavedStoryDao.Properties.Date.eq(date))
+                .orderAsc(SavedStoryDao.Properties.Position)
+                .list();
+        return MappingConvertUtil.toStory(savedStories);
+    }
 
-  public List<TopStory> getTopStoryList() {
-    List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
-    return MappingConvertUtil.toTopStory(savedTopStories);
-  }
+    //========================TopStory=====================================
+    private SavedTopStoryDao getSavedTopStoryDao() {
+        return daoSession.getSavedTopStoryDao();
+    }
 
-  //========================DailyDetail=====================================
-  private SavedDailyDetailDao getDailyDetailDao() {
-    return daoSession.getSavedDailyDetailDao();
-  }
+    public void saveTopStoryList(List<TopStory> list) {
+        if (CommonUtil.isEmpty(list)) {
+            return;
+        }
 
-  public void saveDetailStory(DailyDetail dailyDetail) {
-    getDailyDetailDao().insertOrReplace(MappingConvertUtil.toSavedDailyDetail(dailyDetail));
-  }
+        getSavedTopStoryDao().deleteAll();
+        getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
+    }
 
-  public DailyDetail getDetialStory(long id) {
-    SavedDailyDetail unique =
-        getDailyDetailDao().queryBuilder().where(SavedDailyDetailDao.Properties.Id.eq(id)).unique();
+    public List<TopStory> getTopStoryList() {
+        List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
+        return MappingConvertUtil.toTopStory(savedTopStories);
+    }
 
-    return unique == null ? null : MappingConvertUtil.toDailyDetail(unique);
-  }
+    //========================DailyDetail=====================================
+    private SavedDailyDetailDao getDailyDetailDao() {
+        return daoSession.getSavedDailyDetailDao();
+    }
+
+    public void saveDetailStory(DailyDetail dailyDetail) {
+        getDailyDetailDao().insertOrReplace(MappingConvertUtil.toSavedDailyDetail(dailyDetail));
+    }
+
+    public DailyDetail getDetialStory(long id) {
+        SavedDailyDetail unique = getDailyDetailDao()
+                .queryBuilder()
+                .where(SavedDailyDetailDao.Properties.Id.eq(id))
+                .unique();
+
+        return unique == null ? null : MappingConvertUtil.toDailyDetail(unique);
+    }
 }

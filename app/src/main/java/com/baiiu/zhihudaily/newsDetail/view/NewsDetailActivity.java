@@ -21,82 +21,98 @@ import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {
 
-  public static final String CONTENT_STORY = "content_story";
+    public static final String CONTENT_STORY = "content_story";
 
-  @BindView(R.id.imageView) ImageView imageView;
-  @BindView(R.id.tv_title) TextView tv_title;
-  @BindView(R.id.tv_source) TextView tv_source;
+    @BindView(R.id.imageView) ImageView imageView;
+    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_source) TextView tv_source;
 
-  public static Intent instance(Context context, long id) {
-    return new Intent(context, NewsDetailActivity.class).putExtra(NewsDetailFragment.NEWS_ID, id);
-  }
-
-  public static Intent instance(Context context, Story story) {
-    return new Intent(context, NewsDetailActivity.class).putExtra(CONTENT_STORY, story);
-  }
-
-  @Override public int provideLayoutId() {
-    setCanSwipeBack(true);
-
-    if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-      setTheme(R.style.DayTransparentTheme);
-    } else {
-      setTheme(R.style.NightTransparentTheme);
+    public static Intent instance(Context context, long id) {
+        return new Intent(context, NewsDetailActivity.class).putExtra(NewsDetailFragment.NEWS_ID, id);
     }
 
-    return R.layout.activity_news_detail;
-  }
-
-  @Override protected void initOnCreate(Bundle savedInstanceState) {
-
-    if (LUtils.hasKitKat()) {
-      ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0).setFitsSystemWindows(true);
-      if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-        LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
-      } else {
-        LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
-      }
+    public static Intent instance(Context context, Story story) {
+        return new Intent(context, NewsDetailActivity.class).putExtra(CONTENT_STORY, story);
     }
 
-    long id = 0;
-    if (getIntent().hasExtra(NewsDetailFragment.NEWS_ID)) {
-      id = getIntent().getLongExtra(NewsDetailFragment.NEWS_ID, 0);
+    @Override public int provideLayoutId() {
+        setCanSwipeBack(true);
+
+        if (PreferenceUtil
+                .instance()
+                .get(Constant.UI_MODE, true)) {
+            setTheme(R.style.DayTransparentTheme);
+        } else {
+            setTheme(R.style.NightTransparentTheme);
+        }
+
+        return R.layout.activity_news_detail;
     }
 
-    if (getIntent().hasExtra(CONTENT_STORY)) {
-      Story story = getIntent().getParcelableExtra(CONTENT_STORY);
-      id = story.id;
+    @Override protected void initOnCreate(Bundle savedInstanceState) {
 
-      setTopContent(story.title, null,
-          CommonUtil.isEmpty(story.images) ? null : story.images.get(0));
+        if (LUtils.hasKitKat()) {
+            ((ViewGroup) findViewById(android.R.id.content))
+                    .getChildAt(0)
+                    .setFitsSystemWindows(true);
+
+            if (PreferenceUtil
+                    .instance()
+                    .get(Constant.UI_MODE, true)) {
+
+                LUtils
+                        .instance(this)
+                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+            } else {
+                LUtils
+                        .instance(this)
+                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
+            }
+        }
+
+        long id = 0;
+        if (getIntent().hasExtra(NewsDetailFragment.NEWS_ID)) {
+            id = getIntent().getLongExtra(NewsDetailFragment.NEWS_ID, 0);
+        }
+
+        if (getIntent().hasExtra(CONTENT_STORY)) {
+            Story story = getIntent().getParcelableExtra(CONTENT_STORY);
+            id = story.id;
+
+            setTopContent(story.title, null, CommonUtil.isEmpty(story.images) ? null : story.images.get(0));
+        }
+
+        NewsDetailFragment newsDetailFragment =
+                (NewsDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+
+        if (newsDetailFragment == null) {
+            newsDetailFragment = NewsDetailFragment.instance(id);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, newsDetailFragment, "newsDetailFragment")
+                    .commit();
+        }
+
+        //进行绑定
+        new NewsDetailPresenter(newsDetailFragment);
     }
 
-    NewsDetailFragment newsDetailFragment =
-        (NewsDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+    public void setTopContent(String title, String image_source, String image) {
+        if (!TextUtils.isEmpty(title)) {
+            tv_title.setText(title);
+        }
 
-    if (newsDetailFragment == null) {
-      newsDetailFragment = NewsDetailFragment.instance(id);
+        if (!TextUtils.isEmpty(image_source)) {
+            tv_source.setText(image_source);
+        }
 
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, newsDetailFragment, "newsDetailFragment")
-          .commit();
+        if (!TextUtils.isEmpty(image)) {
+            Glide
+                    .with(this)
+                    .load(image)
+                    .centerCrop()
+                    .into(imageView);
+        }
     }
-
-    //进行绑定
-    new NewsDetailPresenter(newsDetailFragment);
-  }
-
-  public void setTopContent(String title, String image_source, String image) {
-    if (!TextUtils.isEmpty(title)) {
-      tv_title.setText(title);
-    }
-
-    if (!TextUtils.isEmpty(image_source)) {
-      tv_source.setText(image_source);
-    }
-
-    if (!TextUtils.isEmpty(image)) {
-      Glide.with(this).load(image).centerCrop().into(imageView);
-    }
-  }
 }

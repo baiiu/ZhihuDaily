@@ -1,14 +1,16 @@
 package com.baiiu.zhihudaily.newsList.presenter;
 
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
-import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
+import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
+import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.orhanobut.logger.Logger;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * auther: baiiu
@@ -43,67 +45,70 @@ public class NewsListPresenter implements NewsListContract.Presenter {
         //设置是否从远端拉取数据
         newsListRepository.refreshNewsList(fromRemote);
 
-        newsListRepository.loadNewsList("", refresh, new INewsListDataSource.LoadNewsListCallback() {
-            @Override public void onSuccess(Daily daily) {
-                if (daily == null) {
-                    return;
-                }
 
-                if (refresh) {
-                    mNewsListView.showLoadingIndicator(false);
-                }
-
-                if (fromRemote) {
-                    //从远端返回的数据
-                    if (CommonUtil.isEmpty(daily.stories)) {
-                        if (mNewsListView.isDataEmpty()) {
-                            mNewsListView.showEmptyPage();
-                        } else {
-                            mNewsListView.showErrorInfo("拉取数据为空");
-                        }
-                    } else {
-                        mNewsListView.showNews(daily, refresh);
+        newsListRepository.loadNewsList("", refresh)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(daily -> daily != null)
+                .doOnError(Throwable::printStackTrace)
+                .subscribe(daily -> {
+                    if (daily == null) {
+                        return;
                     }
 
-                    mNewsListView.bindFooter(daily.stories, false);
-                } else {
-                    //本地的数据
                     if (refresh) {
-                        if (CommonUtil.isEmpty(daily.stories)) {
-                            //本地都没有缓存
-                            mNewsListView.showLoadingIndicator(false);
-                            onRefresh();
-                        } else {
-                            //本地有,展示数据
-                            mNewsListView.showNews(daily, true);
-                            mNewsListView.bindFooter(daily.stories, true);
+                        mNewsListView.showLoadingIndicator(false);
+                    }
 
-                            UIUtil.postDelayed(new Runnable() {
-                                @Override public void run() {
+                    if (fromRemote) {
+                        //从远端返回的数据
+                        if (CommonUtil.isEmpty(daily.stories)) {
+                            if (mNewsListView.isDataEmpty()) {
+                                mNewsListView.showEmptyPage();
+                            } else {
+                                mNewsListView.showErrorInfo("拉取数据为空");
+                            }
+                        } else {
+                            mNewsListView.showNews(daily, refresh);
+                        }
+
+                        mNewsListView.bindFooter(daily.stories, false);
+                    } else {
+                        //本地的数据
+                        if (refresh) {
+                            if (CommonUtil.isEmpty(daily.stories)) {
+                                //本地都没有缓存
+                                mNewsListView.showLoadingIndicator(false);
+                                onRefresh();
+                            } else {
+                                //本地有,展示数据
+                                mNewsListView.showNews(daily, true);
+                                mNewsListView.bindFooter(daily.stories, true);
+
+                                UIUtil.postDelayed(() -> {
                                     mNewsListView.showLoadingIndicator(true);
                                     onRefresh();
-                                }
-                            }, 1000);
+                                }, 1000);
+                            }
+                        } else {
+                            mNewsListView.showNews(daily, false);
+                            mNewsListView.bindFooter(daily.stories, true);
                         }
-                    } else {
-                        mNewsListView.showNews(daily, false);
-                        mNewsListView.bindFooter(daily.stories, true);
                     }
-                }
-            }
+                }, e -> {
+                    Logger.e(e.toString());
 
-            @Override public void onFailure() {
-                mNewsListView.showLoadingIndicator(false);
-                mNewsListView.showErrorInfo("网络错误");
+                    mNewsListView.showLoadingIndicator(false);
+                    mNewsListView.showErrorInfo("网络错误");
 
-                if (mNewsListView.isDataEmpty()) {
-                    //历史数据都没有
-                    mNewsListView.showErrorPage();
-                } else {
-                    mNewsListView.bindFooter(null, false);
-                }
-            }
-        });
+                    if (mNewsListView.isDataEmpty()) {
+                        //历史数据都没有
+                        mNewsListView.showErrorPage();
+                    } else {
+                        mNewsListView.bindFooter(null, false);
+                    }
+                }, () -> LogUtil.d("onComplete"));
+
     }
 
     @Override public void openNewsDetail(NewsViewHolder holder) {

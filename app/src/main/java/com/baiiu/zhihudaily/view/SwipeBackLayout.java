@@ -96,8 +96,6 @@ public class SwipeBackLayout extends ViewGroup {
 
     /**
      * Set the anchor of calling finish.
-     *
-     * @param offset
      */
     public void setFinishAnchor(float offset) {
         finishAnchor = offset;
@@ -107,8 +105,6 @@ public class SwipeBackLayout extends ViewGroup {
 
     /**
      * Whether allow to finish activity by fling the layout.
-     *
-     * @param b
      */
     public void setEnableFlingBack(boolean b) {
         enableFlingBack = b;
@@ -116,8 +112,7 @@ public class SwipeBackLayout extends ViewGroup {
 
     private SwipeBackListener swipeBackListener;
 
-    @Deprecated
-    public void setOnPullToBackListener(SwipeBackListener listener) {
+    @Deprecated public void setOnPullToBackListener(SwipeBackListener listener) {
         swipeBackListener = listener;
     }
 
@@ -164,8 +159,6 @@ public class SwipeBackLayout extends ViewGroup {
 
     /**
      * Find out the scrollable child view from a ViewGroup.
-     *
-     * @param viewGroup
      */
     private void findScrollView(ViewGroup viewGroup) {
         scrollChild = viewGroup;
@@ -174,7 +167,10 @@ public class SwipeBackLayout extends ViewGroup {
             View child;
             for (int i = 0; i < count; i++) {
                 child = viewGroup.getChildAt(i);
-                if (child instanceof AbsListView || child instanceof ScrollView || child instanceof ViewPager || child instanceof WebView) {
+                if (child instanceof AbsListView
+                        || child instanceof ScrollView
+                        || child instanceof ViewPager
+                        || child instanceof WebView) {
                     scrollChild = child;
                     return;
                 }
@@ -182,8 +178,7 @@ public class SwipeBackLayout extends ViewGroup {
         }
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
         if (getChildCount() == 0) return;
@@ -197,28 +192,29 @@ public class SwipeBackLayout extends ViewGroup {
         int childRight = childLeft + childWidth;
         int childBottom = childTop + childHeight;
 
-        if (child == null)
-            return;
+        if (child == null) return;
 
         child.layout(childLeft, childTop, childRight, childBottom);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getChildCount() > 1) {
             throw new IllegalStateException("SwipeBackLayout must contains only one direct child.");
         }
 
         if (getChildCount() > 0) {
-            int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY);
-            int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight() - getPaddingTop() - getPaddingBottom(), MeasureSpec.EXACTLY);
+            int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth()
+                    - getPaddingLeft()
+                    - getPaddingRight(), MeasureSpec.EXACTLY);
+            int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight()
+                    - getPaddingTop()
+                    - getPaddingBottom(), MeasureSpec.EXACTLY);
             getChildAt(0).measure(measureWidth, measureHeight);
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         verticalDragRange = h;
         horizontalDragRange = w;
@@ -248,8 +244,7 @@ public class SwipeBackLayout extends ViewGroup {
         }
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean handled = false;
         ensureTarget();
         mLeft = (int) ev.getX();
@@ -262,14 +257,12 @@ public class SwipeBackLayout extends ViewGroup {
         return !handled ? super.onInterceptTouchEvent(ev) : handled;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    @Override public boolean onTouchEvent(MotionEvent ev) {
         viewDragHelper.processTouchEvent(ev);
         return true;
     }
 
-    @Override
-    public void computeScroll() {
+    @Override public void computeScroll() {
         if (viewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -301,23 +294,19 @@ public class SwipeBackLayout extends ViewGroup {
 
     private class ViewDragHelperCallBack extends ViewDragHelper.Callback {
 
-        @Override
-        public boolean tryCaptureView(View child, int pointerId) {
+        @Override public boolean tryCaptureView(View child, int pointerId) {
             return child == target && enablePullToBack && mLeft < UIUtil.dp(MARGIN_LEFT_CAN);
         }
 
-        @Override
-        public int getViewVerticalDragRange(View child) {
+        @Override public int getViewVerticalDragRange(View child) {
             return verticalDragRange;
         }
 
-        @Override
-        public int getViewHorizontalDragRange(View child) {
+        @Override public int getViewHorizontalDragRange(View child) {
             return horizontalDragRange;
         }
 
-        @Override
-        public int clampViewPositionVertical(View child, int top, int dy) {
+        @Override public int clampViewPositionVertical(View child, int top, int dy) {
 
             int result = 0;
 
@@ -334,8 +323,7 @@ public class SwipeBackLayout extends ViewGroup {
             return result;
         }
 
-        @Override
-        public int clampViewPositionHorizontal(View child, int left, int dx) {
+        @Override public int clampViewPositionHorizontal(View child, int left, int dx) {
             int result = 0;
 
             if (dragEdge == DragEdge.LEFT && !canChildScrollRight() && left > 0) {
@@ -351,12 +339,12 @@ public class SwipeBackLayout extends ViewGroup {
             return result;
         }
 
-        @Override
-        public void onViewDragStateChanged(int state) {
+        @Override public void onViewDragStateChanged(int state) {
             if (state == draggingState) return;
 
-            if ((draggingState == ViewDragHelper.STATE_DRAGGING || draggingState == ViewDragHelper.STATE_SETTLING) &&
-                    state == ViewDragHelper.STATE_IDLE) {
+            if ((draggingState == ViewDragHelper.STATE_DRAGGING
+                    || draggingState == ViewDragHelper.STATE_SETTLING)
+                    && state == ViewDragHelper.STATE_IDLE) {
                 // the view stopped from moving.
                 if (draggingOffset == getDragRange()) {
                     finish();
@@ -367,8 +355,7 @@ public class SwipeBackLayout extends ViewGroup {
         }
 
 
-        @Override
-        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+        @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             switch (dragEdge) {
                 case TOP:
                 case BOTTOM:
@@ -394,8 +381,7 @@ public class SwipeBackLayout extends ViewGroup {
             }
         }
 
-        @Override
-        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+        @Override public void onViewReleased(View releasedChild, float xvel, float yvel) {
             mLeft = 0;
             if (draggingOffset == 0) return;
 

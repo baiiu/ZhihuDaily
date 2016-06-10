@@ -1,13 +1,9 @@
 package com.baiiu.zhihudaily.newsDetail.model;
 
 import com.baiiu.zhihudaily.util.HttpNetUtil;
-import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.util.db.DBManager;
 import com.baiiu.zhihudaily.util.net.ApiFactory;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -15,54 +11,32 @@ import retrofit2.Response;
  * description: 该逻辑稍微简单些,就写在一块了
  */
 public class NewsDetailRepository implements INewsDetailRepository {
+    @Override public Observable<DailyDetail> loadNewsDetail(long id) {
 
-  @Override public void loadNewsDetail(long id, LoadNewsDetailCallback callback) {
-    if (HttpNetUtil.isConnected()) {
-      //加载并存入缓存
-      loadFromRemote(id, callback);
-    } else {
-      //从缓存中取
-      loadFromLocal(id, callback);
+        if (HttpNetUtil.isConnected()) {
+            //加载并存入缓存
+            return loadFromRemote(id);
+        } else {
+            //从缓存中取
+            return loadFromLocal(id);
+        }
     }
-  }
 
-  private void loadFromRemote(long id, final LoadNewsDetailCallback callback) {
-    ApiFactory.INSTANCE.getDailyAPI().newsDetail(id).enqueue(new Callback<DailyDetail>() {
-      @Override public void onResponse(Call<DailyDetail> call, Response<DailyDetail> response) {
-        DailyDetail body = response.body();
-        callback.onSuccess(body);
-        saveData(body);
-      }
+    private Observable<DailyDetail> loadFromRemote(long id) {
+        return ApiFactory.getDailyAPI()
+                .newsDetail(id)
+                .doOnNext(this::saveData);
+    }
 
-      @Override public void onFailure(Call<DailyDetail> call, Throwable t) {
-        callback.onFailure();
-      }
-    });
-  }
+    private void saveData(DailyDetail response) {
+        DBManager.instance()
+                .saveDetailStory(response);
+    }
 
-  private void saveData(final DailyDetail response) {
-    TinyTaskManager.instance().post(new Runnable() {
-      @Override public void run() {
-        DBManager.instance().saveDetailStory(response);
-      }
-    });
-  }
+    private Observable<DailyDetail> loadFromLocal(final long id) {
+        return Observable.just(id)
+                .flatMap(aLong -> Observable.just(DBManager.instance()
+                        .getDetialStory(id)));
+    }
 
-  private void loadFromLocal(final long id, final LoadNewsDetailCallback callback) {
-    TinyTaskManager.instance().postAtFrontOfQueue(new Runnable() {
-      @Override public void run() {
-        final DailyDetail dailyDetail = DBManager.instance().getDetialStory(id);
-
-        UIUtil.runInMainThread(new Runnable() {
-          @Override public void run() {
-            if (dailyDetail == null) {
-              callback.onFailure();
-            } else {
-              callback.onSuccess(dailyDetail);
-            }
-          }
-        });
-      }
-    });
-  }
 }

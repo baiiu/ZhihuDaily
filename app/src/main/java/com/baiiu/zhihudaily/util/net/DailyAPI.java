@@ -2,9 +2,9 @@ package com.baiiu.zhihudaily.util.net;
 
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.newsList.model.Daily;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -17,9 +17,9 @@ import retrofit2.http.Path;
  */
 public interface DailyAPI {
 
-    @GET("news/latest") Call<Daily> newsLatest();
+    @GET("news/latest") Observable<Daily> newsLatest();
 
-    @GET("news/before/{date}") Call<Daily> newsBefore(@Path("date") String date);
+    @GET("news/before/{date}") Observable<Daily> newsBefore(@Path("date") String date);
 
-    @GET("news/{id}") Call<DailyDetail> newsDetail(@Path("id") long id);
+    @GET("news/{id}") Observable<DailyDetail> newsDetail(@Path("id") long id);
 }

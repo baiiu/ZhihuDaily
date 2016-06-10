@@ -20,28 +20,33 @@ import com.bumptech.glide.Glide;
  */
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
-  @BindView(R.id.imageView) ImageView imageView;
-  public @BindView(R.id.textView) TextView textView;
+    @BindView(R.id.imageView) ImageView imageView;
+    public @BindView(R.id.textView) TextView textView;
 
-  public Story mStroy;
+    public Story mStroy;
 
-  public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
-    super(context, R.layout.holder_news, parent, listener);
-    itemView.setId(R.id.item_news);
-  }
-
-  @Override public void bind(Story data) {
-    itemView.setTag(this);
-    mStroy = data;
-
-    String url = null;
-    if (!CommonUtil.isEmpty(data.images)) {
-      url = data.images.get(0);
+    public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
+        super(context, R.layout.holder_news, parent, listener);
+        itemView.setId(R.id.item_news);
     }
 
-    Glide.with(mContext).load(url).placeholder(R.mipmap.ic_launcher).centerCrop().into(imageView);
+    @Override public void bind(Story data) {
+        itemView.setTag(this);
+        mStroy = data;
 
-    textView.setText(data.title);
-    ReadedListUtil.setTextColor(textView, data.isRead);
-  }
+        String url = null;
+        if (!CommonUtil.isEmpty(data.images)) {
+            url = data.images.get(0);
+        }
+
+        Glide
+                .with(mContext)
+                .load(url)
+                .placeholder(R.mipmap.ic_launcher)
+                .centerCrop()
+                .into(imageView);
+
+        textView.setText(data.title);
+        ReadedListUtil.setTextColor(textView, data.isRead);
+    }
 }

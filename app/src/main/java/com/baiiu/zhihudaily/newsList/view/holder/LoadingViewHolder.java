@@ -11,11 +11,11 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  * description:
  */
 public class LoadingViewHolder extends BaseViewHolder<String> {
-  public LoadingViewHolder(Context mContext, ViewGroup parent) {
-    super(mContext, R.layout.holder_loading, parent);
-  }
+    public LoadingViewHolder(Context mContext, ViewGroup parent) {
+        super(mContext, R.layout.holder_loading, parent);
+    }
 
-  @Override public void bind(String data) {
+    @Override public void bind(String data) {
 
-  }
+    }
 }

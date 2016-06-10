@@ -22,8 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class NewsListFragment extends BaseFragment
-        implements View.OnClickListener, NewsListContract.View {
+public class NewsListFragment extends BaseFragment implements View.OnClickListener, NewsListContract.View {
 
     public static NewsListFragment instance() {
         return new NewsListFragment();
@@ -49,11 +48,12 @@ public class NewsListFragment extends BaseFragment
         dailyNewsAdapter = new DailyNewsAdapter(mContext, this, mNewsListPresenter);
         recyclerView.setAdapter(dailyNewsAdapter);
 
-        getActivity().findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
-            }
-        });
+        getActivity().findViewById(R.id.fab)
+                     .setOnClickListener(new View.OnClickListener() {
+                         @Override public void onClick(View v) {
+                             recyclerView.smoothScrollToPosition(0);
+                         }
+                     });
 
         //放在这里执行,只执行一次,在onResume时可见时会加载页面,不需要这样
         mNewsListPresenter.start();
@@ -78,11 +78,13 @@ public class NewsListFragment extends BaseFragment
     }
 
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(refreshLayout, info, Prompt.SUCCESS).show();
+        TSnackbar.make(refreshLayout, info, Prompt.SUCCESS)
+                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(refreshLayout, info, Prompt.ERROR).show();
+        TSnackbar.make(refreshLayout, info, Prompt.ERROR)
+                 .show();
     }
 
     @Override public void showLoadingPage() {

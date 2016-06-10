@@ -25,31 +25,31 @@ import java.util.List;
  */
 public interface NewsListContract {
 
-  interface View extends BaseView<Presenter> {
-    void showLoadingPage();
+    interface View extends BaseView<Presenter> {
+        void showLoadingPage();
 
-    void showLoadingIndicator(boolean show);
+        void showLoadingIndicator(boolean show);
 
-    void showNews(Daily daily, boolean update);
+        void showNews(Daily daily, boolean update);
 
-    void showEmptyPage();
+        void showEmptyPage();
 
-    void showErrorPage();
+        void showErrorPage();
 
-    boolean isDataEmpty();
+        boolean isDataEmpty();
 
-    void bindFooter(List<Story> list, boolean fromLocal);
+        void bindFooter(List<Story> list, boolean fromLocal);
 
-    //开启新页面
-    void showNewsDetail(Story story);
+        //开启新页面
+        void showNewsDetail(Story story);
 
-    void showNewsReaded(int position, boolean isRead);
-  }
+        void showNewsReaded(int position, boolean isRead);
+    }
 
-  interface Presenter extends BasePresenter, IRefreshLoadMore {
-    //update true时从网络加载数据
-    void loadNewsList(boolean fromRemote, boolean loadMore);
+    interface Presenter extends BasePresenter, IRefreshLoadMore {
+        //update true时从网络加载数据
+        void loadNewsList(boolean fromRemote, boolean loadMore);
 
-    void openNewsDetail(NewsViewHolder holder);
-  }
+        void openNewsDetail(NewsViewHolder holder);
+    }
 }

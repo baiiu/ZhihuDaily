@@ -61,8 +61,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<Story> stories;
     private List<TopStory> topStories;
 
-    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener,
-                            IRefreshLoadMore refreshLoadMore) {
+    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener, IRefreshLoadMore refreshLoadMore) {
         this.mContext = context;
         this.mOnClickListener = onClickListener;
         this.mRefreshLoadMore = refreshLoadMore;
@@ -112,8 +111,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             int startIndex = this.stories.size() - hereStories.size();
 
-            notifyItemRangeInserted(topStories == null ? --startIndex : startIndex,
-                    hereStories.size() + 1);
+            notifyItemRangeInserted(topStories == null ? --startIndex : startIndex, hereStories.size() + 1);
         }
     }
 

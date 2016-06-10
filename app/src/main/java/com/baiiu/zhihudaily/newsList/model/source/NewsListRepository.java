@@ -7,11 +7,13 @@ import com.baiiu.zhihudaily.newsList.model.source.local.NewsListLocalSource;
 import com.baiiu.zhihudaily.newsList.model.source.remote.NewsListRemoteSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
+import com.baiiu.zhihudaily.util.HttpNetUtil;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
-import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.List;
 import java.util.Map;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -32,6 +34,11 @@ public class NewsListRepository implements INewsListDataSource {
 
     private String mCurrentDate;
 
+
+    private Observable<Daily> mRemoteDaily;
+    private Observable<Daily> mLocalDaily;
+
+
     private NewsListRepository() {
         //硬编码注入
         mNewsListLocalSource = new NewsListLocalSource();
@@ -42,51 +49,42 @@ public class NewsListRepository implements INewsListDataSource {
         return new NewsListRepository();
     }
 
-    @Override public void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback) {
+    @RxLogObservable @Override public Observable<Daily> loadNewsList(String date, boolean refresh) {
         if (refresh) {
             //下拉刷新时,reset
             mCurrentDate = null;
         }
 
         if (TextUtils.isEmpty(mCurrentDate)) {
-            mCurrentDate = PreferenceUtil.instance().get(Constant.LATEST_DATE, "");
+            mCurrentDate = PreferenceUtil.instance()
+                    .get(Constant.LATEST_DATE, "");
         }
 
-        loadList(mCurrentDate, refresh, callback);
-    }
-
-    private void loadList(String date, final boolean refresh, final LoadNewsListCallback callback) {
+        Observable<Daily> observable;
 
         if (mFromRemote) {
-            mNewsListRemoteSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
-                @Override public void onSuccess(Daily daily) {
-                    if (refresh) {
-                        PreferenceUtil.instance().put(Constant.LATEST_DATE, daily.date).commit();
-                    }
+            observable = mNewsListRemoteSource.loadNewsList(mCurrentDate, refresh)
+                    .doOnNext(daily -> {
+                        if (refresh) {
+                            PreferenceUtil.instance()
+                                    .put(Constant.LATEST_DATE, daily.date)
+                                    .commit();
+                        }
+                    });
 
-                    mCurrentDate = daily.date;
-                    markRead(daily.stories);
-                    callback.onSuccess(daily);
-                }
-
-                @Override public void onFailure() {
-                    callback.onFailure();
-                }
-            });
         } else {
-            mNewsListLocalSource.loadNewsList(date, refresh, new LoadNewsListCallback() {
-                @Override public void onSuccess(Daily daily) {
+            observable = mNewsListLocalSource.loadNewsList(mCurrentDate, refresh);
+        }
+
+
+        return  observable
+        //return Observable.concat(mLocalDaily, mRemoteDaily)
+        //        .first(daily -> Daily.isAvailable())
+                .filter(daily -> daily != null)
+                .doOnNext(daily -> {
                     mCurrentDate = daily.date;
                     markRead(daily.stories);
-
-                    callback.onSuccess(daily);
-                }
-
-                @Override public void onFailure() {
-                    callback.onFailure();
-                }
-            });
-        }
+                });
     }
 
     /**
@@ -107,5 +105,7 @@ public class NewsListRepository implements INewsListDataSource {
      */
     public void refreshNewsList(boolean fromRemote) {
         this.mFromRemote = fromRemote && HttpNetUtil.isConnected();
+        Daily.setAvailable(!mFromRemote);
     }
+
 }

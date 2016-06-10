@@ -13,47 +13,47 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  * ListView的脚布局，提供三种状态的设置
  */
 public class FooterViewHolder extends BaseViewHolder<Integer> {
-  public static final int HAS_MORE = 0;
-  public static final int NO_MORE = 1;
-  public static final int ERROR = 2;
-  public static final int GONE = 3;
+    public static final int HAS_MORE = 0;
+    public static final int NO_MORE = 1;
+    public static final int ERROR = 2;
+    public static final int GONE = 3;
 
-  private int mCurrentState = -1;
+    private int mCurrentState = -1;
 
-  @BindView(R.id.loading) LinearLayout loadingView;
-  @BindView(R.id.error) LinearLayout errorView;
-  @BindView(R.id.nomore) LinearLayout noMoreView;
+    @BindView(R.id.loading) LinearLayout loadingView;
+    @BindView(R.id.error) LinearLayout errorView;
+    @BindView(R.id.nomore) LinearLayout noMoreView;
 
-  public FooterViewHolder(Context context) {
-    super(UIUtil.inflate(context, R.layout.holder_footer));
-  }
-
-  @Override public synchronized void bind(Integer data) {
-    if (mCurrentState == data) {
-      return;
+    public FooterViewHolder(Context context) {
+        super(UIUtil.inflate(context, R.layout.holder_footer));
     }
 
-    mCurrentState = data;
+    @Override public synchronized void bind(Integer data) {
+        if (mCurrentState == data) {
+            return;
+        }
 
-    loadingView.setVisibility(data == HAS_MORE ? View.VISIBLE : View.INVISIBLE);
-    noMoreView.setVisibility(data == NO_MORE ? View.VISIBLE : View.INVISIBLE);
-    errorView.setVisibility(data == ERROR ? View.VISIBLE : View.INVISIBLE);
-  }
+        mCurrentState = data;
 
-  public boolean isNoMore() {
-    return mCurrentState == NO_MORE;
-  }
+        loadingView.setVisibility(data == HAS_MORE ? View.VISIBLE : View.INVISIBLE);
+        noMoreView.setVisibility(data == NO_MORE ? View.VISIBLE : View.INVISIBLE);
+        errorView.setVisibility(data == ERROR ? View.VISIBLE : View.INVISIBLE);
+    }
 
-  public boolean isError() {
-    return mCurrentState == ERROR;
-  }
+    public boolean isNoMore() {
+        return mCurrentState == NO_MORE;
+    }
 
-  public boolean isHasLoadMore() {
-    return mCurrentState == HAS_MORE;
-  }
+    public boolean isError() {
+        return mCurrentState == ERROR;
+    }
 
-  public void setNoMoreView(View view, LinearLayout.LayoutParams params) {
-    noMoreView.removeAllViews();
-    noMoreView.addView(view, params);
-  }
+    public boolean isHasLoadMore() {
+        return mCurrentState == HAS_MORE;
+    }
+
+    public void setNoMoreView(View view, LinearLayout.LayoutParams params) {
+        noMoreView.removeAllViews();
+        noMoreView.addView(view, params);
+    }
 }

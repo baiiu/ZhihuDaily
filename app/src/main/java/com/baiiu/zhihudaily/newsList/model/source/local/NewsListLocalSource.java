@@ -1,13 +1,11 @@
 package com.baiiu.zhihudaily.newsList.model.source.local;
 
 import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.util.DateUtil;
-import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.util.db.DBManager;
-import java.util.List;
+import com.fernandocejas.frodo.annotation.RxLogObservable;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -16,32 +14,25 @@ import java.util.List;
  */
 public class NewsListLocalSource implements INewsListDataSource {
 
-  @Override public void loadNewsList(final String date, final boolean refresh,
-      final LoadNewsListCallback callback) {
-    TinyTaskManager.instance().postAtFrontOfQueue(new Runnable() {
-      @Override public void run() {
+    @RxLogObservable @Override public Observable<Daily> loadNewsList(String date, boolean refresh) {
+        return Observable.just(date)
+                .map(s -> {
+                    if (!refresh) {
+                        s = DateUtil.getYesterDayDate(s);
+                    }
+                    return s;
+                })
+                .flatMap(s -> {
+                    Daily daily = new Daily();
+                    daily.top_stories = DBManager.instance()
+                            .getTopStoryList();
+                    daily.date = s;
 
-        String cursorDate = date;
-        if (!refresh) {
-          cursorDate = DateUtil.getYesterDayDate(cursorDate);
-        }
+                    daily.stories = DBManager.instance()
+                            .getStoryList(s);
 
-        final Daily daily = new Daily();
+                    return Observable.just(daily);
+                });
 
-        final List<Story> storyList;
-
-        daily.top_stories = DBManager.instance().getTopStoryList();
-        daily.date = cursorDate;
-
-        storyList = DBManager.instance().getStoryList(cursorDate);
-        daily.stories = storyList;
-
-        UIUtil.runInMainThread(new Runnable() {
-          @Override public void run() {
-            callback.onSuccess(daily);
-          }
-        });
-      }
-    });
-  }
+    }
 }

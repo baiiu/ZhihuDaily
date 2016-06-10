@@ -26,7 +26,8 @@ import com.baiiu.zhihudaily.view.base.BaseActivity;
 public class NewsListActivity extends BaseActivity {
 
     @Override public int provideLayoutId() {
-        if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+        if (PreferenceUtil.instance()
+                          .get(Constant.UI_MODE, true)) {
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
@@ -38,10 +39,13 @@ public class NewsListActivity extends BaseActivity {
     @Override protected void initOnCreate(Bundle savedInstanceState) {
 
         if (LUtils.hasKitKat()) {
-            if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+            if (PreferenceUtil.instance()
+                              .get(Constant.UI_MODE, true)) {
+                LUtils.instance(this)
+                      .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
             } else {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
+                LUtils.instance(this)
+                      .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
             }
         }
 
@@ -54,8 +58,8 @@ public class NewsListActivity extends BaseActivity {
             newsListFragment = NewsListFragment.instance();
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, newsListFragment, "MainFragment")
-                    .commit();
+                                       .replace(R.id.container, newsListFragment, "MainFragment")
+                                       .commit();
         }
 
         //newsListFragment.setRetainInstance(true);
@@ -89,12 +93,17 @@ public class NewsListActivity extends BaseActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_theme:
-                if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+                if (PreferenceUtil.instance()
+                                  .get(Constant.UI_MODE, true)) {
                     setTheme(R.style.NightTheme);
-                    PreferenceUtil.instance().put(Constant.UI_MODE, false).commit();
+                    PreferenceUtil.instance()
+                                  .put(Constant.UI_MODE, false)
+                                  .commit();
                 } else {
                     setTheme(R.style.DayTheme);
-                    PreferenceUtil.instance().put(Constant.UI_MODE, true).commit();
+                    PreferenceUtil.instance()
+                                  .put(Constant.UI_MODE, true)
+                                  .commit();
                 }
 
                 Constant.bitmap = ScreenUtil.snapShotWithoutStatusBar(this);

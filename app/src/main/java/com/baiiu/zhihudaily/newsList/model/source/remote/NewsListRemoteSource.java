@@ -6,13 +6,11 @@ import com.baiiu.zhihudaily.newsList.model.TopStory;
 import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.async.MappingConvertUtil;
-import com.baiiu.zhihudaily.util.async.TinyTaskManager;
 import com.baiiu.zhihudaily.util.db.DBManager;
 import com.baiiu.zhihudaily.util.net.ApiFactory;
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.List;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -20,65 +18,31 @@ import retrofit2.Response;
  * description:
  */
 public class NewsListRemoteSource implements INewsListDataSource {
+    @RxLogObservable(RxLogObservable.Scope.EVERYTHING) @Override
+    public Observable<Daily> loadNewsList(String date, boolean refresh) {
+        Observable<Daily> dailyObservable;
 
-  @Override
-  public void loadNewsList(String date, boolean refresh, final LoadNewsListCallback callback) {
-    if (refresh) {
-      ApiFactory.getDailyAPI().newsLatest().enqueue(new Callback<Daily>() {
-        @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
-          Daily body = response.body();
-          callback.onSuccess(body);
-
-          if (body != null) {
-            saveStories(body.stories, body.date);
-            saveTopStories(body.top_stories);
-          }
+        if (refresh) {
+            dailyObservable = ApiFactory.getDailyAPI()
+                    .newsLatest();
+        } else {
+            dailyObservable = ApiFactory.getDailyAPI()
+                    .newsBefore(date);
         }
 
-        @Override public void onFailure(Call<Daily> call, Throwable t) {
-          callback.onFailure();
-        }
-      });
-    } else {
 
-      ApiFactory.getDailyAPI().newsBefore(date).enqueue(new Callback<Daily>() {
-        @Override public void onResponse(Call<Daily> call, Response<Daily> response) {
-          Daily body = response.body();
-          callback.onSuccess(body);
-          if (body != null) {
-            saveStories(body.stories, body.date);
-            saveTopStories(body.top_stories);
-          }
-        }
-
-        @Override public void onFailure(Call<Daily> call, Throwable t) {
-          callback.onFailure();
-        }
-      });
-    }
-  }
-
-  private void saveTopStories(final List<TopStory> top_stories) {
-    if (CommonUtil.isEmpty(top_stories)) {
-      return;
+        return dailyObservable.filter(daily -> daily != null && !CommonUtil.isEmpty(daily.stories))
+                .doOnNext(daily -> saveStories(daily.stories, daily.date));
     }
 
-    TinyTaskManager.instance().post(new Runnable() {
-      @Override public void run() {
-        DBManager.instance().saveTopStoryList(top_stories);
-      }
-    });
-  }
-
-  private void saveStories(final List<Story> stories, final String date) {
-    if (CommonUtil.isEmpty(stories)) {
-      return;
+    private void saveTopStories(final List<TopStory> top_stories) {
+        DBManager.instance()
+                .saveTopStoryList(top_stories);
     }
 
-    TinyTaskManager.instance().post(new Runnable() {
-      @Override public void run() {
-        DBManager.instance().saveStoryList(MappingConvertUtil.toSavedStory(stories, date));
-      }
-    });
-  }
+    private void saveStories(final List<Story> stories, final String date) {
+        DBManager.instance()
+                .saveStoryList(MappingConvertUtil.toSavedStory(stories, date));
+    }
+
 }

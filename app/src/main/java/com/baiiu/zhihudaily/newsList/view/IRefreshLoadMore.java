@@ -8,6 +8,5 @@ import android.support.v4.widget.SwipeRefreshLayout;
  * description:
  */
 public interface IRefreshLoadMore extends SwipeRefreshLayout.OnRefreshListener {
-  void loadMore();
-
+    void loadMore();
 }

@@ -11,11 +11,11 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  * description:
  */
 public class ErrorViewHolder extends BaseViewHolder<String> {
-  public ErrorViewHolder(Context mContext, ViewGroup parent) {
-    super(mContext, R.layout.holder_error, parent);
-  }
+    public ErrorViewHolder(Context mContext, ViewGroup parent) {
+        super(mContext, R.layout.holder_error, parent);
+    }
 
-  @Override public void bind(String data) {
+    @Override public void bind(String data) {
 
-  }
+    }
 }

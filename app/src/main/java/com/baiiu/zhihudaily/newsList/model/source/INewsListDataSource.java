@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily.newsList.model.source;
 
 import com.baiiu.zhihudaily.newsList.model.Daily;
+import rx.Observable;
 
 /**
  * author: baiiu
@@ -9,11 +10,6 @@ import com.baiiu.zhihudaily.newsList.model.Daily;
  */
 public interface INewsListDataSource {
 
-  void loadNewsList(String date, boolean refresh, LoadNewsListCallback callback);
+    Observable<Daily> loadNewsList(String date, boolean refresh);
 
-  interface LoadNewsListCallback {
-    void onSuccess(Daily daily);
-
-    void onFailure();
-  }
 }

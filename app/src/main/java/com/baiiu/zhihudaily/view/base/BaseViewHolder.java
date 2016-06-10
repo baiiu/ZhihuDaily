@@ -16,43 +16,41 @@ import butterknife.ButterKnife;
  * BaseViewHolder
  */
 public abstract class BaseViewHolder<E> extends RecyclerView.ViewHolder {
-  public OnClickListener mListener;
-  public Context mContext;
+    public OnClickListener mListener;
+    public Context mContext;
 
-  public BaseViewHolder(View itemView) {
-    super(itemView);
-    ButterKnife.bind(this, itemView);
-  }
-
-  public BaseViewHolder(Context context, View itemView) {
-    super(itemView);
-    this.mContext = context;
-    ButterKnife.bind(this, itemView);
-  }
-
-  public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent) {
-    this(context, layoutId, parent, null);
-  }
-
-  public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent,
-      OnClickListener listener) {
-    this(context, layoutId, parent, listener, true);
-  }
-
-  public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent,
-      OnClickListener listener, boolean canItemClick) {
-    super(UIUtil.inflate(context, layoutId, parent, false));
-    this.mContext = context;
-
-    ButterKnife.bind(this, itemView);
-    if (listener != null) {
-      this.mListener = listener;
-
-      if (canItemClick && itemView != null) {
-        itemView.setOnClickListener(listener);
-      }
+    public BaseViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
     }
-  }
 
-  public abstract void bind(E data);
+    public BaseViewHolder(Context context, View itemView) {
+        super(itemView);
+        this.mContext = context;
+        ButterKnife.bind(this, itemView);
+    }
+
+    public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent) {
+        this(context, layoutId, parent, null);
+    }
+
+    public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent, OnClickListener listener) {
+        this(context, layoutId, parent, listener, true);
+    }
+
+    public BaseViewHolder(Context context, @LayoutRes int layoutId, ViewGroup parent, OnClickListener listener, boolean canItemClick) {
+        super(UIUtil.inflate(context, layoutId, parent, false));
+        this.mContext = context;
+
+        ButterKnife.bind(this, itemView);
+        if (listener != null) {
+            this.mListener = listener;
+
+            if (canItemClick && itemView != null) {
+                itemView.setOnClickListener(listener);
+            }
+        }
+    }
+
+    public abstract void bind(E data);
 }
