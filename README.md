@@ -5,7 +5,6 @@ The tags in master shows the evolution of the project step-by-step, You will see
 该项目是知乎日报的一个实现,主要用来学习各种项目架构.从最基本的代码(全部代码在Activity中)到MVP等,之后依然会持续更新.
 使用tag来表明一步一步重构代码进化过程,从这些分支上可以看到使用MVP的代码是多么清晰.
 
-文章总结: [Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)
 
 ## Branches
 - `the master` has a lot of tags, and the first version code is on it.
@@ -32,7 +31,10 @@ The tags in master shows the evolution of the project step-by-step, You will see
     review with mvp,making the View and Logic separating from each other.It is so great,and looks more elegant.
     使用MVP重构,List页面参考Google samples的三层架构,Detail页面没有把remote和locale分开,你可以看到这两者的区别.
 
+- v1.3
 
+    review with RxJava, based on the MVP,also with Retrofit
+    在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit
 
 
 ## ScreenShot
@@ -41,3 +43,9 @@ The tags in master shows the evolution of the project step-by-step, You will see
 ## ThanksTo
 [知乎日报API](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)<br>
 [PureZhihuD](https://github.com/laucherish/PureZhihuD)
+
+## 文章总结
+[Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)
+[Android 网络框架 Retrofit2.0介绍、使用和封装](http://blog.csdn.net/u014099894/article/details/51441462)
+[Android 项目框架 使用RxJava开发](http://blog.csdn.net/u014099894/article/details/51621858)
+
