@@ -80,6 +80,8 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
             webView.destroy();
             webView = null;
         }
+
+        mNewsDetailPresenter.detachView();
     }
 
     @Override public void showSuccessInfo(String info) {

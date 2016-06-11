@@ -60,6 +60,11 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
         mNewsListPresenter.start();
     }
 
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        mNewsListPresenter.detachView();
+    }
+
     @Override public void onClick(View v) {
         long id = 0;
         switch (v.getId()) {

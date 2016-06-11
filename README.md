@@ -34,7 +34,10 @@ The tags in master shows the evolution of the project step-by-step, You will see
 - v1.3
 
     review with RxJava, based on the MVP,also with Retrofit
-    在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit
+    在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit.
+    
+     - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
+     - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
 
 ## ScreenShot
