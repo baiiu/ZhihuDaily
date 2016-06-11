@@ -77,9 +77,9 @@ public class NewsListRepository implements INewsListDataSource {
         }
 
 
-        return  observable
-        //return Observable.concat(mLocalDaily, mRemoteDaily)
-        //        .first(daily -> Daily.isAvailable())
+        return observable
+                //return Observable.concat(mLocalDaily, mRemoteDaily)
+                //        .first(daily -> Daily.isAvailable())
                 .filter(daily -> daily != null)
                 .doOnNext(daily -> {
                     mCurrentDate = daily.date;
