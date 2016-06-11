@@ -10,7 +10,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
@@ -38,8 +37,7 @@ public class NewsDetailActivity extends BaseActivity {
     @Override public int provideLayoutId() {
         setCanSwipeBack(true);
 
-        if (PreferenceUtil
-                .instance()
+        if (PreferenceUtil.instance()
                 .get(Constant.UI_MODE, true)) {
             setTheme(R.style.DayTransparentTheme);
         } else {
@@ -52,20 +50,16 @@ public class NewsDetailActivity extends BaseActivity {
     @Override protected void initOnCreate(Bundle savedInstanceState) {
 
         if (LUtils.hasKitKat()) {
-            ((ViewGroup) findViewById(android.R.id.content))
-                    .getChildAt(0)
+            ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)
                     .setFitsSystemWindows(true);
 
-            if (PreferenceUtil
-                    .instance()
+            if (PreferenceUtil.instance()
                     .get(Constant.UI_MODE, true)) {
 
-                LUtils
-                        .instance(this)
+                LUtils.instance(this)
                         .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
             } else {
-                LUtils
-                        .instance(this)
+                LUtils.instance(this)
                         .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
             }
         }
@@ -88,14 +82,10 @@ public class NewsDetailActivity extends BaseActivity {
         if (newsDetailFragment == null) {
             newsDetailFragment = NewsDetailFragment.instance(id);
 
-            getSupportFragmentManager()
-                    .beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, newsDetailFragment, "newsDetailFragment")
                     .commit();
         }
-
-        //进行绑定
-        new NewsDetailPresenter(newsDetailFragment);
     }
 
     public void setTopContent(String title, String image_source, String image) {
@@ -108,8 +98,7 @@ public class NewsDetailActivity extends BaseActivity {
         }
 
         if (!TextUtils.isEmpty(image)) {
-            Glide
-                    .with(this)
+            Glide.with(this)
                     .load(image)
                     .centerCrop()
                     .into(imageView);

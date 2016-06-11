@@ -1,6 +1,6 @@
 ## ZhihuDaily
 This is a project to learn how to build an app with different architecture.
-The tags in master shows the evolution of the project step-by-step. You will see this project becomes clear after the MVP.
+The tags in master shows the evolution of the project step-by-step, You will see this project becomes clear after the MVP.The branch shows the other implementation.
 
 该项目是知乎日报的一个实现,主要用来学习各种项目架构.从最基本的代码(全部代码在Activity中)到MVP等,之后依然会持续更新.
 使用tag来表明一步一步重构代码进化过程,从这些分支上可以看到使用MVP的代码是多么清晰.
@@ -8,8 +8,8 @@ The tags in master shows the evolution of the project step-by-step. You will see
 文章总结: [Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)
 
 ## Branches
-- the `master` branch has a lot of tags, and the first version code is on it.
-- the `branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
+- `the master` has a lot of tags, and the first version code is on it.
+- `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
 
 中文版:
 

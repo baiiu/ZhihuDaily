@@ -7,7 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
+import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
@@ -15,24 +15,22 @@ import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
-
 import java.util.List;
 
-import butterknife.BindView;
-
-public class NewsListFragment extends BaseFragment implements View.OnClickListener, NewsListContract.View {
+public class NewsListFragment extends BaseFragment implements View.OnClickListener, NewsListContract.IView {
 
     public static NewsListFragment instance() {
         return new NewsListFragment();
     }
 
-    private NewsListContract.Presenter mNewsListPresenter;
-    private DailyNewsAdapter dailyNewsAdapter;
+    private NewsListContract.IPresenter mNewsListPresenter;
+    private DailyNewsAdapter mDailyNewsAdapter;
 
-    @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
 
     @Override public int provideLayoutId() {
         return R.layout.fragment_main;
@@ -41,19 +39,22 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        refreshLayout.setOnRefreshListener(mNewsListPresenter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mNewsListPresenter = new NewsListPresenter();
+        mNewsListPresenter.attachView(this);
 
-        dailyNewsAdapter = new DailyNewsAdapter(mContext, this, mNewsListPresenter);
-        recyclerView.setAdapter(dailyNewsAdapter);
+        mRefreshLayout.setOnRefreshListener(mNewsListPresenter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mDailyNewsAdapter = new DailyNewsAdapter(mContext, this, mNewsListPresenter);
+        mRecyclerView.setAdapter(mDailyNewsAdapter);
 
         getActivity().findViewById(R.id.fab)
-                     .setOnClickListener(new View.OnClickListener() {
-                         @Override public void onClick(View v) {
-                             recyclerView.smoothScrollToPosition(0);
-                         }
-                     });
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        mRecyclerView.smoothScrollToPosition(0);
+                    }
+                });
 
         //放在这里执行,只执行一次,在onResume时可见时会加载页面,不需要这样
         mNewsListPresenter.start();
@@ -73,51 +74,47 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    @Override public void setPresenter(NewsListContract.Presenter newsListPresenter) {
-        this.mNewsListPresenter = newsListPresenter;
-    }
-
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(refreshLayout, info, Prompt.SUCCESS)
-                 .show();
+        TSnackbar.make(mRefreshLayout, info, Prompt.SUCCESS)
+                .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(refreshLayout, info, Prompt.ERROR)
-                 .show();
+        TSnackbar.make(mRefreshLayout, info, Prompt.ERROR)
+                .show();
     }
 
     @Override public void showLoadingPage() {
-        dailyNewsAdapter.setLoading(true);
+        mDailyNewsAdapter.setLoading(true);
     }
 
     @Override public void showLoadingIndicator(boolean show) {
-        refreshLayout.setRefreshing(show);
+        mRefreshLayout.setRefreshing(show);
     }
 
     @Override public void showNews(Daily daily, boolean update) {
-        dailyNewsAdapter.setLoading(false);
-        dailyNewsAdapter.setEmpty(false);
-        dailyNewsAdapter.setError(false);
-        dailyNewsAdapter.setDaily(daily, update);
+        mDailyNewsAdapter.setLoading(false);
+        mDailyNewsAdapter.setEmpty(false);
+        mDailyNewsAdapter.setError(false);
+        mDailyNewsAdapter.setDaily(daily, update);
     }
 
     @Override public void showEmptyPage() {
-        dailyNewsAdapter.setEmpty(true);
-        dailyNewsAdapter.notifyDataSetChanged();
+        mDailyNewsAdapter.setEmpty(true);
+        mDailyNewsAdapter.notifyDataSetChanged();
     }
 
     @Override public void showErrorPage() {
-        dailyNewsAdapter.setError(true);
-        dailyNewsAdapter.notifyDataSetChanged();
+        mDailyNewsAdapter.setError(true);
+        mDailyNewsAdapter.notifyDataSetChanged();
     }
 
     @Override public boolean isDataEmpty() {
-        return dailyNewsAdapter.isDataEmpty();
+        return mDailyNewsAdapter.isDataEmpty();
     }
 
     @Override public void bindFooter(List<Story> list, boolean fromLocal) {
-        dailyNewsAdapter.bindFooter(list, fromLocal);
+        mDailyNewsAdapter.bindFooter(list, fromLocal);
     }
 
     @Override public void showNewsDetail(Story story) {
@@ -125,6 +122,6 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override public void showNewsReaded(int position, boolean isRead) {
-        dailyNewsAdapter.notifyItemChanged(position, isRead);
+        mDailyNewsAdapter.notifyItemChanged(position, isRead);
     }
 }

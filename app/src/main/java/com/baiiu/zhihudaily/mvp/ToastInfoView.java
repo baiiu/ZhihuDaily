@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.baiiu.zhihudaily;
+package com.baiiu.zhihudaily.mvp;
 
-public interface BaseView<T> {
-
-    void setPresenter(T presenter);
+public interface ToastInfoView {
 
     void showSuccessInfo(String info);
 

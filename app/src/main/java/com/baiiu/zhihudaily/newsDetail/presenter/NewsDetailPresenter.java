@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily.newsDetail.presenter;
 
 import android.os.Bundle;
+import com.baiiu.zhihudaily.mvp.BasePresenter;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.model.NewsDetailRepository;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
@@ -14,19 +15,12 @@ import rx.schedulers.Schedulers;
  * date: on 16/5/12 15:05
  * description:
  */
-public class NewsDetailPresenter implements NewsDetailContract.Presenter {
+public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView> implements NewsDetailContract.IPresenter {
 
-    private NewsDetailContract.View mNewsDetailView;
     private final NewsDetailRepository mNewsDetailRepository;
     private long id;
 
-    public NewsDetailPresenter(NewsDetailContract.View newsDetailView) {
-        //构造函数注入
-        this.mNewsDetailView = newsDetailView;
-
-        //双向绑定
-        newsDetailView.setPresenter(this);
-
+    public NewsDetailPresenter() {
         //硬编码注入
         mNewsDetailRepository = new NewsDetailRepository();
     }
@@ -39,20 +33,24 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 
     @Override public void start() {
         if (id == 0) {
-            mNewsDetailView.showErrorPage();
+            getMvpView().showErrorPage();
         } else {
-            mNewsDetailView.showLoadingPage();
+            getMvpView().showLoadingPage();
 
-            mNewsDetailRepository.loadNewsDetail(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(dailyDetail -> {
-                        mNewsDetailView.showNewsDetail(dailyDetail);
-                    }, e -> {
-                        Logger.e(e.toString());
-                        mNewsDetailView.showErrorPage();
-                        mNewsDetailView.showErrorInfo("some error");
-                    }, () -> LogUtil.d("onComplete"));
+            mCompositeSubscription.add(
+
+                    mNewsDetailRepository.loadNewsDetail(id)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(dailyDetail -> {
+                                getMvpView().showNewsDetail(dailyDetail);
+                            }, e -> {
+                                Logger.e(e.toString());
+                                getMvpView().showErrorPage();
+                                getMvpView().showErrorInfo("some error");
+                            }, () -> LogUtil.d("onComplete"))
+
+            );
         }
     }
 }

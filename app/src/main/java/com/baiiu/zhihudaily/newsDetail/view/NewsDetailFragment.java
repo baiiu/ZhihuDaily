@@ -12,6 +12,7 @@ import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
+import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
@@ -21,10 +22,10 @@ import com.baiiu.zhihudaily.view.base.BaseFragment;
  * date: on 16/5/10 17:34
  * description:
  */
-public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.View {
+public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.IView {
     public static final String NEWS_ID = "id";
 
-    private NewsDetailContract.Presenter mNewsDetailPresenter;
+    private NewsDetailContract.IPresenter mNewsDetailPresenter;
 
     @BindView(R.id.webViewContainer) FrameLayout webViewContainer;
     @BindView(R.id.emptyLayout) EmptyLayout emptyLayout;
@@ -45,6 +46,9 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getArguments();
+        mNewsDetailPresenter = new NewsDetailPresenter();
+        mNewsDetailPresenter.attachView(this);
+
         mNewsDetailPresenter.processArguments(arguments);
     }
 
@@ -78,19 +82,13 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         }
     }
 
-    @Override public void setPresenter(NewsDetailContract.Presenter presenter) {
-        this.mNewsDetailPresenter = presenter;
-    }
-
     @Override public void showSuccessInfo(String info) {
-        TSnackbar
-                .make(webViewContainer, info, Prompt.SUCCESS)
+        TSnackbar.make(webViewContainer, info, Prompt.SUCCESS)
                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar
-                .make(webViewContainer, info, Prompt.ERROR)
+        TSnackbar.make(webViewContainer, info, Prompt.ERROR)
                 .show();
     }
 
@@ -110,10 +108,10 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         emptyLayout.setVisibility(View.GONE);
         webViewContainer.setVisibility(View.VISIBLE);
 
-        ((NewsDetailActivity) mContext).setTopContent(dailyDetail.title, dailyDetail.image_source, dailyDetail.image);
+        ((NewsDetailActivity) mContext).setTopContent(dailyDetail.title, dailyDetail.image_source,
+                                                      dailyDetail.image);
 
-        webView.loadDataWithBaseURL("", HTMLUtil
-                .handleHtml(dailyDetail.body, true)
+        webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true)
                 .toString(), "text/html", "utf-8", null);
     }
 }

@@ -1,7 +1,8 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.BasePresenter;
-import com.baiiu.zhihudaily.BaseView;
+import com.baiiu.zhihudaily.mvp.MVPPresenter;
+import com.baiiu.zhihudaily.mvp.ToastInfoView;
+import com.baiiu.zhihudaily.mvp.MvpView;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public interface NewsListContract {
 
-    interface View extends BaseView<Presenter> {
+    interface IView extends ToastInfoView, MvpView {
         void showLoadingPage();
 
         void showLoadingIndicator(boolean show);
@@ -46,7 +47,7 @@ public interface NewsListContract {
         void showNewsReaded(int position, boolean isRead);
     }
 
-    interface Presenter extends BasePresenter, IRefreshLoadMore {
+    interface IPresenter extends IRefreshLoadMore, MVPPresenter<IView> {
         //update true时从网络加载数据
         void loadNewsList(boolean fromRemote, boolean loadMore);
 
