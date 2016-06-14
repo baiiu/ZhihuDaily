@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily.newsList.model.source;
 
 import android.text.TextUtils;
+import com.baiiu.zhihudaily.di.scope.PerFragment;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.source.local.NewsListLocalSource;
@@ -13,6 +14,7 @@ import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.fernandocejas.frodo.annotation.RxLogObservable;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -20,6 +22,7 @@ import rx.Observable;
  * date: on 16/5/11 10:43
  * description: NewsList数据管理类,控制从哪里取数据,并对数据进行处理.
  */
+@PerFragment
 public class NewsListRepository implements INewsListDataSource {
 
     public static final String READ_LIST = "read_list";
@@ -39,15 +42,14 @@ public class NewsListRepository implements INewsListDataSource {
     private Observable<Daily> mLocalDaily;
 
 
-    private NewsListRepository() {
-        //硬编码注入
-        mNewsListLocalSource = new NewsListLocalSource();
-        mNewsListRemoteSource = new NewsListRemoteSource();
+    @Inject public NewsListRepository(NewsListLocalSource localSource, NewsListRemoteSource remoteSource) {
+        mNewsListLocalSource = localSource;
+        mNewsListRemoteSource = remoteSource;
     }
 
-    public static NewsListRepository instance() {
-        return new NewsListRepository();
-    }
+    //public static NewsListRepository instance() {
+    //    return new NewsListRepository();
+    //}
 
     @RxLogObservable @Override public Observable<Daily> loadNewsList(String date, boolean refresh) {
         if (refresh) {

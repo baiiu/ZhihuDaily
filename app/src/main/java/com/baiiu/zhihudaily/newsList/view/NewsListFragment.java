@@ -19,6 +19,7 @@ import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
 import java.util.List;
+import javax.inject.Inject;
 
 public class NewsListFragment extends BaseFragment implements View.OnClickListener, NewsListContract.IView {
 
@@ -26,7 +27,8 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
         return new NewsListFragment();
     }
 
-    private NewsListContract.IPresenter mNewsListPresenter;
+    @Inject NewsListPresenter mNewsListPresenter;
+
     private DailyNewsAdapter mDailyNewsAdapter;
 
     @BindView(R.id.refreshLayout) SwipeRefreshLayout mRefreshLayout;
@@ -39,7 +41,9 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mNewsListPresenter = new NewsListPresenter();
+        //mNewsListPresenter = new NewsListPresenter();
+
+        ((NewsListActivity) getActivity()).newsListFragmentComponent.inject(this);
         mNewsListPresenter.attachView(this);
 
         mRefreshLayout.setOnRefreshListener(mNewsListPresenter);

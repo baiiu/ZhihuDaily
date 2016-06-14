@@ -11,11 +11,14 @@ import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
+import com.baiiu.zhihudaily.newsDetail.di.DaggerNewsDetailComponent;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.util.HTMLUtil;
+import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
+import javax.inject.Inject;
 
 /**
  * author: baiiu
@@ -25,7 +28,7 @@ import com.baiiu.zhihudaily.view.base.BaseFragment;
 public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.IView {
     public static final String NEWS_ID = "id";
 
-    private NewsDetailContract.IPresenter mNewsDetailPresenter;
+    @Inject NewsDetailPresenter mNewsDetailPresenter;
 
     @BindView(R.id.webViewContainer) FrameLayout webViewContainer;
     @BindView(R.id.emptyLayout) EmptyLayout emptyLayout;
@@ -46,7 +49,12 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getArguments();
-        mNewsDetailPresenter = new NewsDetailPresenter();
+
+        DaggerNewsDetailComponent.builder()
+                .appComponent(UIUtil.getAppComponent())
+                .build()
+                .inject(this);
+
         mNewsDetailPresenter.attachView(this);
 
         mNewsDetailPresenter.processArguments(arguments);

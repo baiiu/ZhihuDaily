@@ -18,6 +18,7 @@ import rx.Observable;
  * description:
  */
 public class NewsListRemoteSource implements INewsListDataSource {
+
     @RxLogObservable(RxLogObservable.Scope.EVERYTHING) @Override
     public Observable<Daily> loadNewsList(String date, boolean refresh) {
         Observable<Daily> dailyObservable;

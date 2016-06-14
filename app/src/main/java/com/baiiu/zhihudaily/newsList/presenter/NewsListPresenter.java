@@ -11,6 +11,7 @@ import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.orhanobut.logger.Logger;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -21,12 +22,14 @@ import rx.schedulers.Schedulers;
  */
 
 public class NewsListPresenter extends BasePresenter<NewsListContract.IView> implements NewsListContract.IPresenter {
-    private final NewsListRepository newsListRepository;
+    NewsListRepository mNewsListRepository;
 
     //很明显,使用构造函数注入依赖
-    public NewsListPresenter() {
+    @Inject public NewsListPresenter(NewsListRepository newsListRepository) {
         //持有 NewsList数据操作类,硬编码注入
-        newsListRepository = NewsListRepository.instance();
+        //newsListRepository = NewsListRepository.instance();
+        this.mNewsListRepository = newsListRepository;
+        LogUtil.d(mNewsListRepository.toString());
     }
 
     @Override public void start() {
@@ -37,11 +40,11 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
 
     @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
         //设置是否从远端拉取数据
-        newsListRepository.refreshNewsList(fromRemote);
+        mNewsListRepository.refreshNewsList(fromRemote);
 
         mCompositeSubscription.add(
 
-                newsListRepository.loadNewsList("", refresh)
+                mNewsListRepository.loadNewsList("", refresh)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .filter(daily -> daily != null)

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.baiiu.zhihudaily.DailyApplication;
+import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
@@ -21,6 +22,11 @@ public class UIUtil {
      **/
     public static Context getContext() {
         return DailyApplication.getContext();
+    }
+
+    public static AppComponent getAppComponent() {
+        DailyApplication application = (DailyApplication) getContext().getApplicationContext();
+        return application.getAppComponent();
     }
 
     public static RefWatcher getRefWatcher() {
@@ -88,7 +94,7 @@ public class UIUtil {
      */
     public static int getDrawableId(Context context, String name) {
         return context.getResources()
-                      .getIdentifier(name, "mipmap", context.getPackageName());
+                .getIdentifier(name, "mipmap", context.getPackageName());
     }
 
     /**
@@ -96,8 +102,7 @@ public class UIUtil {
      */
     public static int dp(int dp) {
         return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources()
-                                                                                             .getDisplayMetrics())
-                + 0.5F);
+                .getDisplayMetrics()) + 0.5F);
     }
 
     /**
@@ -111,7 +116,8 @@ public class UIUtil {
         return inflate(context, layoutId, parent, false);
     }
 
-    public static View inflate(Context context, @LayoutRes int layoutId, ViewGroup parent, boolean attatch) {
+    public static View inflate(Context context, @LayoutRes int layoutId, ViewGroup parent,
+            boolean attatch) {
         return getInflater(context).inflate(layoutId, parent, attatch);
     }
 
@@ -127,6 +133,6 @@ public class UIUtil {
      */
     public static int getColor(int resId) {
         return getContext().getResources()
-                           .getColor(resId);
+                .getColor(resId);
     }
 }

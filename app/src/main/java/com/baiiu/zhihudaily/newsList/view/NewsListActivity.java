@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.newsList.di.DaggerNewsListComponent;
+import com.baiiu.zhihudaily.newsList.di.NewsListComponent;
+import com.baiiu.zhihudaily.newsList.di.NewsListFragmentComponent;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
@@ -23,9 +26,11 @@ import com.baiiu.zhihudaily.view.base.BaseActivity;
  */
 public class NewsListActivity extends BaseActivity {
 
+    public NewsListFragmentComponent newsListFragmentComponent;
+
     @Override public int provideLayoutId() {
         if (PreferenceUtil.instance()
-                          .get(Constant.UI_MODE, true)) {
+                .get(Constant.UI_MODE, true)) {
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
@@ -36,14 +41,21 @@ public class NewsListActivity extends BaseActivity {
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
 
+        NewsListComponent newsListComponent = DaggerNewsListComponent.builder()
+                .appComponent(UIUtil.getAppComponent())
+                .build();
+        newsListComponent.inject(this);
+        newsListFragmentComponent = newsListComponent.newsListFragmentComponent();
+
+
         if (LUtils.hasKitKat()) {
             if (PreferenceUtil.instance()
-                              .get(Constant.UI_MODE, true)) {
+                    .get(Constant.UI_MODE, true)) {
                 LUtils.instance(this)
-                      .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
             } else {
                 LUtils.instance(this)
-                      .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
+                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
             }
         }
 
@@ -56,11 +68,13 @@ public class NewsListActivity extends BaseActivity {
             newsListFragment = NewsListFragment.instance();
 
             getSupportFragmentManager().beginTransaction()
-                                       .replace(R.id.container, newsListFragment, "MainFragment")
-                                       .commit();
+                    .replace(R.id.container, newsListFragment, "MainFragment")
+                    .commit();
         }
 
         //newsListFragment.setRetainInstance(true);
+
+
     }
 
     //=====================Menu===================================
@@ -80,16 +94,16 @@ public class NewsListActivity extends BaseActivity {
                 return true;
             case R.id.action_theme:
                 if (PreferenceUtil.instance()
-                                  .get(Constant.UI_MODE, true)) {
+                        .get(Constant.UI_MODE, true)) {
                     setTheme(R.style.NightTheme);
                     PreferenceUtil.instance()
-                                  .put(Constant.UI_MODE, false)
-                                  .commit();
+                            .put(Constant.UI_MODE, false)
+                            .commit();
                 } else {
                     setTheme(R.style.DayTheme);
                     PreferenceUtil.instance()
-                                  .put(Constant.UI_MODE, true)
-                                  .commit();
+                            .put(Constant.UI_MODE, true)
+                            .commit();
                 }
 
                 Constant.bitmap = ScreenUtil.snapShotWithoutStatusBar(this);
