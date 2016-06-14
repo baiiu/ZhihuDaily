@@ -27,11 +27,18 @@ public class RepositoryModule {
     }
 
     @Provides @PerApp public NewsListRemoteSource provideRemoteSource() {
+        /*
+            在此处可以把retrofit API创建出来,通过构造函数注入,但不想那么做,现在封装的觉得不错.
+            之后在做单元测试时若有不妥,可通过Dagger2提供依赖.
+         */
         return new NewsListRemoteSource();
     }
 
 
     @Provides @PerApp public NewsDetailRepository provideNewsDetailRepository() {
+        /*
+
+         */
         return new NewsDetailRepository();
     }
 

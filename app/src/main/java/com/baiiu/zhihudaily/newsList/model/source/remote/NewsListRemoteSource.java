@@ -19,6 +19,11 @@ import rx.Observable;
  */
 public class NewsListRemoteSource implements INewsListDataSource {
 
+    // 可以在Dagger2中这样注入,再添加一个@Provider方法即可
+    //public NewsListRemoteSource(DailyApplication dailyAPI) {
+    //    this.mDailyAPI = dailyAPI;
+    //}
+
     @RxLogObservable(RxLogObservable.Scope.EVERYTHING) @Override
     public Observable<Daily> loadNewsList(String date, boolean refresh) {
         Observable<Daily> dailyObservable;
