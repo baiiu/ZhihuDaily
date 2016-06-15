@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.util.async;
+package com.baiiu.zhihudaily.util.db;
 
 import android.text.TextUtils;
 import baiiu.greendao.gen.SavedDailyDetail;

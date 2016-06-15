@@ -8,7 +8,7 @@ import com.baiiu.zhihudaily.newsList.model.source.local.NewsListLocalSource;
 import com.baiiu.zhihudaily.newsList.model.source.remote.NewsListRemoteSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.util.Constant;
-import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.fernandocejas.frodo.annotation.RxLogObservable;

@@ -6,7 +6,7 @@ import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;

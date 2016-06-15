@@ -11,12 +11,12 @@ import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
+import com.baiiu.zhihudaily.util.router.Navigator;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
 import java.util.List;
 import javax.inject.Inject;
@@ -78,7 +78,7 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.item_topic_news:
                 id = (long) v.getTag(R.id.item_topic_news);
-                startActivity(NewsDetailActivity.instance(mContext, id));
+                Navigator.INSTANCE.navigatorToDetail(mContext, id);
                 break;
         }
     }
@@ -127,7 +127,7 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override public void showNewsDetail(Story story) {
-        startActivity(NewsDetailActivity.instance(mContext, story));
+        Navigator.INSTANCE.navigatorToDetail(mContext, story);
     }
 
     @Override public void showNewsReaded(int position, boolean isRead) {

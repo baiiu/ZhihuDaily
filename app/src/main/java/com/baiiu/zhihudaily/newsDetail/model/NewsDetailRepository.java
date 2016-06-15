@@ -1,6 +1,6 @@
 package com.baiiu.zhihudaily.newsDetail.model;
 
-import com.baiiu.zhihudaily.util.HttpNetUtil;
+import com.baiiu.zhihudaily.util.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.util.db.DBManager;
 import com.baiiu.zhihudaily.util.net.ApiFactory;
 import rx.Observable;

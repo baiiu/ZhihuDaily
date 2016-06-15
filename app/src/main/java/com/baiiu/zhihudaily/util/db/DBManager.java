@@ -9,7 +9,6 @@ import baiiu.greendao.gen.SavedStory;
 import baiiu.greendao.gen.SavedStoryDao;
 import baiiu.greendao.gen.SavedTopStory;
 import baiiu.greendao.gen.SavedTopStoryDao;
-import com.baiiu.zhihudaily.util.async.MappingConvertUtil;
 import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.TopStory;

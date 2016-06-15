@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.baiiu.zhihudaily.util.HttpNetUtil;
-
 
 /**
  * Created by baiiu on 15/11/17.

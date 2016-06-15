@@ -5,7 +5,7 @@ import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.TopStory;
 import com.baiiu.zhihudaily.newsList.model.source.INewsListDataSource;
 import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.async.MappingConvertUtil;
+import com.baiiu.zhihudaily.util.db.MappingConvertUtil;
 import com.baiiu.zhihudaily.util.db.DBManager;
 import com.baiiu.zhihudaily.util.net.ApiFactory;
 import com.fernandocejas.frodo.annotation.RxLogObservable;
