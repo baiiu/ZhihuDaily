@@ -1,5 +1,6 @@
 package com.baiiu.zhihudaily.mvp;
 
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -17,10 +18,19 @@ public abstract class BasePresenter<T extends MvpView> implements MVPPresenter<T
         mCompositeSubscription = new CompositeSubscription();
     }
 
+    protected void addSubscription(Subscription subscription) {
+        if (subscription == null) {
+            return;
+        }
+        mCompositeSubscription.add(subscription);
+    }
+
     @Override public void detachView() {
         mMvpView = null;
-        mCompositeSubscription.unsubscribe();
-        mCompositeSubscription = null;
+        if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
+            mCompositeSubscription.unsubscribe();
+            mCompositeSubscription = null;
+        }
     }
 
     public boolean isViewAttached() {

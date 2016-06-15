@@ -39,6 +39,10 @@ The tags in master shows the evolution of the project step-by-step, You will see
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
+- Latest
+    
+    review with Dagger2
+    使用Dagger2重构代码
 
 ## ScreenShot
 ![ZhihuDaily](images/daily.gif "Gif Example")

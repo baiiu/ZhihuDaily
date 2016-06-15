@@ -42,7 +42,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
         //设置是否从远端拉取数据
         mNewsListRepository.refreshNewsList(fromRemote);
 
-        mCompositeSubscription.add(
+        addSubscription(
 
                 mNewsListRepository.loadNewsList("", refresh)
                         .subscribeOn(Schedulers.io())
