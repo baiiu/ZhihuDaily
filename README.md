@@ -21,13 +21,13 @@ The tags in master shows the evolution of the project step-by-step, You will see
     version 1.0,all codes are in the Activity and with no fragments, the basic code for all variants.
     全部代码在Activity中,作为重构的基础
 
-- v1.1 
-    
+- v1.1
+
     pull all codes out from activity into fragment
     将部分代码抽离到Fragment中,为下一步打基础
 
 - v1.2
-    
+
     review with mvp,making the View and Logic separating from each other.It is so great,and looks more elegant.
     使用MVP重构,List页面参考Google samples的三层架构,Detail页面没有把remote和locale分开,你可以看到这两者的区别.
 
@@ -35,12 +35,12 @@ The tags in master shows the evolution of the project step-by-step, You will see
 
     review with RxJava, based on the MVP,also with Retrofit
     在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit.
-    
+
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
 - Latest
-    
+
     review with Dagger2
     使用Dagger2重构代码
 
@@ -52,7 +52,7 @@ The tags in master shows the evolution of the project step-by-step, You will see
 [PureZhihuD](https://github.com/laucherish/PureZhihuD)
 
 ## 文章总结
-[Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)
-[Android 网络框架 Retrofit2.0介绍、使用和封装](http://blog.csdn.net/u014099894/article/details/51441462)
-[Android 项目框架 使用RxJava开发](http://blog.csdn.net/u014099894/article/details/51621858)
-
+[Android 项目框架 使用MVP开发](http://blog.csdn.net/u014099894/article/details/51388170)<br>
+[Android 网络框架 Retrofit2.0介绍、使用和封装](http://blog.csdn.net/u014099894/article/details/51441462)<br>
+[Android 项目框架 使用RxJava开发](http://blog.csdn.net/u014099894/article/details/51621858)<br>
+[Android 依赖注入框架 Dagger2使用](http://blog.csdn.net/u014099894/article/details/51675362)<br>

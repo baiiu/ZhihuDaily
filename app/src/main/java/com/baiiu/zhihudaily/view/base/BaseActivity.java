@@ -3,7 +3,6 @@ package com.baiiu.zhihudaily.view.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,12 +13,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.view.SwipeBackLayout;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
  * Created by baiiu on 15/11/16.
  * Base
  */
-public abstract class BaseActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
+public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
     @Nullable @BindView(R.id.toolbar) public Toolbar toolbar;
     protected ActionBar actionBar;
@@ -77,8 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeBac
     @Override public void setContentView(int layoutResID) {
         if (canSwipeBack) {
             super.setContentView(getContainer());
-            View view = LayoutInflater
-                    .from(this)
+            View view = LayoutInflater.from(this)
                     .inflate(layoutResID, null);
             swipeBackLayout.addView(view);
         } else {
@@ -93,7 +92,8 @@ public abstract class BaseActivity extends AppCompatActivity implements SwipeBac
         ivShadow = new ImageView(this);
         ivShadow.setBackgroundColor(getResources().getColor(R.color.black_p50));
         RelativeLayout.LayoutParams params =
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                                                RelativeLayout.LayoutParams.MATCH_PARENT);
         container.addView(ivShadow, params);
         container.addView(swipeBackLayout);
         return container;
