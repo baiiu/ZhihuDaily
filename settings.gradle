@@ -1,1 +1,1 @@
-include ':app', ':dao-generator', ':tsnackbar'
+include ':app', ':dao-generator', ':tsnackbar', ':stickyHeaderRecyclerView'

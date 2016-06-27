@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.model.TopStory;
@@ -17,7 +15,8 @@ import com.baiiu.zhihudaily.newsList.view.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
-
+import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ import java.util.List;
  * date: on 16/4/5 14:44
  * description: 第一次set时默认展示Loading页面
  */
-public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> implements StickyRecyclerHeadersAdapter<DateViewHolder> {
 
     public static final int TYPE_TOPIC = 0;
     public static final int TYPE_NEWS = 1;
@@ -61,7 +60,8 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<Story> stories;
     private List<TopStory> topStories;
 
-    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener, IRefreshLoadMore refreshLoadMore) {
+    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener,
+            IRefreshLoadMore refreshLoadMore) {
         this.mContext = context;
         this.mOnClickListener = onClickListener;
         this.mRefreshLoadMore = refreshLoadMore;
@@ -93,7 +93,18 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         if (latest) {
+            Story storyDate = new Story();
+            storyDate.mType = DailyNewsAdapter.TYPE_DATE;
+            storyDate.title = daily.date;
+            hereStories.add(0, storyDate);
+
+            for (Story story : hereStories) {
+                story.date = daily.date;
+            }
+
             this.stories = hereStories;
+
+
             this.topStories = daily.top_stories;
 
             //// TODO: 16/4/12 可以删掉,添加顶部轮播图
@@ -102,10 +113,15 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             notifyDataSetChanged();
         } else {
             //添加分割线Date
-            Story story = new Story();
-            story.mType = DailyNewsAdapter.TYPE_DATE;
-            story.title = daily.date;
-            this.stories.add(story);
+            Story storyDate = new Story();
+            storyDate.mType = DailyNewsAdapter.TYPE_DATE;
+            storyDate.title = daily.date;
+            this.stories.add(storyDate);
+
+
+            for (Story story : hereStories) {
+                story.date = daily.date;
+            }
 
             this.stories.addAll(hereStories);
 
@@ -221,6 +237,29 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             return TYPE_TOPIC;
         }
         return stories.get(--position).mType;
+    }
+
+    @Override public long getHeaderId(int position) {
+        if (stories == null) {
+            return 0;
+        }
+
+        try {
+            Story story = stories.get(CommonUtil.isEmpty(topStories) ? position : --position);
+            return Long.parseLong(story.date);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override public DateViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return new DateViewHolder(mContext, parent);
+    }
+
+    @Override public void onBindHeaderViewHolder(DateViewHolder holder, int position) {
+        if (stories != null) {
+            holder.bind(stories.get(CommonUtil.isEmpty(topStories) ? position : --position));
+        }
     }
 
     @Override public int getItemCount() {

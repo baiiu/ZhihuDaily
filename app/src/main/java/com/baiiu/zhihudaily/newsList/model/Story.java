@@ -17,6 +17,7 @@ public class Story implements Parcelable {
     public long id;
     public String ga_prefix;
     public String title;
+    public String date;
     public boolean isRead;
 
     public int mType = DailyNewsAdapter.TYPE_NEWS;

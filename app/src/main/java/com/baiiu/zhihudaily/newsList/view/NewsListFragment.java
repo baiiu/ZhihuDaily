@@ -17,7 +17,11 @@ import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.router.Navigator;
+import com.baiiu.zhihudaily.util.Constant;
+import com.baiiu.zhihudaily.util.PreferenceUtil;
+import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -47,18 +51,26 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
         mNewsListPresenter.attachView(this);
 
         mRefreshLayout.setOnRefreshListener(mNewsListPresenter);
+
+        if (PreferenceUtil.instance()
+                .get(Constant.UI_MODE, true)) {
+            mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Day));
+        } else {
+            mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Night));
+        }
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mDailyNewsAdapter = new DailyNewsAdapter(mContext, this, mNewsListPresenter);
         mRecyclerView.setAdapter(mDailyNewsAdapter);
 
+        StickyRecyclerHeadersDecoration headersDecor =
+                new StickyRecyclerHeadersDecoration(mDailyNewsAdapter);
+        mRecyclerView.addItemDecoration(headersDecor);
+
         getActivity().findViewById(R.id.fab)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        mRecyclerView.smoothScrollToPosition(0);
-                    }
-                });
+                .setOnClickListener(v -> mRecyclerView.smoothScrollToPosition(0));
 
         //放在这里执行,只执行一次,在onResume时可见时会加载页面,不需要这样
         mNewsListPresenter.start();

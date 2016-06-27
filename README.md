@@ -6,15 +6,6 @@ The tags in master shows the evolution of the project step-by-step, You will see
 使用tag来表明一步一步重构代码进化过程,从这些分支上可以看到使用MVP的代码是多么清晰.
 
 
-## Branches
-- `the master` has a lot of tags, and the first version code is on it.
-- `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
-
-中文版:
-
-- `master`分支上的tag表示每次重构后的完整代码
-- `branch_mvp_variant`分支是 MVP变种 分支,使用Fragment作为Presenter,我把点击事件当做逻辑放在Presenter中,代码简化了不少
-
 ## Version
 - v1.0
 
@@ -39,10 +30,22 @@ The tags in master shows the evolution of the project step-by-step, You will see
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
-- Latest
+- latest
+    review with Dagger2,make repository singleton
+    最新版使用了dagger2,将repository放在application中变成单例,网络部分并没有动,因为封装的比较好,没有再使用Dagger2注入.
 
-    review with Dagger2
-    使用Dagger2重构代码
+
+## Branches
+- `the master` has a lot of tags, and the first version code is on it.
+- `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
+
+中文版:
+
+- `master`分支上的tag表示每次重构后的完整代码
+- `branch_mvp_variant`分支是 MVP变种 分支,使用Fragment作为Presenter,我把点击事件当做逻辑放在Presenter中,代码简化了不少
+
+
+>>>>>>> to add stickyHeaderRecyclerView
 
 ## ScreenShot
 ![ZhihuDaily](images/daily.gif "Gif Example")
