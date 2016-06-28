@@ -15,6 +15,7 @@ import com.baiiu.zhihudaily.newsList.view.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
+import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.List;
@@ -93,10 +94,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
         }
 
         if (latest) {
-            Story storyDate = new Story();
-            storyDate.mType = DailyNewsAdapter.TYPE_DATE;
-            storyDate.title = daily.date;
-            hereStories.add(0, storyDate);
+            //Story storyDate = new Story();
+            //storyDate.mType = DailyNewsAdapter.TYPE_DATE;
+            //storyDate.title = daily.date;
+            //hereStories.add(0, storyDate);
 
             for (Story story : hereStories) {
                 story.date = daily.date;
@@ -113,10 +114,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
             notifyDataSetChanged();
         } else {
             //添加分割线Date
-            Story storyDate = new Story();
-            storyDate.mType = DailyNewsAdapter.TYPE_DATE;
-            storyDate.title = daily.date;
-            this.stories.add(storyDate);
+            //Story storyDate = new Story();
+            //storyDate.mType = DailyNewsAdapter.TYPE_DATE;
+            //storyDate.title = daily.date;
+            //this.stories.add(storyDate);
 
 
             for (Story story : hereStories) {
@@ -124,10 +125,10 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
             }
 
             this.stories.addAll(hereStories);
+            //int startIndex = this.stories.size() - hereStories.size();
+            //notifyItemRangeInserted(topStories == null ? --startIndex : startIndex, hereStories.size() + 1);
 
-            int startIndex = this.stories.size() - hereStories.size();
-
-            notifyItemRangeInserted(topStories == null ? --startIndex : startIndex, hereStories.size() + 1);
+            notifyDataSetChanged();
         }
     }
 
@@ -240,10 +241,6 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
     }
 
     @Override public long getHeaderId(int position) {
-        if (stories == null) {
-            return 0;
-        }
-
         try {
             Story story = stories.get(CommonUtil.isEmpty(topStories) ? position : --position);
             return Long.parseLong(story.date);
@@ -257,8 +254,14 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
     }
 
     @Override public void onBindHeaderViewHolder(DateViewHolder holder, int position) {
-        if (stories != null) {
-            holder.bind(stories.get(CommonUtil.isEmpty(topStories) ? position : --position));
+        try {
+            Story story = stories.get(position);
+            holder.bind(story);
+            LogUtil.d(position +", " + story.toString());
+        } catch (Exception e) {
+            Story story = new Story();
+            story.title = "title";
+            holder.bind(story);
         }
     }
 

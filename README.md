@@ -30,7 +30,8 @@ The tags in master shows the evolution of the project step-by-step, You will see
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
-- latest
+- Latest
+
     review with Dagger2,make repository singleton
     最新版使用了dagger2,将repository放在application中变成单例,网络部分并没有动,因为封装的比较好,没有再使用Dagger2注入.
 
@@ -44,8 +45,6 @@ The tags in master shows the evolution of the project step-by-step, You will see
 - `master`分支上的tag表示每次重构后的完整代码
 - `branch_mvp_variant`分支是 MVP变种 分支,使用Fragment作为Presenter,我把点击事件当做逻辑放在Presenter中,代码简化了不少
 
-
->>>>>>> to add stickyHeaderRecyclerView
 
 ## ScreenShot
 ![ZhihuDaily](images/daily.gif "Gif Example")

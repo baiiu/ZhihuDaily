@@ -22,6 +22,6 @@ public class DateViewHolder extends BaseViewHolder<Story> {
     }
 
     @Override public void bind(Story data) {
-        textView.setText(data.title);
+        textView.setText(data.date);
     }
 }

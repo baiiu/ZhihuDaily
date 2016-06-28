@@ -31,6 +31,16 @@ public class Story implements Parcelable {
         this.title = title;
     }
 
+
+    @Override public String toString() {
+        return "Story{" +
+                "type=" + type +
+                ", id=" + id +
+                ", date='" + date + '\'' +
+                ", mType=" + mType +
+                '}';
+    }
+
     protected Story(Parcel in) {
         images = in.createStringArrayList();
         type = in.readInt();
