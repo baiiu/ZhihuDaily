@@ -29,7 +29,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
 
     public static final int TYPE_TOPIC = 0;
     public static final int TYPE_NEWS = 1;
-    public static final int TYPE_DATE = 2;
+    //public static final int TYPE_DATE = 2;
     public static final int TYPE_FOOTER = 3;
 
     /**
@@ -149,9 +149,9 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
             case TYPE_NEWS:
                 viewHolder = new NewsViewHolder(mContext, parent, mOnClickListener);
                 break;
-            case TYPE_DATE:
-                viewHolder = new DateViewHolder(mContext, parent);
-                break;
+            //case TYPE_DATE:
+            //    viewHolder = new DateViewHolder(mContext, parent);
+            //    break;
             case TYPE_FOOTER:
                 viewHolder = getFooterHolder();
                 break;
@@ -176,7 +176,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
                 holder.bind(topStories);
                 break;
             case TYPE_NEWS:
-            case TYPE_DATE:
+            //case TYPE_DATE:
                 holder.bind(stories.get(CommonUtil.isEmpty(topStories) ? position : --position));
                 break;
             case TYPE_FOOTER:
