@@ -21,7 +21,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
-    @Nullable @BindView(R.id.toolbar) public Toolbar toolbar;
+    @Nullable @BindView(R.id.toolbar) public Toolbar mTtoolbar;
     protected ActionBar actionBar;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
 
         ButterKnife.bind(this);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        if (mTtoolbar != null) {
+            setSupportActionBar(mTtoolbar);
 
             actionBar = getSupportActionBar();
 

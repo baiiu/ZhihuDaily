@@ -15,7 +15,6 @@ import com.baiiu.zhihudaily.newsList.view.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.TopicViewHolder;
 import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.List;
@@ -257,7 +256,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
         try {
             Story story = stories.get(position);
             holder.bind(story);
-            LogUtil.d(position +", " + story.toString());
+            //LogUtil.d(position +", " + story.toString());
         } catch (Exception e) {
             Story story = new Story();
             story.title = "title";

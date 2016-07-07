@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import butterknife.BindView;
@@ -16,11 +15,13 @@ import com.baiiu.zhihudaily.newsList.model.Daily;
 import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.util.router.Navigator;
 import com.baiiu.zhihudaily.util.Constant;
+import com.baiiu.zhihudaily.util.DoubleClickListener;
 import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
+import com.baiiu.zhihudaily.util.router.Navigator;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
+import com.baiiu.zhihudaily.view.fastscroll.FastScrollLinearLayoutManager;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import java.util.List;
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
             mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Night));
         }
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mRecyclerView.setLayoutManager(new FastScrollLinearLayoutManager(mContext));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mDailyNewsAdapter = new DailyNewsAdapter(mContext, this, mNewsListPresenter);
@@ -71,6 +72,16 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
 
         getActivity().findViewById(R.id.fab)
                 .setOnClickListener(v -> mRecyclerView.smoothScrollToPosition(0));
+
+        //双击返回
+        View view = ((NewsListActivity) getActivity()).mTtoolbar;
+        if (view != null) {
+            view.setOnClickListener(new DoubleClickListener() {
+                @Override public void onDoubleClick(View v) {
+                    mRecyclerView.smoothScrollToPosition(0);
+                }
+            });
+        }
 
         //放在这里执行,只执行一次,在onResume时可见时会加载页面,不需要这样
         mNewsListPresenter.start();
