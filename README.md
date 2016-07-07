@@ -33,11 +33,10 @@ The tags in master shows the evolution of the project step-by-step, You will see
 - Latest
 
     - review with Dagger2,make repository singleton
+      最新版使用了dagger2,将repository放在application中变成单例,网络部分并没有动,因为封装的比较好,没有再使用Dagger2注入.
+
     - let the recyclerView move fast to top
-    
-    
-    - 最新版使用了dagger2,将repository放在application中变成单例,网络部分并没有动,因为封装的比较好,没有再使用Dagger2注入.
-    - 添加快速滑动到顶部,默认的当距离比较长时滑动太慢.
+      添加快速滑动到顶部,默认的当距离比较长时滑动太慢.
 
 
 ## Branches

@@ -40,9 +40,12 @@ public class FastScrollLinearLayoutManager extends LinearLayoutManager {
             //if returned value is 2 ms, it means scrolling 1000 pixels with LinearInterpolation should take 2 seconds.
             @Override protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
                 /*
-                    控制单位速度,  dp/每毫秒
+                    控制单位速度,  毫秒/像素, 滑动1像素需要多少毫秒.
 
-                    默认为 (25F/density) dp/每毫秒,
+                    默认为 (25F/densityDpi) 毫秒/像素
+
+                    mdpi上, 1英寸有160个像素点, 25/160,
+                    xxhdpi,1英寸有480个像素点, 25/480,
                  */
 
                 //return 10F / displayMetrics.densityDpi;
