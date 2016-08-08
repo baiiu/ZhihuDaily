@@ -61,3 +61,7 @@ The tags in master shows the evolution of the project step-by-step, You will see
 [Android 网络框架 Retrofit2.0介绍、使用和封装](http://blog.csdn.net/u014099894/article/details/51441462)<br>
 [Android 项目框架 使用RxJava开发](http://blog.csdn.net/u014099894/article/details/51621858)<br>
 [Android 依赖注入框架 Dagger2使用](http://blog.csdn.net/u014099894/article/details/51675362)<br>
+
+## Download
+[fir.im](http://fir.im/159600?release_id=57a8a7e2959d6913c8000022)
+![downLoad](images/ZhihuDaily.png "download")
