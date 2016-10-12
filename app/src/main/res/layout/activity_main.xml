@@ -34,6 +34,10 @@
       android:layout_gravity="bottom|end"
       android:layout_margin="@dimen/fab_margin"
       android:src="@android:drawable/ic_dialog_email"
+      app:layout_behavior="com.baiiu.zhihudaily.view.ScrollAwareFABBehavior"
       />
+
+  <!--com.baiiu.zhihudaily.view.ScrollAwareFABBehavior-->
+  <!--com.baiiu.zhihudaily.view.ScrollAwareFABBehaviorDefault-->
 
 </android.support.design.widget.CoordinatorLayout>

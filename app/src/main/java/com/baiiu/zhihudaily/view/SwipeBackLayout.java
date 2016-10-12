@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
-
 import com.baiiu.zhihudaily.util.UIUtil;
 
 
@@ -85,13 +84,15 @@ public class SwipeBackLayout extends ViewGroup {
      */
     private boolean enablePullToBack = true;
 
-    private static final float BACK_FACTOR = 0.4f;
-    private static final int MARGIN_LEFT_CAN = 40;//dp值
+    private static final int MARGIN_LEFT_CAN = 50;//dp值
 
 
     /**
      * the anchor of calling finish.
      */
+    private static final float BACK_FACTOR = 0.4f;
+
+    //width * BACK_FACTOR
     private float finishAnchor = 0;
 
     /**
@@ -204,12 +205,10 @@ public class SwipeBackLayout extends ViewGroup {
         }
 
         if (getChildCount() > 0) {
-            int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth()
-                    - getPaddingLeft()
-                    - getPaddingRight(), MeasureSpec.EXACTLY);
-            int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight()
-                    - getPaddingTop()
-                    - getPaddingBottom(), MeasureSpec.EXACTLY);
+            int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(),
+                                                           MeasureSpec.EXACTLY);
+            int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
+                                                            MeasureSpec.EXACTLY);
             getChildAt(0).measure(measureWidth, measureHeight);
         }
     }
@@ -296,6 +295,8 @@ public class SwipeBackLayout extends ViewGroup {
 
         @Override public boolean tryCaptureView(View child, int pointerId) {
             return child == target && enablePullToBack && mLeft < UIUtil.dp(MARGIN_LEFT_CAN);
+            //&& !viewDragHelper.checkTouchSlop(ViewDragHelper.DIRECTION_VERTICAL, pointerId)
+            //&& viewDragHelper.isEdgeTouched(ViewDragHelper.EDGE_LEFT, pointerId);
         }
 
         @Override public int getViewVerticalDragRange(View child) {
@@ -342,8 +343,7 @@ public class SwipeBackLayout extends ViewGroup {
         @Override public void onViewDragStateChanged(int state) {
             if (state == draggingState) return;
 
-            if ((draggingState == ViewDragHelper.STATE_DRAGGING
-                    || draggingState == ViewDragHelper.STATE_SETTLING)
+            if ((draggingState == ViewDragHelper.STATE_DRAGGING || draggingState == ViewDragHelper.STATE_SETTLING)
                     && state == ViewDragHelper.STATE_IDLE) {
                 // the view stopped from moving.
                 if (draggingOffset == getDragRange()) {
@@ -397,8 +397,9 @@ public class SwipeBackLayout extends ViewGroup {
                 isBack = false;
             }
 
-            int finalLeft;
-            int finalTop;
+
+            int finalLeft = 0;
+            int finalTop = 0;
             switch (dragEdge) {
                 case LEFT:
                     finalLeft = isBack ? horizontalDragRange : 0;
@@ -417,7 +418,6 @@ public class SwipeBackLayout extends ViewGroup {
                     smoothScrollToY(finalTop);
                     break;
             }
-
         }
     }
 
