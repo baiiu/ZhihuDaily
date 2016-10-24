@@ -47,7 +47,6 @@ public class NewsListActivity extends BaseActivity {
         newsListComponent.inject(this);
         newsListFragmentComponent = newsListComponent.newsListFragmentComponent();
 
-
         if (LUtils.hasKitKat()) {
             if (PreferenceUtil.instance()
                     .get(Constant.UI_MODE, true)) {

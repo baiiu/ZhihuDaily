@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.baiiu.zhihudaily.di.component.DaggerAppComponent;
 import com.baiiu.zhihudaily.di.module.AppModule;
@@ -23,6 +24,25 @@ public class DailyApplication extends Application {
     private AppComponent appComponent;
 
     @Override public void onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                                               .detectAll()
+                                               .penaltyLog()
+                                               //.detectDiskReads()
+                                               //.detectDiskWrites()
+                                               //.detectNetwork()
+                                               //.detectCustomSlowCalls()
+                                               .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                                           .detectAll()
+                                           .penaltyLog()
+                                           //.detectLeakedSqlLiteObjects()
+                                           //.detectLeakedClosableObjects()
+                                           //.detectActivityLeaks()
+                                           //.penaltyDeath() //Crashes the whole process on violation，一旦发现问题崩溃进程
+                                           .build());
+        }
+
         super.onCreate();
         mContext = getApplicationContext();
 
@@ -34,6 +54,8 @@ public class DailyApplication extends Application {
                 .appModule(new AppModule(this))
                 .repositoryModule(new RepositoryModule())
                 .build();
+
+
 
     }
 
