@@ -47,16 +47,16 @@ public class NewsListActivity extends BaseActivity {
         newsListComponent.inject(this);
         newsListFragmentComponent = newsListComponent.newsListFragmentComponent();
 
+        // @formatter:off
         if (LUtils.hasKitKat()) {
-            if (PreferenceUtil.instance()
-                    .get(Constant.UI_MODE, true)) {
-                LUtils.instance(this)
-                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+            if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
             } else {
-                LUtils.instance(this)
-                        .setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
+                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
             }
         }
+        // @formatter:on
+
 
         initBroadCast();
 
@@ -92,18 +92,16 @@ public class NewsListActivity extends BaseActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_theme:
-                if (PreferenceUtil.instance()
-                        .get(Constant.UI_MODE, true)) {
+                // @formatter:off
+                if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
                     setTheme(R.style.NightTheme);
-                    PreferenceUtil.instance()
-                            .put(Constant.UI_MODE, false)
-                            .commit();
+                    PreferenceUtil.instance().put(Constant.UI_MODE, false).commit();
                 } else {
                     setTheme(R.style.DayTheme);
-                    PreferenceUtil.instance()
-                            .put(Constant.UI_MODE, true)
-                            .commit();
+                    PreferenceUtil.instance().put(Constant.UI_MODE, true).commit();
                 }
+                // @formatter:on
+
 
                 Constant.bitmap = ScreenUtil.snapShotWithoutStatusBar(this);
                 startActivity(new Intent(this, SwitchModeActivity.class));
