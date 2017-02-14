@@ -4,14 +4,16 @@ apply plugin: 'android-apt'
 apply plugin: 'com.fernandocejas.frodo'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion as int
-    buildToolsVersion rootProject.ext.buildToolsVersion as String
+    def cfg = rootProject.ext.androidVersionConfig
+
+    compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion as int
-        targetSdkVersion rootProject.ext.targetSdkVersion as int
-        versionCode rootProject.ext.versionCode as int
-        versionName rootProject.ext.versionName as String
+        minSdkVersion cfg.androidMinSdkVersion
+        targetSdkVersion cfg.androidTargetSdkVersion
+        versionCode cfg.versionCode as int
+        versionName cfg.versionName
     }
 
     buildTypes {
@@ -89,11 +91,11 @@ dependencies {
     debugCompile assistance.stethoOkHttp as String
 
 
-
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'
 
-
     //logger
     compile 'com.github.orhanobut:logger:1.12'
+
+
 }

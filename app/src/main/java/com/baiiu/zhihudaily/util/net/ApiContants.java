@@ -7,5 +7,5 @@ package com.baiiu.zhihudaily.util.net;
  */
 public interface ApiContants {
 
-  String GITHUB_BASEURL = "http://news-at.zhihu.com/api/4/";
+    String GITHUB_BASEURL = "http://news-at.zhihu.com/api/4/";
 }

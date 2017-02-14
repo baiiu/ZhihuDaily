@@ -11,6 +11,7 @@ import static com.baiiu.zhihudaily.util.PreferenceUtil.instance;
  * date: on 16/2/19 14:45
  * description:
  */
+// @formatter:off
 public class ReadedListUtil {
 
   public static void saveToReadedList(String prefName, String id) {

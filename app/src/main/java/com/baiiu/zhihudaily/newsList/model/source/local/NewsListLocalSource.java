@@ -18,7 +18,7 @@ public class NewsListLocalSource implements INewsListDataSource {
         return Observable.just(date)
                 .map(s -> {
                     if (!refresh) {
-                        s = DateUtil.getYesterDayDate(s);
+                        s = DateUtil.getYesterdayDate(s);
                     }
                     return s;
                 })

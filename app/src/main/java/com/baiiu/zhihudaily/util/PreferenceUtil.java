@@ -18,7 +18,8 @@ public class PreferenceUtil {
     private static final String defaultFile = "default";
 
     private PreferenceUtil(String fileName) {
-        settings = UIUtil.getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
+        settings = UIUtil.getContext()
+                .getSharedPreferences(fileName, Context.MODE_PRIVATE);
         editor = settings.edit();
     }
 
@@ -46,7 +47,8 @@ public class PreferenceUtil {
             preferenceManagerWeakHashMap.clear();
         }
 
-        if ((preferenceManagerWeakHashMap.get(fileName) == null || !preferenceManagerWeakHashMap.containsKey(fileName))) {
+        if ((preferenceManagerWeakHashMap.get(fileName) == null || !preferenceManagerWeakHashMap.containsKey(
+                fileName))) {
             PreferenceUtil manager = new PreferenceUtil(fileName);
             preferenceManagerWeakHashMap.put(fileName, manager);
         }
@@ -132,25 +134,25 @@ public class PreferenceUtil {
     }
 
     //    public PreferenceManager putObject(String key, Object value) {
-//        if (value != null) {
-//            String str = GsonUtil.toJson(value);
-//            editor.putString(key, str);
-//        } else {
-//            editor.remove(key);
-//        }
-//        return this;
-//    }
-//
-//    public <T> T getObject(String key, Class<T> classOfT) {
-//        String str = settings.getString(key, null);
-//        if (TextUtils.isEmpty(str))
-//            return null;
-//        try {
-//            T t = GsonUtil.parseJson(str, classOfT);
-//            return t;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+    //        if (value != null) {
+    //            String str = GsonUtil.toJson(value);
+    //            editor.putString(key, str);
+    //        } else {
+    //            editor.remove(key);
+    //        }
+    //        return this;
+    //    }
+    //
+    //    public <T> T getObject(String key, Class<T> classOfT) {
+    //        String str = settings.getString(key, null);
+    //        if (TextUtils.isEmpty(str))
+    //            return null;
+    //        try {
+    //            T t = GsonUtil.parseJson(str, classOfT);
+    //            return t;
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            return null;
+    //        }
+    //    }
 }

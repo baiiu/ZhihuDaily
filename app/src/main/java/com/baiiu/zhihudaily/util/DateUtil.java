@@ -14,30 +14,31 @@ import java.util.Locale;
  */
 public class DateUtil {
 
-  /**
-   * @param date 20160331
-   */
-  public static String getYesterDayDate(String date) {
-    if (TextUtils.isEmpty(date)) {
-      return null;
+    /**
+     * @param date 20160331
+     */
+    public static String getYesterdayDate(String date) {
+        if (TextUtils.isEmpty(date)) {
+            return null;
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+
+        try {
+            Date parseDate = simpleDateFormat.parse(date);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(parseDate);
+
+            int day = calendar.get(Calendar.DATE);
+            calendar.set(Calendar.DATE, day - 1);
+
+            return simpleDateFormat.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-
-    try {
-      Date parseDate = simpleDateFormat.parse(date);
-
-      Calendar calendar = Calendar.getInstance();
-      calendar.setTime(parseDate);
-
-      int day = calendar.get(Calendar.DATE);
-      calendar.set(Calendar.DATE, day - 1);
-
-      return simpleDateFormat.format(calendar.getTime());
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-
-    return null;
-  }
 }

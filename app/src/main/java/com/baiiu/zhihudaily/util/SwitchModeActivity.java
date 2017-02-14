@@ -9,28 +9,28 @@ import com.baiiu.zhihudaily.R;
 
 public class SwitchModeActivity extends AppCompatActivity {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    //requestWindowFeature(Window.FEATURE_NO_TITLE);
-    //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-    //    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //    WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    Bitmap pic = Constant.bitmap;
+        Bitmap pic = Constant.bitmap;
 
-    ImageView imageView = new ImageView(this);
+        ImageView imageView = new ImageView(this);
 
-    if (pic != null) {
-      imageView.setImageBitmap(pic);
+        if (pic != null) {
+            imageView.setImageBitmap(pic);
+        }
+
+        setContentView(imageView);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                finish();
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+            }
+        }, 500);
     }
-
-    setContentView(imageView);
-
-    new Handler().postDelayed(new Runnable() {
-      @Override public void run() {
-        finish();
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-      }
-    }, 500);
-  }
 }

@@ -116,8 +116,7 @@ public class UIUtil {
         return inflate(context, layoutId, parent, false);
     }
 
-    public static View inflate(Context context, @LayoutRes int layoutId, ViewGroup parent,
-            boolean attatch) {
+    public static View inflate(Context context, @LayoutRes int layoutId, ViewGroup parent, boolean attatch) {
         return getInflater(context).inflate(layoutId, parent, attatch);
     }
 
