@@ -15,15 +15,16 @@ import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.data.bean.mapper.MappingConvertUtil;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
+import de.greenrobot.dao.AbstractDao;
 import java.util.List;
 
 /**
  * author: baiiu
  * date: on 16/4/7 14:31
  * description:
+ * 数据库仅仅是提供基础操作，CRUD，不要做业务操作
  */
 public class DBManager {
-
     private static final String DB_NAME = "daily-db";
 
     private static DBManager dbManager;
@@ -49,8 +50,18 @@ public class DBManager {
         return dbManager;
     }
 
+
+    public <T, K> void save(AbstractDao<T, K> dao, List<T> list) {
+        dao.insertOrReplaceInTx(list);
+    }
+
+    public <T, K> List<T> query(AbstractDao<T, K> dao) {
+        return dao.queryBuilder().list();
+    }
+
+
     //=======================Story================================
-    private SavedStoryDao getSavedStoryDao() {
+    public SavedStoryDao getSavedStoryDao() {
         return daoSession.getSavedStoryDao();
     }
 

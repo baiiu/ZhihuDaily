@@ -106,7 +106,6 @@ public class MappingConvertUtil {
         dailyDetail.image = savedDailyDetail.getImage();
         dailyDetail.title = savedDailyDetail.getTitle();
         dailyDetail.share_url = savedDailyDetail.getShare_url();
-        //// TODO: 16/4/8  js 和 css ,学完前端再说
         return dailyDetail;
     }
 }
