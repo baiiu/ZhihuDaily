@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
  * description:
  */
 public class Constant {
-  public static final String LATEST_DATE = "Latest_Date";
   public static final String UI_MODE = "Ui_mode";
 
   public static Bitmap bitmap;

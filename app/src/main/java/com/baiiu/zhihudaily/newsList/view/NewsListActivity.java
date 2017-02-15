@@ -9,14 +9,11 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsList.di.DaggerNewsListComponent;
-import com.baiiu.zhihudaily.newsList.di.NewsListComponent;
-import com.baiiu.zhihudaily.newsList.di.NewsListFragmentComponent;
+import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
+import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
-import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.util.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.view.base.BaseActivity;
 
 /**
@@ -26,26 +23,20 @@ import com.baiiu.zhihudaily.view.base.BaseActivity;
  */
 public class NewsListActivity extends BaseActivity {
 
-    public NewsListFragmentComponent newsListFragmentComponent;
-
     @Override public int provideLayoutId() {
-        if (PreferenceUtil.instance()
-                .get(Constant.UI_MODE, true)) {
+        // @formatter:off
+        if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
             setTheme(R.style.DayTheme);
         } else {
             setTheme(R.style.NightTheme);
         }
+        // @formatter:on
+
 
         return R.layout.activity_main;
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
-
-        NewsListComponent newsListComponent = DaggerNewsListComponent.builder()
-                .appComponent(UIUtil.getAppComponent())
-                .build();
-        newsListComponent.inject(this);
-        newsListFragmentComponent = newsListComponent.newsListFragmentComponent();
 
         // @formatter:off
         if (LUtils.hasKitKat()) {

@@ -1,14 +1,14 @@
 package com.baiiu.zhihudaily.newsList.presenter;
 
-import com.baiiu.zhihudaily.mvp.BasePresenter;
+import com.baiiu.zhihudaily.data.bean.Daily;
+import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
+import com.baiiu.zhihudaily.data.repository.NewsRepository;
+import com.baiiu.zhihudaily.data.util.CommonUtil;
+import com.baiiu.zhihudaily.data.util.ReadedListUtil;
+import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.source.NewsListRepository;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.util.LogUtil;
-import com.baiiu.zhihudaily.util.ReadedListUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.orhanobut.logger.Logger;
 import javax.inject.Inject;
@@ -22,10 +22,10 @@ import rx.schedulers.Schedulers;
  */
 
 public class NewsListPresenter extends BasePresenter<NewsListContract.IView> implements NewsListContract.IPresenter {
-    NewsListRepository mNewsListRepository;
+    NewsRepository mNewsListRepository;
 
     //很明显,使用构造函数注入依赖
-    @Inject public NewsListPresenter(NewsListRepository newsListRepository) {
+    @Inject public NewsListPresenter(NewsRepository newsListRepository) {
         //持有 NewsList数据操作类,硬编码注入
         //newsListRepository = NewsListRepository.instance();
         this.mNewsListRepository = newsListRepository;
@@ -124,7 +124,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
         //已读
         long id = holder.mStroy.id;
         if (id != 0) {
-            ReadedListUtil.saveToReadedList(NewsListRepository.READ_LIST, String.valueOf(id));
+            ReadedListUtil.saveToReadedList(NewsRepository.READ_LIST, String.valueOf(id));
         }
     }
 

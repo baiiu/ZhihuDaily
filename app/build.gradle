@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'android-apt'
-apply plugin: 'com.fernandocejas.frodo'
 
 android {
     def cfg = rootProject.ext.androidVersionConfig
@@ -39,31 +38,28 @@ android {
     }
 }
 
-frodo {
-    enabled = true
-}
-
 dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':tsnackbar')
     compile project(':stickyHeaderRecyclerView')
+//    compile project(':data')
 
     def support = rootProject.ext.support
-    def rx = rootProject.ext.rx;
-    def majorFrame = rootProject.ext.majorFrame
 
     compile support.appcompat as String
     compile support.design as String
     compile support.recyclerView as String
     compile support.cardView as String
 
+    def rx = rootProject.ext.rx;
     compile rx.rxJava as String
     compile rx.rxAndroid as String
     compile rx.rxLifecycle as String
     compile rx.rxLlifecycleComponents as String
     compile rx.rxBinding as String
 
+    def majorFrame = rootProject.ext.majorFrame
     compile majorFrame.okHttp as String
     compile majorFrame.loggingInterceptor as String
 
@@ -82,7 +78,6 @@ dependencies {
 
 
     def assistance = rootProject.ext.assistance;
-
     debugCompile assistance.leakCanaryDebug as String
     releaseCompile assistance.leakCanaryRelease as String
     testCompile assistance.leakCanaryTest as String
@@ -90,12 +85,10 @@ dependencies {
     debugCompile assistance.stetho as String
     debugCompile assistance.stethoOkHttp as String
 
-
-    //数据库
-    compile 'de.greenrobot:greendao:2.1.0'
-
     //logger
     compile 'com.github.orhanobut:logger:1.12'
 
+    //数据库
+    compile 'de.greenrobot:greendao:2.1.0'
 
 }

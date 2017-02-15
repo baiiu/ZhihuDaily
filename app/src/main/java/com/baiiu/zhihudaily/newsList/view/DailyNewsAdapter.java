@@ -4,9 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
-import com.baiiu.zhihudaily.newsList.model.TopStory;
+import com.baiiu.zhihudaily.data.bean.Daily;
+import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.bean.TopStory;
+import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.newsList.view.holder.DateViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.EmptyViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.ErrorViewHolder;
@@ -14,7 +15,6 @@ import com.baiiu.zhihudaily.newsList.view.holder.FooterViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.TopicViewHolder;
-import com.baiiu.zhihudaily.util.CommonUtil;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.List;
@@ -60,8 +60,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
     private List<Story> stories;
     private List<TopStory> topStories;
 
-    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener,
-            IRefreshLoadMore refreshLoadMore) {
+    public DailyNewsAdapter(Context context, View.OnClickListener onClickListener, IRefreshLoadMore refreshLoadMore) {
         this.mContext = context;
         this.mOnClickListener = onClickListener;
         this.mRefreshLoadMore = refreshLoadMore;
@@ -82,6 +81,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
     }
 
     // latest true:下拉刷新,false上拉加载
+    // TODO: 17/2/15 数据的拼凑放在数据层
     public void setDaily(Daily daily, boolean latest) {
         if (daily == null) {
             return;
@@ -175,7 +175,7 @@ public class DailyNewsAdapter extends RecyclerView.Adapter<BaseViewHolder> imple
                 holder.bind(topStories);
                 break;
             case TYPE_NEWS:
-            //case TYPE_DATE:
+                //case TYPE_DATE:
                 holder.bind(stories.get(CommonUtil.isEmpty(topStories) ? position : --position));
                 break;
             case TYPE_FOOTER:

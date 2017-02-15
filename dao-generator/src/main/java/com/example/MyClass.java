@@ -22,7 +22,7 @@ public class MyClass {
     addStoryDetail(schema);
 
     //生成代码.
-
+    //new DaoGenerator().generateAll(schema, "../ZhihuDaily/data/src/main/java-gen");
     new DaoGenerator().generateAll(schema, "../ZhihuDaily/app/src/main/java-gen");
   }
 

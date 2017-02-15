@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.newsList.model.Story;
-import com.baiiu.zhihudaily.util.CommonUtil;
-import com.baiiu.zhihudaily.util.ReadedListUtil;
+import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.util.CommonUtil;
+import com.baiiu.zhihudaily.data.util.ReadedListUtil;
 import com.baiiu.zhihudaily.view.base.BaseViewHolder;
 import com.bumptech.glide.Glide;
 

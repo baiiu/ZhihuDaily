@@ -10,9 +10,9 @@ import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.data.bean.DailyDetail;
+import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
-import com.baiiu.zhihudaily.newsDetail.di.DaggerNewsDetailComponent;
-import com.baiiu.zhihudaily.newsDetail.model.DailyDetail;
 import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
@@ -50,7 +50,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
         Bundle arguments = getArguments();
 
-        DaggerNewsDetailComponent.builder()
+        DaggerNewsComponent.builder()
                 .appComponent(UIUtil.getAppComponent())
                 .build()
                 .inject(this);

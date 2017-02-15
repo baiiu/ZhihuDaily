@@ -10,14 +10,15 @@ import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.data.bean.Daily;
+import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
+import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
 import com.baiiu.zhihudaily.newsList.presenter.NewsListPresenter;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.DoubleClickListener;
-import com.baiiu.zhihudaily.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.router.Navigator;
 import com.baiiu.zhihudaily.view.base.BaseFragment;
@@ -46,9 +47,12 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //mNewsListPresenter = new NewsListPresenter();
+        DaggerNewsComponent.builder()
+                .appComponent(UIUtil.getAppComponent())
+                .build()
+                .inject(this);
 
-        ((NewsListActivity) getActivity()).newsListFragmentComponent.inject(this);
+
         mNewsListPresenter.attachView(this);
 
         mRefreshLayout.setOnRefreshListener(mNewsListPresenter);

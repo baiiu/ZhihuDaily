@@ -1,10 +1,10 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.mvp.MVPPresenter;
-import com.baiiu.zhihudaily.mvp.ToastInfoView;
-import com.baiiu.zhihudaily.mvp.MvpView;
-import com.baiiu.zhihudaily.newsList.model.Daily;
-import com.baiiu.zhihudaily.newsList.model.Story;
+import com.baiiu.zhihudaily.data.bean.Daily;
+import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.view.mvp.MVPPresenter;
+import com.baiiu.zhihudaily.view.mvp.MvpView;
+import com.baiiu.zhihudaily.view.mvp.ToastInfoView;
 import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import java.util.List;
@@ -53,4 +53,5 @@ public interface NewsListContract {
 
         void openNewsDetail(NewsViewHolder holder);
     }
+
 }

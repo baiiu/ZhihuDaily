@@ -13,38 +13,38 @@ import java.util.Locale;
  * description:
  */
 public class DateClass {
-  public static void main(String[] args) throws ParseException {
-    getYesterDayDate("20160102");
-    getYesterDayDate("20160101");
-    getYesterDayDate("20151231");
-  }
+    public static void main(String[] args) throws ParseException {
+        getYesterDayDate("20160102");
+        getYesterDayDate("20160101");
+        getYesterDayDate("20151231");
+    }
 
-  public static void getYesterDayDate(String date) throws ParseException {
+    public static void getYesterDayDate(String date) throws ParseException {
 
-    //解析指定Date
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-    Date parseDate = simpleDateFormat.parse(date);
+        //解析指定Date
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        Date parseDate = simpleDateFormat.parse(date);
 
-    //设置Calendar
-    Calendar calendar = GregorianCalendar.getInstance();
-    calendar.setTime(parseDate);
+        //设置Calendar
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(parseDate);
 
-    //回滚
-    backOne(calendar);
-    //backTwo(calendar);
+        //回滚
+        backOne(calendar);
+        //backTwo(calendar);
 
-    //转换格式
-    String format = simpleDateFormat.format(calendar.getTime());
+        //转换格式
+        String format = simpleDateFormat.format(calendar.getTime());
 
-    System.out.println(format);
-  }
+        System.out.println(format);
+    }
 
-  private static void backOne(Calendar calendar) {
-    calendar.roll(Calendar.DAY_OF_YEAR, -1);
-  }
+    private static void backOne(Calendar calendar) {
+        calendar.roll(Calendar.DAY_OF_YEAR, -1);
+    }
 
-  private static void backTwo(Calendar calendar) {
-    int day = calendar.get(Calendar.DATE);
-    calendar.set(Calendar.DATE, day - 1);
-  }
+    private static void backTwo(Calendar calendar) {
+        int day = calendar.get(Calendar.DATE);
+        calendar.set(Calendar.DATE, day - 1);
+    }
 }

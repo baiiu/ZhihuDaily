@@ -1,0 +1,69 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    def cfg = rootProject.ext.androidVersionConfig
+
+    compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.androidMinSdkVersion
+        targetSdkVersion cfg.androidTargetSdkVersion
+        versionCode cfg.versionCode as int
+        versionName cfg.versionName
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility as JavaVersion
+        targetCompatibility rootProject.ext.javaTargetCompatibility as JavaVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    testCompile 'junit:junit:4.12'
+
+
+    def rx = rootProject.ext.rx;
+    compile rx.rxJava as String
+    compile rx.rxAndroid as String
+    compile rx.rxLifecycle as String
+    compile rx.rxLlifecycleComponents as String
+
+    def majorFrame = rootProject.ext.majorFrame
+    compile majorFrame.okHttp as String
+    compile majorFrame.loggingInterceptor as String
+
+    compile majorFrame.retrofit as String
+    compile majorFrame.converterGson as String
+    compile majorFrame.adapterRxJava as String
+
+    compile majorFrame.Gson as String
+
+    def assistance = rootProject.ext.assistance;
+    debugCompile assistance.stetho as String
+    debugCompile assistance.stethoOkHttp as String
+
+    //数据库
+    compile 'de.greenrobot:greendao:2.1.0'
+
+
+}

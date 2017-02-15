@@ -1,11 +1,11 @@
 package com.baiiu.zhihudaily.newsDetail.presenter;
 
 import android.os.Bundle;
-import com.baiiu.zhihudaily.mvp.BasePresenter;
+import com.baiiu.zhihudaily.data.repository.NewsRepository;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
-import com.baiiu.zhihudaily.newsDetail.model.NewsDetailRepository;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
 import com.baiiu.zhihudaily.util.LogUtil;
+import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import com.orhanobut.logger.Logger;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,12 +18,12 @@ import rx.schedulers.Schedulers;
  */
 public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView> implements NewsDetailContract.IPresenter {
 
-    private final NewsDetailRepository mNewsDetailRepository;
+    private final NewsRepository mNewsRepository;
     private long id;
 
-    @Inject public NewsDetailPresenter(NewsDetailRepository newsDetailRepository) {
-        mNewsDetailRepository = newsDetailRepository;
-        LogUtil.d(mNewsDetailRepository.toString());//打印看是否为单例
+    @Inject public NewsDetailPresenter(NewsRepository newsDetailRepository) {
+        mNewsRepository = newsDetailRepository;
+        LogUtil.d(mNewsRepository.toString());//打印看是否为单例
     }
 
     @Override public void processArguments(Bundle arguments) {
@@ -40,7 +40,7 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView>
 
             mCompositeSubscription.add(
 
-                    mNewsDetailRepository.loadNewsDetail(id)
+                    mNewsRepository.loadNewsDetail(id)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(dailyDetail -> {
