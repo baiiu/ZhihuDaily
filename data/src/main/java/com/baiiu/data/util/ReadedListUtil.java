@@ -4,7 +4,6 @@ import android.widget.TextView;
 import com.baiiu.zhihudaily.R;
 import java.util.Map;
 
-import static com.baiiu.data.util.PreferenceUtil.instance;
 import static com.baiiu.zhihudaily.util.PreferenceUtil.instance;
 
 /**
