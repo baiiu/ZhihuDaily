@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily.data.net;
 
 
 import com.baiiu.zhihudaily.data.net.retrofit.RetrofitClient;
+import com.baiiu.zhihudaily.data.repository.api.NewsAPI;
 
 /**
  * author: baiiu
@@ -9,9 +10,9 @@ import com.baiiu.zhihudaily.data.net.retrofit.RetrofitClient;
  * description:
  */
 public enum ApiFactory {
-    INSTANCE;
+    ;
 
-    private static DailyAPI dailyAPI;
+    private static NewsAPI newsAPI;
 
     // @formatter:off
     public static <T> T getAPI(T t, Class<T> tClass) {
@@ -19,8 +20,8 @@ public enum ApiFactory {
     }
     // @formatter:on
 
-    public static DailyAPI getDailyAPI() {
-        return dailyAPI = getAPI(dailyAPI, DailyAPI.class);
+    public static NewsAPI getNewsAPI() {
+        return newsAPI = getAPI(newsAPI, NewsAPI.class);
     }
 
 }

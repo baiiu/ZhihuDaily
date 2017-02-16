@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
+import com.baiiu.zhihudaily.data.net.network.NetWorkReceiver;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;

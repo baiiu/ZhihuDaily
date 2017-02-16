@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.data.repository;
 
-import com.baiiu.zhihudaily.data.bean.Daily;
-import com.baiiu.zhihudaily.data.bean.DailyDetail;
+import com.baiiu.zhihudaily.data.entity.Daily;
+import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import rx.Observable;
 
 /**

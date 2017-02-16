@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.data.bean.Daily;
-import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.entity.Daily;
+import com.baiiu.zhihudaily.data.entity.Story;
 import com.baiiu.zhihudaily.view.mvp.MVPPresenter;
 import com.baiiu.zhihudaily.view.mvp.MvpView;
 import com.baiiu.zhihudaily.view.mvp.ToastInfoView;

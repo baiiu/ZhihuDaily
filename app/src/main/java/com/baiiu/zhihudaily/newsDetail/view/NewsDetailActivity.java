@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.entity.Story;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;

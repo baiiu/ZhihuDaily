@@ -2,3 +2,16 @@ include ':app', ':tsnackbar', ':stickyHeaderRecyclerView'
 
 //include ':dao-generator'
 //include ':data'
+
+
+//组件-common
+include(
+
+        ':lib_component:LogUtil',
+        ':lib_component:LogUtilRelease',
+        ':lib_component:Stetho',
+        ':lib_component:fragmentBackHelper',
+        ':lib_component:CrashWoodpecker',
+        ':lib_component:CrashWoodpeckerRelease'
+
+)

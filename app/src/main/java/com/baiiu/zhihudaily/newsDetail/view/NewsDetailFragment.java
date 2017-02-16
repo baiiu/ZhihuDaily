@@ -10,7 +10,7 @@ import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.data.bean.DailyDetail;
+import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;

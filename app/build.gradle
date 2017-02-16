@@ -44,6 +44,8 @@ dependencies {
     compile project(':tsnackbar')
     compile project(':stickyHeaderRecyclerView')
 //    compile project(':data')
+    debugCompile project(':lib_component:LogUtil')
+    releaseCompile project(':lib_component:LogUtilRelease')
 
     def support = rootProject.ext.support
 
@@ -87,9 +89,6 @@ dependencies {
 
     debugCompile assistance.stetho as String
     debugCompile assistance.stethoOkHttp as String
-
-    //logger
-    compile 'com.github.orhanobut:logger:1.12'
 
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'

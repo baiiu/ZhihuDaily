@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.newsDetail;
 
 import android.os.Bundle;
-import com.baiiu.zhihudaily.data.bean.DailyDetail;
+import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import com.baiiu.zhihudaily.view.mvp.MVPPresenter;
 import com.baiiu.zhihudaily.view.mvp.MvpView;
 import com.baiiu.zhihudaily.view.mvp.ToastInfoView;

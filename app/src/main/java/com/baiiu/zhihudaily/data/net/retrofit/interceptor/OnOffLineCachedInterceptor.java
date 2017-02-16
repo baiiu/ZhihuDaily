@@ -1,6 +1,6 @@
 package com.baiiu.zhihudaily.data.net.retrofit.interceptor;
 
-import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
+import com.baiiu.zhihudaily.data.net.network.HttpNetUtil;
 import java.io.IOException;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;

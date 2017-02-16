@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.util.router;
 
 import android.content.Context;
-import com.baiiu.zhihudaily.data.bean.Story;
+import com.baiiu.zhihudaily.data.entity.Story;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailActivity;
 
 /**

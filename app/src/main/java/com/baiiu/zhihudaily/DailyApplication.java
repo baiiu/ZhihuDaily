@@ -7,7 +7,6 @@ import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.baiiu.zhihudaily.di.component.DaggerAppComponent;
 import com.baiiu.zhihudaily.di.module.AppModule;
 import com.baiiu.zhihudaily.di.module.RepositoryModule;
-import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -47,8 +46,6 @@ public class DailyApplication extends Application {
         mContext = getApplicationContext();
 
         refWatcher = LeakCanary.install(this);
-
-        Logger.init();
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

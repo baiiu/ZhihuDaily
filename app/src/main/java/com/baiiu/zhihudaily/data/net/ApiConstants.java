@@ -9,4 +9,5 @@ public interface ApiConstants {
 
     String GITHUB_BASEURL = "http://news-at.zhihu.com/api/4/";
 
+    String CACHE_NAME = "CACHE";
 }

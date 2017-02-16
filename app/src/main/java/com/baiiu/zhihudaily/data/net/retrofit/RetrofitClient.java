@@ -37,4 +37,10 @@ public enum RetrofitClient implements ApiConstants {
     public Retrofit getRetrofit() {
         return retrofit;
     }
+
+
+    public <T> T create(Class<T> tClass) {
+        return retrofit.create(tClass);
+    }
+
 }

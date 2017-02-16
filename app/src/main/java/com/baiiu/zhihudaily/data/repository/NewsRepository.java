@@ -1,48 +1,63 @@
 package com.baiiu.zhihudaily.data.repository;
 
 import android.text.TextUtils;
-import com.baiiu.zhihudaily.data.bean.Daily;
-import com.baiiu.zhihudaily.data.bean.DailyDetail;
-import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
-import com.baiiu.zhihudaily.data.repository.local.NewsLocalSource;
-import com.baiiu.zhihudaily.data.repository.remote.NewsRemoteSource;
+import com.baiiu.library.LogUtil;
+import com.baiiu.zhihudaily.data.entity.Daily;
+import com.baiiu.zhihudaily.data.entity.DailyDetail;
+import com.baiiu.zhihudaily.data.entity.Story;
+import com.baiiu.zhihudaily.data.net.retrofit.RetrofitClient;
+import com.baiiu.zhihudaily.data.repository.api.NewsAPI;
+import com.baiiu.zhihudaily.data.repository.api.NewsProviders;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.data.util.ReadedListUtil;
+import com.baiiu.zhihudaily.data.util.StorageUtil;
+import io.rx_cache.DynamicKey;
+import io.rx_cache.EvictDynamicKey;
+import io.rx_cache.Reply;
+import io.rx_cache.internal.RxCache;
+import io.victoralbertos.jolyglot.GsonSpeaker;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Inject;
 import rx.Observable;
+import rx.functions.Func1;
+
+import static com.baiiu.zhihudaily.data.net.ApiConstants.CACHE_NAME;
 
 /**
  * author: baiiu
- * date: on 16/5/11 10:43
- * description: NewsList数据管理类,控制从哪里取数据,并对数据进行处理.
+ * date: on 17/2/16 14:51
+ * description:
  */
 public class NewsRepository implements INewsDataSource {
     public static final String LATEST_DATE = "Latest_Date";
     public static final String READ_LIST = "read_list";
 
-    private NewsLocalSource mNewsLocalSource;
-    private NewsRemoteSource mNewsRemoteSource;
+    private final NewsProviders mNewsProviders;
+    private final NewsAPI mNewsAPI;
 
-    /**
-     * 从网络加载数据
-     */
-    private boolean mFromRemote = true;
+    public NewsRepository() {
+        File cacheDirectory = StorageUtil.getUnderCacheDirectory(CACHE_NAME, false);
+        mNewsProviders = new RxCache.Builder().persistence(cacheDirectory, new GsonSpeaker())
+                .using(NewsProviders.class);
+
+        mNewsAPI = RetrofitClient.INSTANCE.create(NewsAPI.class);
+    }
 
     private String mCurrentDate;
 
-    @Inject public NewsRepository(NewsLocalSource localSource, NewsRemoteSource remoteSource) {
-        mNewsLocalSource = localSource;
-        mNewsRemoteSource = remoteSource;
+    /**
+     * 控制是否从远端拉去数据
+     */
+    public void refreshNewsList(boolean fromRemote) {
+        //this.mFromRemote = fromRemote && HttpNetUtil.isConnected();
     }
 
     @Override public Observable<Daily> loadNewsList(String date, boolean refresh) {
         if (refresh) {
             //下拉刷新时,reset
-            mCurrentDate = null;
+            mCurrentDate = "latest";
         }
 
         if (TextUtils.isEmpty(mCurrentDate)) {
@@ -50,33 +65,15 @@ public class NewsRepository implements INewsDataSource {
                     .get(LATEST_DATE, "");
         }
 
-        Observable<Daily> observable;
 
-        if (mFromRemote) {
-            observable = mNewsRemoteSource.loadNewsList(mCurrentDate, refresh)
-                    .doOnNext(daily -> {
-                        if (refresh) {
-                            PreferenceUtil.instance()
-                                    .put(LATEST_DATE, daily.date)
-                                    .commit();
-                        }
-                    });
-
-        } else {
-            observable = mNewsLocalSource.loadNewsList(mCurrentDate, refresh);
-        }
-
-
-        return observable
-                //return Observable.concat(mLocalDaily, mRemoteDaily)
-                //        .first(daily -> Daily.isAvailable())
-                .filter(daily -> daily != null)
+        return mNewsProviders.newsList(refresh ? mNewsAPI.newsLatest() : mNewsAPI.newsBefore(mCurrentDate),
+                                       new DynamicKey(mCurrentDate), new EvictDynamicKey(false))
+                .map(extractReply())
                 .doOnNext(daily -> {
                     mCurrentDate = daily.date;
                     markRead(daily.stories);
                 });
     }
-
 
     /**
      * 标记已读
@@ -91,20 +88,18 @@ public class NewsRepository implements INewsDataSource {
         }
     }
 
-    /**
-     * 控制是否从远端拉去数据
-     */
-    public void refreshNewsList(boolean fromRemote) {
-        this.mFromRemote = fromRemote && HttpNetUtil.isConnected();
-        Daily.setAvailable(!mFromRemote);
-    }
 
     @Override public Observable<DailyDetail> loadNewsDetail(long id) {
-        if (HttpNetUtil.isConnected()) {
-            return mNewsRemoteSource.loadNewsDetail(id);
-        } else {
-            return mNewsLocalSource.loadNewsDetail(id);
-        }
+        return mNewsProviders.newsDetail(mNewsAPI.newsDetail(id), new DynamicKey(id))
+                .map(extractReply());
+    }
+
+
+    private static <T> Func1<Reply<T>, T> extractReply() {
+        return tReply -> {
+            LogUtil.d(tReply.toString());
+            return tReply.getData();
+        };
     }
 
 }
