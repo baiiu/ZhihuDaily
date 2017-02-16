@@ -8,6 +8,7 @@
 
 
 2017.2.15
-- 着手将数据层抽出，合并ListRepository和DetailRepository，作为一个模块Repository看待
 
-数据层所负责的是增删改查，不要参与业务逻辑。
+- 着手将数据层抽出，合并ListRepository和DetailRepository，作为一个模块Repository看待
+  数据层所负责的是增删改查，不要参与业务逻辑。
+

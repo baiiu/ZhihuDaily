@@ -12,7 +12,7 @@ import dagger.Component;
  * date: on 16/6/12 16:04
  * description:
  */
-@PerApp //标明该Component中有Module使用了@PerApp
+@PerApp
 @Component(
         modules = {
                 AppModule.class, RepositoryModule.class

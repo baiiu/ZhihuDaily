@@ -48,9 +48,6 @@ public class NewsRemoteSource implements INewsDataSource {
 
     private void saveStories(final List<Story> stories, final String date) {
         DBManager.instance()
-                .saveList(DBManager.instance()
-                                  .getSavedStoryDao(), MappingConvertUtil.toSavedStory(stories, date));
-        DBManager.instance()
                 .saveStoryList(MappingConvertUtil.toSavedStory(stories, date));
     }
 

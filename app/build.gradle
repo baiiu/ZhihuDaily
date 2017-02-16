@@ -58,6 +58,9 @@ dependencies {
     compile rx.rxLifecycle as String
     compile rx.rxLlifecycleComponents as String
     compile rx.rxBinding as String
+    compile "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x"
+    compile 'com.github.VictorAlbertos.Jolyglot:gson:0.0.3'
+
 
     def majorFrame = rootProject.ext.majorFrame
     compile majorFrame.okHttp as String

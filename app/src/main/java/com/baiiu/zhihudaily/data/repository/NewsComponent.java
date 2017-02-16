@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.data.repository;
 
 import com.baiiu.zhihudaily.di.component.AppComponent;
-import com.baiiu.zhihudaily.di.scope.PerActivity;
+import com.baiiu.zhihudaily.di.scope.PerFragment;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
 import com.baiiu.zhihudaily.newsList.view.NewsListFragment;
 import dagger.Component;
@@ -11,7 +11,7 @@ import dagger.Component;
  * date: on 16/6/14 16:54
  * description:
  */
-@PerActivity
+@PerFragment
 @Component(
         dependencies = AppComponent.class
 

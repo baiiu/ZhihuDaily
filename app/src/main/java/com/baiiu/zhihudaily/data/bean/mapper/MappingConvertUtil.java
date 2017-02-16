@@ -1,10 +1,10 @@
 package com.baiiu.zhihudaily.data.bean.mapper;
 
 import android.text.TextUtils;
-import baiiu.greendao.gen.SavedDailyDetail;
-import baiiu.greendao.gen.SavedStory;
-import baiiu.greendao.gen.SavedTopStory;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
+import com.baiiu.zhihudaily.data.bean.SavedDailyDetail;
+import com.baiiu.zhihudaily.data.bean.SavedStory;
+import com.baiiu.zhihudaily.data.bean.SavedTopStory;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.data.util.CommonUtil;

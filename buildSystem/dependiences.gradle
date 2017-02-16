@@ -16,7 +16,7 @@ ext {
     okHttpVersion = '3.3.1'
     okHttpUtilsVersion = '2.6.2'
 
-    rxJavaVersion = '1.2.4'
+    rxJavaVersion = '1.2.5'
     rxAndroidVersion = '1.2.1'
     rxLifeCycleVersion = '1.0'
     rxBindingVersion = '1.0.0'
@@ -27,7 +27,7 @@ ext {
     GlideOkHttpVersion = '1.4.0'
     ButterKnifeVersion = '8.4.0'
 
-    Dagger2Version = '2.0'
+    Dagger2Version = '2.8'
 
     EventBusVersion = '3.0.0'
 
