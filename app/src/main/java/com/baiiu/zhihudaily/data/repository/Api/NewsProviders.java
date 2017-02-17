@@ -16,8 +16,10 @@ import rx.Observable;
 
 public interface NewsProviders {
 
+    @LifeCache(duration = 1,timeUnit = TimeUnit.SECONDS)
     Observable<Reply<Daily>> newsList(Observable<Daily> daily, DynamicKey date/*, EvictDynamicKey evictDynamicKey*/);
 
+    @LifeCache(duration = 1,timeUnit = TimeUnit.SECONDS)
     Observable<Reply<DailyDetail>> newsDetail(Observable<DailyDetail> dailyDetail, DynamicKey id);
 
 }

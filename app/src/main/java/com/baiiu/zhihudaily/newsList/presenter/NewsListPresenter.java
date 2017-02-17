@@ -77,31 +77,31 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
                                 getMvpView().bindFooter(null, false);
                             }
                         })
-        //mNewsListRepository.loadNewsList("", refresh)
-        //        .subscribeOn(Schedulers.io())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .filter(daily -> daily != null)
-        //        .doOnError(Throwable::printStackTrace)
-        //        .subscribe(daily -> {
-        //            if (daily == null) {
-        //                return;
-        //            }
-        //
-        //            dealDaily(fromRemote, refresh, daily);
-        //
-        //        }, e -> {
-        //            LogUtil.e(e.toString());
-        //
-        //            getMvpView().showLoadingIndicator(false);
-        //            getMvpView().showErrorInfo("网络错误");
-        //
-        //            if (getMvpView().isDataEmpty()) {
-        //                //历史数据都没有
-        //                getMvpView().showErrorPage();
-        //            } else {
-        //                getMvpView().bindFooter(null, false);
-        //            }
-        //        })
+                //mNewsListRepository.loadNewsList("", refresh)
+                //        .subscribeOn(Schedulers.io())
+                //        .observeOn(AndroidSchedulers.mainThread())
+                //        .filter(daily -> daily != null)
+                //        .doOnError(Throwable::printStackTrace)
+                //        .subscribe(daily -> {
+                //            if (daily == null) {
+                //                return;
+                //            }
+                //
+                //            dealDaily(fromRemote, refresh, daily);
+                //
+                //        }, e -> {
+                //            LogUtil.e(e.toString());
+                //
+                //            getMvpView().showLoadingIndicator(false);
+                //            getMvpView().showErrorInfo("网络错误");
+                //
+                //            if (getMvpView().isDataEmpty()) {
+                //                //历史数据都没有
+                //                getMvpView().showErrorPage();
+                //            } else {
+                //                getMvpView().bindFooter(null, false);
+                //            }
+                //        })
 
         );
 
@@ -170,16 +170,16 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
     }
 
     @Override public void onRefresh() {
-        if (HttpNetUtil.isConnected()) {
-            //刷新数据时从网络拉取
-            loadNewsList(true, true);
-        } else {
-            getMvpView().showLoadingIndicator(false);
-            getMvpView().showErrorInfo("网络未连接");
-
-            if (getMvpView().isDataEmpty()) {
-                getMvpView().showErrorPage();
-            }
-        }
+        //if (HttpNetUtil.isConnected()) {
+        //刷新数据时从网络拉取
+        loadNewsList(true, true);
+        //} else {
+        //    getMvpView().showLoadingIndicator(false);
+        //    getMvpView().showErrorInfo("网络未连接");
+        //
+        //    if (getMvpView().isDataEmpty()) {
+        //        getMvpView().showErrorPage();
+        //    }
+        //}
     }
 }

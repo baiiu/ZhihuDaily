@@ -5,7 +5,6 @@ import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.entity.Daily;
 import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import com.baiiu.zhihudaily.data.entity.Story;
-import com.baiiu.zhihudaily.data.net.network.HttpNetUtil;
 import com.baiiu.zhihudaily.data.net.retrofit.RetrofitClient;
 import com.baiiu.zhihudaily.data.repository.api.NewsAPI;
 import com.baiiu.zhihudaily.data.repository.api.NewsProviders;
@@ -57,10 +56,10 @@ public class NewsRepository implements INewsDataSource {
         if (refresh) {
             //下拉刷新时,reset
             mCurrentDate = "latest";
-            if (HttpNetUtil.isConnected()) {
-                LogUtil.d("deleted");
-                observable = mRxCache.evictAll();
-            }
+            //if (HttpNetUtil.isConnected()) {
+            //    LogUtil.d("deleted");
+            //    observable = mRxCache.evictAll();
+            //}
         }
 
         if (TextUtils.isEmpty(mCurrentDate)) {

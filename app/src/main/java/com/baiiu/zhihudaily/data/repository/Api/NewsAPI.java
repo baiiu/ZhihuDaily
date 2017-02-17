@@ -1,8 +1,8 @@
 package com.baiiu.zhihudaily.data.repository.api;
 
 
-import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import com.baiiu.zhihudaily.data.entity.Daily;
+import com.baiiu.zhihudaily.data.entity.DailyDetail;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -23,4 +23,5 @@ public interface NewsAPI {
     @GET("news/before/{date}") Observable<Daily> newsBefore(@Path("date") String date);
 
     @GET("news/{id}") Observable<DailyDetail> newsDetail(@Path("id") long id);
+
 }
