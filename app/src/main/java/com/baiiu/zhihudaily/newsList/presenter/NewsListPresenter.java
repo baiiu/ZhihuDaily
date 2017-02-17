@@ -41,8 +41,6 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
 
     @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
         //设置是否从远端拉取数据
-        // TODO: 17/2/16
-        mNewsListRepository.refreshNewsList(fromRemote);
 
         addSubscription(
 
@@ -52,11 +50,19 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
                         .filter(daily -> daily != null)
                         .doOnError(Throwable::printStackTrace)
                         .subscribe(daily -> {
-                            if (daily == null) {
-                                return;
+                            getMvpView().showLoadingIndicator(false);
+
+                            if (CommonUtil.isEmpty(daily.stories)) {
+                                if (getMvpView().isDataEmpty()) {
+                                    getMvpView().showEmptyPage();
+                                } else {
+                                    getMvpView().showErrorInfo("拉取数据为空");
+                                }
+                            } else {
+                                getMvpView().showNews(daily, refresh);
                             }
 
-                            dealDaily(fromRemote, refresh, daily);
+                            getMvpView().bindFooter(daily.stories, false);
 
                         }, e -> {
                             LogUtil.e(e.toString());
@@ -70,7 +76,32 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
                             } else {
                                 getMvpView().bindFooter(null, false);
                             }
-                        }, () -> LogUtil.d("onComplete"))
+                        })
+        //mNewsListRepository.loadNewsList("", refresh)
+        //        .subscribeOn(Schedulers.io())
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .filter(daily -> daily != null)
+        //        .doOnError(Throwable::printStackTrace)
+        //        .subscribe(daily -> {
+        //            if (daily == null) {
+        //                return;
+        //            }
+        //
+        //            dealDaily(fromRemote, refresh, daily);
+        //
+        //        }, e -> {
+        //            LogUtil.e(e.toString());
+        //
+        //            getMvpView().showLoadingIndicator(false);
+        //            getMvpView().showErrorInfo("网络错误");
+        //
+        //            if (getMvpView().isDataEmpty()) {
+        //                //历史数据都没有
+        //                getMvpView().showErrorPage();
+        //            } else {
+        //                getMvpView().bindFooter(null, false);
+        //            }
+        //        })
 
         );
 

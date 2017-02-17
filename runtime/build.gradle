@@ -1,0 +1,12 @@
+apply plugin: 'java'
+group='com.github.VictorAlbertos'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+dependencies {
+    compile 'com.github.VictorAlbertos.Jolyglot:api:0.0.3'
+    compile project(':core')
+
+}

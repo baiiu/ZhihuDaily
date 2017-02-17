@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'base'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.4"
+        classpath 'net.sf.proguard:proguard-gradle:4.11'
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: "net.ltgt.apt"
+
+group = 'com.github.VictorAlbertos'
+version='1.6.0'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+        runtimeClasspath += configurations.provided
+    }
+}
+
+
+dependencies {
+    apt "com.google.dagger:dagger-compiler:2.8"
+    compile "com.google.dagger:dagger:2.8"
+    compile "org.glassfish:javax.annotation:10.0-b28"
+
+    compile "io.reactivex:rxjava:1.2.5"
+    compile 'com.github.VictorAlbertos.Jolyglot:api:0.0.3'
+
+}

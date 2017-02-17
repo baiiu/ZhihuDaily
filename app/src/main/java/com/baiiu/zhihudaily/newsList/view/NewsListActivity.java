@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.data.net.network.HttpNetUtil;
 import com.baiiu.zhihudaily.data.net.network.NetWorkReceiver;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
@@ -31,7 +32,6 @@ public class NewsListActivity extends BaseActivity {
             setTheme(R.style.NightTheme);
         }
         // @formatter:on
-
 
         return R.layout.activity_main;
     }
@@ -109,6 +109,8 @@ public class NewsListActivity extends BaseActivity {
     private NetWorkReceiver netWorkReceiver;
 
     private void initBroadCast() {
+        HttpNetUtil.setConnected();//先初始化一下
+
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         netWorkReceiver = new NetWorkReceiver();
         registerReceiver(netWorkReceiver, filter);

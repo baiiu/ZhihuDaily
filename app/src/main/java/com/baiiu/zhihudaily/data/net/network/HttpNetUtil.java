@@ -10,7 +10,7 @@ public class HttpNetUtil {
     private static boolean isConnected = true;
 
     /**
-     * 获取是否连接
+     * 获取是否连接，在应用启动时先调用下 @{@link {@link #setConnected()}}进行初始化
      */
     public static boolean isConnected() {
         return isConnected;

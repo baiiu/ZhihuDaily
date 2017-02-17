@@ -3,6 +3,7 @@ include ':app', ':tsnackbar', ':stickyHeaderRecyclerView'
 //include ':dao-generator'
 //include ':data'
 
+include ':core',':runtime'
 
 //组件-common
 include(
