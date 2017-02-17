@@ -1,16 +1,15 @@
 package com.baiiu.zhihudaily.newsList.presenter;
 
+import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.ReadedListUtil;
-import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.orhanobut.logger.Logger;
+import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -57,7 +56,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
                             dealDaily(fromRemote, refresh, daily);
 
                         }, e -> {
-                            Logger.e(e.toString());
+                            LogUtil.e(e.toString());
 
                             getMvpView().showLoadingIndicator(false);
                             getMvpView().showErrorInfo("网络错误");

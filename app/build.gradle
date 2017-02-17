@@ -84,9 +84,14 @@ dependencies {
 
     debugCompile assistance.stetho as String
     debugCompile assistance.stethoOkHttp as String
+    releaseCompile project(':lib_component:Stetho')
 
-    //logger
-    compile 'com.github.orhanobut:logger:1.12'
+    debugCompile project(':lib_component:LogUtil')
+    releaseCompile project(':lib_component:LogUtilRelease')
+
+    //bug捕捉
+    debugCompile project(':lib_component:CrashWoodpecker')
+    releaseCompile project(':lib_component:CrashWoodpeckerRelease')
 
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'

@@ -1,12 +1,11 @@
 package com.baiiu.zhihudaily.newsDetail.presenter;
 
 import android.os.Bundle;
+import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
-import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.view.mvp.BasePresenter;
-import com.orhanobut.logger.Logger;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -46,7 +45,7 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView>
                             .subscribe(dailyDetail -> {
                                 getMvpView().showNewsDetail(dailyDetail);
                             }, e -> {
-                                Logger.e(e.toString());
+                               LogUtil.e(e.toString());
                                 getMvpView().showErrorPage();
                                 getMvpView().showErrorInfo("some error");
                             }, () -> LogUtil.d("onComplete"))

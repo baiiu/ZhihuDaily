@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import com.baiiu.zhihudaily.util.LogUtil;
+import com.baiiu.library.LogUtil;
 
 /**
  * author: baiiu

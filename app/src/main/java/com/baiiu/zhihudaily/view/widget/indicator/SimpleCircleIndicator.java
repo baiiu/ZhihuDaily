@@ -8,9 +8,8 @@ import android.graphics.Paint;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-
+import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.util.LogUtil;
 import com.baiiu.zhihudaily.view.widget.indicator._interface.IPageIndicator;
 import com.baiiu.zhihudaily.view.widget.loopvp._interface.ILoopViewPager;
 

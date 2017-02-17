@@ -37,6 +37,7 @@ As well, the project is continue refactoring.
 ## Branches
 - `the master` has a lot of tags, and the first version code is on it.
 - `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
+- `the branch_rxcache` replace GreenDao with RxCache to save data 
 
 中文版:
 
