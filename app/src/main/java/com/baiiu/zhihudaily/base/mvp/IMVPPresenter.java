@@ -1,10 +1,10 @@
-package com.baiiu.zhihudaily.view.mvp;
+package com.baiiu.zhihudaily.base.mvp;
 
 /**
  * Every presenter in the app must either implement this interface or extend BasePresenter
  * indicating the MvpView type that wants to be attached with.
  */
-public interface MVPPresenter<V extends MvpView> {
+public interface IMVPPresenter<V extends MvpView> {
 
     void start();
 
@@ -12,3 +12,4 @@ public interface MVPPresenter<V extends MvpView> {
 
     void detachView();
 }
+

@@ -10,7 +10,7 @@ import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.ReadedListUtil;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.bumptech.glide.Glide;
 
 /**

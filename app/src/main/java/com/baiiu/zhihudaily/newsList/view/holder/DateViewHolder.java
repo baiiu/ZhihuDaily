@@ -6,7 +6,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 
 /**
  * author: baiiu

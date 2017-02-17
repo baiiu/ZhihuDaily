@@ -2,9 +2,9 @@ package com.baiiu.zhihudaily.newsList;
 
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.view.mvp.MVPPresenter;
-import com.baiiu.zhihudaily.view.mvp.MvpView;
-import com.baiiu.zhihudaily.view.mvp.ToastInfoView;
+import com.baiiu.zhihudaily.base.mvp.MVPPresenter;
+import com.baiiu.zhihudaily.base.mvp.MvpView;
+import com.baiiu.zhihudaily.base.mvp.ToastInfoView;
 import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import java.util.List;
@@ -47,11 +47,11 @@ public interface NewsListContract {
         void showNewsReaded(int position, boolean isRead);
     }
 
-    interface IPresenter extends IRefreshLoadMore, MVPPresenter<IView> {
+    abstract class IPresenter extends MVPPresenter<IView> implements IRefreshLoadMore {
         //update true时从网络加载数据
-        void loadNewsList(boolean fromRemote, boolean loadMore);
+        public abstract void loadNewsList(boolean fromRemote, boolean loadMore);
 
-        void openNewsDetail(NewsViewHolder holder);
+        public abstract void openNewsDetail(NewsViewHolder holder);
     }
 
 }

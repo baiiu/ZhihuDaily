@@ -2,6 +2,7 @@ package com.baiiu.zhihudaily.data.util;
 
 import android.os.Looper;
 import android.text.TextUtils;
+import com.baiiu.zhihudaily.base.ApiResponse;
 import com.facebook.stetho.common.LogUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -78,6 +79,7 @@ public class CommonUtil {
 
     //============================URL============================================
 
+
     /**
      * 只encode中文
      */
@@ -111,6 +113,10 @@ public class CommonUtil {
     }
 
     //============================ELSE============================================
+
+    public static boolean isNotResponse(ApiResponse apiResponse) {
+        return apiResponse == null || apiResponse.code != 0 || apiResponse.data == null;
+    }
 
     //生存uuid
     public static String generateUUID() {

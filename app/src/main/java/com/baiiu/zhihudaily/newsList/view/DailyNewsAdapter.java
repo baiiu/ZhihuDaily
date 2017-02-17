@@ -9,13 +9,13 @@ import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.newsList.view.holder.DateViewHolder;
-import com.baiiu.zhihudaily.newsList.view.holder.EmptyViewHolder;
-import com.baiiu.zhihudaily.newsList.view.holder.ErrorViewHolder;
-import com.baiiu.zhihudaily.newsList.view.holder.FooterViewHolder;
-import com.baiiu.zhihudaily.newsList.view.holder.LoadingViewHolder;
+import com.baiiu.zhihudaily.base.list.holder.EmptyViewHolder;
+import com.baiiu.zhihudaily.base.list.holder.ErrorViewHolder;
+import com.baiiu.zhihudaily.base.list.holder.FooterViewHolder;
+import com.baiiu.zhihudaily.base.list.holder.LoadingViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.newsList.view.holder.TopicViewHolder;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.List;
 

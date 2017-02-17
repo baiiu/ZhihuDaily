@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.view.base;
+package com.baiiu.zhihudaily.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +21,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
-    @Nullable @BindView(R.id.toolbar) public Toolbar mTtoolbar;
+    @Nullable @BindView(R.id.toolbar) public Toolbar mToolbar;
     protected ActionBar actionBar;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
 
         ButterKnife.bind(this);
 
-        if (mTtoolbar != null) {
-            setSupportActionBar(mTtoolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
 
             actionBar = getSupportActionBar();
 
@@ -91,9 +91,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
         swipeBackLayout.setOnSwipeBackListener(this);
         ivShadow = new ImageView(this);
         ivShadow.setBackgroundColor(getResources().getColor(R.color.black_p50));
-        RelativeLayout.LayoutParams params =
-                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                                                RelativeLayout.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                                                                             RelativeLayout.LayoutParams.MATCH_PARENT);
         container.addView(ivShadow, params);
         container.addView(swipeBackLayout);
         return container;

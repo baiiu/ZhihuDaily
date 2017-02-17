@@ -2,18 +2,18 @@ package com.baiiu.zhihudaily.newsDetail;
 
 import android.os.Bundle;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
-import com.baiiu.zhihudaily.view.mvp.MVPPresenter;
-import com.baiiu.zhihudaily.view.mvp.MvpView;
-import com.baiiu.zhihudaily.view.mvp.ToastInfoView;
+import com.baiiu.zhihudaily.base.mvp.MVPPresenter;
+import com.baiiu.zhihudaily.base.mvp.MvpView;
+import com.baiiu.zhihudaily.base.mvp.ToastInfoView;
 
 /**
  * author: baiiu
  * date: on 16/5/11 10:38
  * description:
  */
-public class NewsDetailContract {
+public interface NewsDetailContract {
 
-    public interface IView extends ToastInfoView, MvpView {
+    interface IView extends ToastInfoView, MvpView {
         void showErrorPage();
 
         void showLoadingPage();
@@ -21,7 +21,7 @@ public class NewsDetailContract {
         void showNewsDetail(DailyDetail dailyDetail);
     }
 
-    public interface IPresenter extends MVPPresenter<IView> {
-        void processArguments(Bundle arguments);
+    abstract class IPresenter extends MVPPresenter<IView> {
+        public abstract void processArguments(Bundle arguments);
     }
 }

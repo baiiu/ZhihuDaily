@@ -1,9 +1,11 @@
-package com.baiiu.zhihudaily.newsList.view.holder;
+package com.baiiu.zhihudaily.base.list.holder;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
+import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 
 /**
  * author: baiiu
@@ -11,11 +13,21 @@ import com.baiiu.zhihudaily.view.base.BaseViewHolder;
  * description:
  */
 public class ErrorViewHolder extends BaseViewHolder<String> {
+    @BindView(R.id.retry) View retry;
+
     public ErrorViewHolder(Context mContext, ViewGroup parent) {
         super(mContext, R.layout.holder_error, parent);
     }
 
     @Override public void bind(String data) {
 
+    }
+
+    public void setRetryListener(View.OnClickListener listener) {
+        if (listener == null) {
+            return;
+        }
+
+        retry.setOnClickListener(listener);
     }
 }

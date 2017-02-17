@@ -9,7 +9,6 @@ import com.baiiu.zhihudaily.data.util.ReadedListUtil;
 import com.baiiu.zhihudaily.newsList.NewsListContract;
 import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -20,8 +19,8 @@ import rx.schedulers.Schedulers;
  * description:
  */
 
-public class NewsListPresenter extends BasePresenter<NewsListContract.IView> implements NewsListContract.IPresenter {
-    NewsRepository mNewsListRepository;
+public class NewsListPresenter extends NewsListContract.IPresenter {
+    private NewsRepository mNewsListRepository;
 
     //很明显,使用构造函数注入依赖
     @Inject public NewsListPresenter(NewsRepository newsListRepository) {
@@ -37,7 +36,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract.IView> imp
         loadNewsList(false, true);
     }
 
-    @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
+   @Override public void loadNewsList(final boolean fromRemote, final boolean refresh) {
         //设置是否从远端拉取数据
         mNewsListRepository.refreshNewsList(fromRemote);
 

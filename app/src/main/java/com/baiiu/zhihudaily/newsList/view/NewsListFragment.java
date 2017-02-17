@@ -21,7 +21,7 @@ import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.DoubleClickListener;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.router.Navigator;
-import com.baiiu.zhihudaily.view.base.BaseFragment;
+import com.baiiu.zhihudaily.base.BaseFragment;
 import com.baiiu.zhihudaily.view.fastscroll.FastScrollLinearLayoutManager;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import java.util.List;
@@ -78,7 +78,7 @@ public class NewsListFragment extends BaseFragment implements View.OnClickListen
                 .setOnClickListener(v -> mRecyclerView.smoothScrollToPosition(0));
 
         //双击返回
-        View view = ((NewsListActivity) getActivity()).mTtoolbar;
+        View view = ((NewsListActivity) getActivity()).mToolbar;
         if (view != null) {
             view.setOnClickListener(new DoubleClickListener() {
                 @Override public void onDoubleClick(View v) {

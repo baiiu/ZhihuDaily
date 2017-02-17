@@ -17,7 +17,7 @@ import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;
-import com.baiiu.zhihudaily.view.base.BaseFragment;
+import com.baiiu.zhihudaily.base.BaseFragment;
 import javax.inject.Inject;
 
 /**

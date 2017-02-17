@@ -5,17 +5,18 @@ import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
 import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
 import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
-import com.baiiu.zhihudaily.view.mvp.BasePresenter;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+
 
 /**
  * author: baiiu
  * date: on 16/5/12 15:05
  * description:
  */
-public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView> implements NewsDetailContract.IPresenter {
+public class NewsDetailPresenter extends NewsDetailContract.IPresenter {
 
     private final NewsRepository mNewsRepository;
     private long id;
@@ -37,7 +38,7 @@ public class NewsDetailPresenter extends BasePresenter<NewsDetailContract.IView>
         } else {
             getMvpView().showLoadingPage();
 
-            mCompositeSubscription.add(
+            addSubscription(
 
                     mNewsRepository.loadNewsDetail(id)
                             .subscribeOn(Schedulers.io())

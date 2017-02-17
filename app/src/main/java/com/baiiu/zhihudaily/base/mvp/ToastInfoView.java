@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.baiiu.zhihudaily.view.mvp;
+package com.baiiu.zhihudaily.base.mvp;
 
 public interface ToastInfoView {
 

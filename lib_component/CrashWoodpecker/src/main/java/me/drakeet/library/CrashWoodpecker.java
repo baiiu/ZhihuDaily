@@ -49,7 +49,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.library.ui.CatchActivity;
 
 /**
  * Created by drakeet(http://drakeet.me)

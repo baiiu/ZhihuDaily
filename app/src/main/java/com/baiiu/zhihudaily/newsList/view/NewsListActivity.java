@@ -14,7 +14,7 @@ import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.view.base.BaseActivity;
+import com.baiiu.zhihudaily.base.BaseActivity;
 
 /**
  * Activity将变成全局的Controller

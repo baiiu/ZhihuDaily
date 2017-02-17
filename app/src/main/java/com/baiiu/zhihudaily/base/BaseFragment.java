@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.view.base;
+package com.baiiu.zhihudaily.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.util.UIUtil;
+import com.baiiu.zhihudaily.base.mvp.MvpView;
 
 /**
  * Created by baiiu on 2015/11/16.
  * Base
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements MvpView {
     /**
      * 绑定到当前的attach的activity上.可强转
      */
@@ -41,23 +42,25 @@ public abstract class BaseFragment extends Fragment {
     protected void initOnCreateView() {
     }
 
+    @Override public boolean isAlive() {
+        //noinspection SimplifiableIfStatement
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            return true;
+        }
+
+        return isAdded();
+    }
+
     @Override public void onDestroyView() {
         super.onDestroyView();
         //        ButterKnife.unbind(this);不要回收,会造成空指针异常
     }
 
-    @Override public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override public void onStop() {
-        super.onStop();
-    }
 
     @Override public void onDestroy() {
         super.onDestroy();
 
         UIUtil.getRefWatcher()
-              .watch(this);
+                .watch(this);
     }
 }

@@ -1,9 +1,9 @@
-package com.baiiu.zhihudaily.newsList.view.holder;
+package com.baiiu.zhihudaily.base.list.holder;
 
 import android.content.Context;
 import android.view.ViewGroup;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 
 /**
  * author: baiiu

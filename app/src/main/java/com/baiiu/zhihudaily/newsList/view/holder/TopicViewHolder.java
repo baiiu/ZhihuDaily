@@ -7,7 +7,7 @@ import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.newsList.view.TopicAdapter;
-import com.baiiu.zhihudaily.view.base.BaseViewHolder;
+import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.view.widget.indicator._interface.IPageIndicator;
 import com.baiiu.zhihudaily.view.widget.loopvp.LoopViewPager;
 import java.util.List;

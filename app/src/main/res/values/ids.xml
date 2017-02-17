@@ -12,6 +12,9 @@
   <item name="textView" type="id"/>
   <item name="container" type="id"/>
 
+  <item name="swipeRefreshLayout" type="id"/>
+  <item name="recyclerView" type="id"/>
+
 
   <item name="empty" type="id"/>
   <item name="container_empty" type="id"/>

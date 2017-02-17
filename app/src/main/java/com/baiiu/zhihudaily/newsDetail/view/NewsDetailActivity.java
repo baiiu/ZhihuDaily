@@ -15,7 +15,7 @@ import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.view.base.BaseActivity;
+import com.baiiu.zhihudaily.base.BaseActivity;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {

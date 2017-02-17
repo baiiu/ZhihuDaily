@@ -90,8 +90,8 @@ dependencies {
     releaseCompile project(':lib_component:LogUtilRelease')
 
     //bug捕捉
-    debugCompile project(':lib_component:CrashWoodpecker')
-    releaseCompile project(':lib_component:CrashWoodpeckerRelease')
+//    debugCompile project(':lib_component:CrashWoodpecker')
+//    releaseCompile project(':lib_component:CrashWoodpeckerRelease')
 
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'

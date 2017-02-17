@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.view.base;
+package com.baiiu.zhihudaily.base;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

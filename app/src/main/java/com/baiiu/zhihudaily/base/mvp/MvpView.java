@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.view.mvp;
+package com.baiiu.zhihudaily.base.mvp;
 
 
 /**
@@ -7,5 +7,8 @@ package com.baiiu.zhihudaily.view.mvp;
  * that then usually will be implemented by an Activity or Fragment.
  */
 public interface MvpView {
-
+    /**
+     * View的宿主已经被销毁了么
+     */
+    boolean isAlive();
 }
