@@ -2,7 +2,7 @@ package com.baiiu.zhihudaily.data.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.baiiu.zhihudaily.newsList.view.DailyNewsAdapter;
+import com.baiiu.zhihudaily.newsList.DailyNewsAdapter;
 import java.util.List;
 
 /**

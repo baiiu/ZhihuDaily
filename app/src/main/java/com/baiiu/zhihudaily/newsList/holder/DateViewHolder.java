@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsList.view.holder;
+package com.baiiu.zhihudaily.newsList.holder;
 
 import android.content.Context;
 import android.view.ViewGroup;

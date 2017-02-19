@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsList.view.holder;
+package com.baiiu.zhihudaily.newsList.holder;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.TopStory;
-import com.baiiu.zhihudaily.newsList.view.TopicAdapter;
+import com.baiiu.zhihudaily.newsList.TopicAdapter;
 import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.baiiu.zhihudaily.view.widget.indicator._interface.IPageIndicator;
 import com.baiiu.zhihudaily.view.widget.loopvp.LoopViewPager;

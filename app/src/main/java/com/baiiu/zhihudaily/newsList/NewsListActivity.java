@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsList.view;
+package com.baiiu.zhihudaily.newsList;
 
 import android.content.Intent;
 import android.content.IntentFilter;

@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsDetail.view;
+package com.baiiu.zhihudaily.newsDetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +12,6 @@ import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
-import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
-import com.baiiu.zhihudaily.newsDetail.presenter.NewsDetailPresenter;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.view.EmptyLayout;

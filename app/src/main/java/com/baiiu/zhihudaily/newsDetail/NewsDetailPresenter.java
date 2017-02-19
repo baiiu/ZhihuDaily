@@ -1,10 +1,8 @@
-package com.baiiu.zhihudaily.newsDetail.presenter;
+package com.baiiu.zhihudaily.newsDetail;
 
 import android.os.Bundle;
 import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
-import com.baiiu.zhihudaily.newsDetail.NewsDetailContract;
-import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

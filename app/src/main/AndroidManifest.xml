@@ -18,7 +18,7 @@
         android:theme="@style/DayTheme"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".newsList.view.NewsListActivity">
+            android:name=".newsList.NewsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".newsDetail.view.NewsDetailActivity"
+            android:name=".newsDetail.NewsDetailActivity"
             android:theme="@style/DayTransparentTheme"/>
 
         <activity android:name=".util.SwitchModeActivity"/>

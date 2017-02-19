@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsList.view;
+package com.baiiu.zhihudaily.newsList;
 
 import android.content.Context;
 import android.view.View;

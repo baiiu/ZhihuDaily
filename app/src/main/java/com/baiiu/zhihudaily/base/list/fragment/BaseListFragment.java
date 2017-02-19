@@ -18,6 +18,7 @@ import com.baiiu.zhihudaily.data.net.ApiConstants;
 import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * author: baiiu
@@ -29,7 +30,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     @BindView(R.id.swipeRefreshLayout) protected SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView) protected RecyclerView mRecyclerView;
 
-    protected P mPresenter;
+    @Inject protected P mPresenter;
     protected BaseRefreshLoadMoreAdapter<E> mAdapter;
     protected LoadingMoreScrollListenerM mLoadingMoreScrollListener;
 
@@ -40,8 +41,10 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initOnCreate();
-        mPresenter = providePresenter();
-        mPresenter.attachView(this);
+        providePresenter();
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
         //initPresenter();
     }
 
@@ -136,7 +139,8 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         mRecyclerView.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    public abstract P providePresenter();
+    protected void providePresenter() {
+    }
 
     protected abstract BaseRefreshLoadMoreAdapter<E> provideAdapter();
 
@@ -186,7 +190,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         showFooter(data);
     }
 
-    public void showFooter(List<E> list) {
+    protected void showFooter(List<E> list) {
         /*
             默认的是以pageSize比较,所有服务器返回的list，并不准确，再请求一次确定终止
             mAdapter.bindFooter(list);
@@ -233,7 +237,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
 
     }
 
-    //从Presenter调用，一定要在showContent()后
+    //从Presenter调用，一定要在showContent()后，有list时会自己触发，所有当无list时才手动调用
     @Override public void showFooter(int state) {
         mAdapter.bindFooter(state);
         mLoadingMoreScrollListener.setLoading(state == FooterViewHolder.HAS_MORE);

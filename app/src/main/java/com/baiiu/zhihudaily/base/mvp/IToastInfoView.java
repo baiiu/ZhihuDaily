@@ -16,7 +16,7 @@
 
 package com.baiiu.zhihudaily.base.mvp;
 
-public interface ToastInfoView {
+public interface IToastInfoView {
 
     void showSuccessInfo(String info);
 

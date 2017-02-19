@@ -1,4 +1,4 @@
-package com.baiiu.zhihudaily.newsDetail.view;
+package com.baiiu.zhihudaily.newsDetail;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,12 +1,9 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.data.bean.Daily;
+import com.baiiu.zhihudaily.base.list.fragment.BaseListContract;
+import com.baiiu.zhihudaily.base.mvp.IToastInfoView;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.base.mvp.MVPPresenter;
-import com.baiiu.zhihudaily.base.mvp.MvpView;
-import com.baiiu.zhihudaily.base.mvp.ToastInfoView;
-import com.baiiu.zhihudaily.newsList.view.IRefreshLoadMore;
-import com.baiiu.zhihudaily.newsList.view.holder.NewsViewHolder;
+import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
 import java.util.List;
 
 /**
@@ -24,22 +21,10 @@ import java.util.List;
  *
  * 3. 开始下拉刷新,加载网络数据,显示并缓存.
  */
-public interface NewsListContract {
+interface NewsListContract {
 
-    interface IView extends ToastInfoView, MvpView {
-        void showLoadingPage();
-
-        void showLoadingIndicator(boolean show);
-
-        void showNews(Daily daily, boolean update);
-
-        void showEmptyPage();
-
-        void showErrorPage();
-
+    interface IView extends BaseListContract.IListMvpView<List<Story>>,IToastInfoView {
         boolean isDataEmpty();
-
-        void bindFooter(List<Story> list, boolean fromLocal);
 
         //开启新页面
         void showNewsDetail(Story story);
@@ -47,7 +32,7 @@ public interface NewsListContract {
         void showNewsReaded(int position, boolean isRead);
     }
 
-    abstract class IPresenter extends MVPPresenter<IView> implements IRefreshLoadMore {
+    abstract class IPresenter extends BaseListContract.IRefreshPresenter<List<Story>> {
         //update true时从网络加载数据
         public abstract void loadNewsList(boolean fromRemote, boolean loadMore);
 

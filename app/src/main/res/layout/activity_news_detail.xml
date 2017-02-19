@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context=".newsDetail.view.NewsDetailActivity"
+    tools:context=".newsDetail.NewsDetailActivity"
     >
 
     <android.support.design.widget.AppBarLayout

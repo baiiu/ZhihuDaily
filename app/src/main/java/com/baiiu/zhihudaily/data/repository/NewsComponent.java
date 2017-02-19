@@ -2,8 +2,8 @@ package com.baiiu.zhihudaily.data.repository;
 
 import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.baiiu.zhihudaily.di.scope.PerActivity;
-import com.baiiu.zhihudaily.newsDetail.view.NewsDetailFragment;
-import com.baiiu.zhihudaily.newsList.view.NewsListFragment;
+import com.baiiu.zhihudaily.newsDetail.NewsDetailFragment;
+import com.baiiu.zhihudaily.newsList.NewsListFragment;
 import dagger.Component;
 
 /**

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.base.mvp.MVPPresenter;
 import com.baiiu.zhihudaily.base.mvp.MvpView;
-import com.baiiu.zhihudaily.base.mvp.ToastInfoView;
+import com.baiiu.zhihudaily.base.mvp.IToastInfoView;
 
 /**
  * author: baiiu
@@ -13,7 +13,7 @@ import com.baiiu.zhihudaily.base.mvp.ToastInfoView;
  */
 public interface NewsDetailContract {
 
-    interface IView extends ToastInfoView, MvpView {
+    interface IView extends IToastInfoView, MvpView {
         void showErrorPage();
 
         void showLoadingPage();
