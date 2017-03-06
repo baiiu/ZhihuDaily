@@ -1,19 +1,3 @@
-/*
- * Copyright 2014 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.baiiu.tsnackbar;
 
 import android.annotation.TargetApi;
@@ -24,133 +8,228 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP) public class LUtils {
+/**
+ * 提供两种方法：
+ * 1. 将布局扩展到状态栏
+ * 2. 设置状态栏颜色。如不使用代码设置，则需要在styles中配置
+ *
+ * 提供setters、getters方法是为了属性动画。使用后要调用clear方法
+ */
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+public class LUtils {
 
-  protected Activity mActivity;
-  private volatile static LUtils instance;
+    private static final int FAKE_STATUS_BAR_ID = R.id.statusBarView;
 
-  private LUtils(Activity activity) {
-    mActivity = activity;
-  }
+    private Activity mActivity;
 
-  public static LUtils instance(Activity activity) {
-    if (instance == null) {
-      synchronized (LUtils.class) {
-        if (instance == null) {
-          instance = new LUtils(activity);
+    private LUtils(Activity activity) {
+        mActivity = activity;
+    }
+
+    public static LUtils instance(Activity activity) {
+        return new LUtils(activity);
+    }
+
+    public void setActivity(Activity activity) {
+        this.mActivity = activity;
+    }
+
+    public int getStatusBarColor() {
+        return getStatusBarColor(mActivity);
+    }
+
+    public void setStatusBarColor(int color) {
+        setStatusBarColor(mActivity, color);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public static int getStatusBarColor(Activity activity) {
+        if (Version.belowKitKat()) {
+            // On pre-kitKat devices, you can have any status bar color so long as it's black.
+            return Color.BLACK;
         }
-      }
-    }
-    instance.setActivity(activity);
-    return instance;
-  }
 
-  private void setActivity(Activity activity) {
-    this.mActivity = activity;
-  }
-
-  public static void clear() {
-    resetColorPrimaryDark();
-
-    if (instance != null) {
-      instance.mActivity = null;
-      instance = null;
-    }
-  }
-
-  public static boolean hasL() {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-  }
-
-  public static boolean hasKitKat() {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-        && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
-  }
-
-  public static boolean belowKitKat() {
-    return Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
-  }
-
-  public int getStatusBarColor() {
-    if (belowKitKat()) {
-      // On pre-kitKat devices, you can have any status bar color so long as it's black.
-      return Color.BLACK;
-    }
-
-    if (hasL()) {
-      return mActivity.getWindow().getStatusBarColor();
-    }
-
-    if (hasKitKat()) {
-      ViewGroup contentView = (ViewGroup) mActivity.findViewById(android.R.id.content);
-      View statusBarView = contentView.getChildAt(0);
-      if (statusBarView != null && statusBarView.getMeasuredHeight() == ScreenUtil.getStatusHeight(
-          mActivity)) {
-        Drawable drawable = statusBarView.getBackground();
-        if (drawable != null) {
-          return ((ColorDrawable) drawable).getColor();
+        if (Version.hasL()) {
+            return activity.getWindow()
+                    .getStatusBarColor();
         }
-      }
+
+        if (Version.hasKitKat()) {
+            ViewGroup decorView = (ViewGroup) activity.getWindow()
+                    .getDecorView();
+            View statusBarView = decorView.findViewById(FAKE_STATUS_BAR_ID);
+            if (statusBarView != null) {
+                Drawable drawable = statusBarView.getBackground();
+                if (drawable != null) {
+                    return ((ColorDrawable) drawable).getColor();
+                }
+            }
+        }
+
+        return -1;
     }
 
-    return -1;
-  }
+    public static void setStatusBarColor(Activity activity, @ColorInt int color) {
+        if (Version.belowKitKat() || activity == null) {
+            return;
+        }
 
-  public void setStatusBarColor(int color) {
-    if (belowKitKat()) {
-      return;
+        if (Version.hasL() && !isTranslucentStatus(activity)) {
+            activity.getWindow()
+                    .setStatusBarColor(color);
+            return;
+        }
+
+        if (Version.hasKitKat()) {
+            ViewGroup decorView = (ViewGroup) activity.getWindow()
+                    .getDecorView();
+            View fakeStatusBarView = decorView.findViewById(FAKE_STATUS_BAR_ID);
+            if (fakeStatusBarView != null) {
+                if (fakeStatusBarView.getVisibility() == View.GONE) {
+                    fakeStatusBarView.setVisibility(View.VISIBLE);
+                }
+                fakeStatusBarView.setBackgroundColor(color);
+            } else {
+                decorView.addView(createStatusBarView(activity, color));
+            }
+
+            setRootView(activity);
+        }
     }
 
-    if (hasL()) {
-      mActivity.getWindow().setStatusBarColor(color);
-      return;
-    }
-
-    if (hasKitKat()) {
-      ViewGroup contentView = (ViewGroup) mActivity.findViewById(android.R.id.content);
-
-      View statusBarView = contentView.getChildAt(0);
-      //改变颜色时避免重复添加statusBarView
-      if (statusBarView != null && statusBarView.getMeasuredHeight() == ScreenUtil.getStatusHeight(
-          mActivity)) {
+    private static View createStatusBarView(Activity activity, int color) {
+        View statusBarView = new View(activity);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                                         ScreenUtil.getStatusHeight((activity)));
+        statusBarView.setLayoutParams(params);
         statusBarView.setBackgroundColor(color);
-        return;
-      }
-      statusBarView = new View(mActivity);
-      ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-          ScreenUtil.getStatusHeight(mActivity));
-      statusBarView.setBackgroundColor(color);
-      contentView.addView(statusBarView, 0, lp);
+        statusBarView.setId(FAKE_STATUS_BAR_ID);
+        return statusBarView;
     }
-  }
 
-  private static final int[] THEME_ATTRS = {
-      android.R.attr.colorPrimaryDark, android.R.attr.windowTranslucentStatus
-  };
-
-  public static int getDefaultStatusBarBackground(Context context) {
-    final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
-    try {
-      return a.getColor(0, Color.TRANSPARENT);
-    } finally {
-      a.recycle();
+    private static void setRootView(Activity activity) {
+        ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
+        for (int i = 0, count = parent.getChildCount(); i < count; i++) {
+            View childView = parent.getChildAt(i);
+            if (childView instanceof ViewGroup) {
+                childView.setFitsSystemWindows(true);
+                ((ViewGroup) childView).setClipToPadding(true);
+            }
+        }
     }
-  }
 
-  public static boolean getWindowTranslucentStatus(Context context) {
-    final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-    try {
-      return a.getBoolean(1, false);
-    } finally {
-      a.recycle();
+    private static final int[] THEME_ATTRS = {
+            android.R.attr.colorPrimaryDark, android.R.attr.windowTranslucentStatus
+    };
+
+    static int getDefaultStatusBarBackground(Context context) {
+
+        final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
+        try {
+            return a.getColor(0, Color.TRANSPARENT);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        } finally {
+            a.recycle();
+        }
+
+        return Color.TRANSPARENT;
     }
-  }
 
-  public static void resetColorPrimaryDark() {
-    TSnackbar.setColorPrimaryDark(-1);
-  }
+    //=====================================TranslucentStatusBar====================================================
+
+    /**
+     * 将布局扩展到状态栏
+     */
+    public static void translucentStatusBar(Activity activity) {
+        if (activity == null || Version.belowKitKat()) {
+            return;
+        }
+
+        if (Version.hasKitKatAndUnderL()) {
+            activity.getWindow()
+                    .setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                              WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            return;
+        }
+
+        if (Version.hasL()) {
+            activity.getWindow()
+                    .clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow()
+                    .setStatusBarColor(Color.TRANSPARENT);
+            activity.getWindow()
+                    .getDecorView()
+                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
+    }
+
+    public static boolean isTranslucentStatus(Context context) {
+        if (Version.belowKitKat()) {
+            return false;
+        }
+
+        if (context instanceof Activity) {
+            if (Version.hasL()) {
+                return (((Activity) context).getWindow()
+                        .getDecorView()
+                        .getSystemUiVisibility() & (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) != 0;
+            } else {
+                return hasTranslucentStatusFlag((Activity) context);
+            }
+        }
+
+        final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
+
+        try {
+            //noinspection ResourceType
+            return a.getBoolean(1, false);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT) private static boolean hasTranslucentStatusFlag(final Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return (activity.getWindow()
+                    .getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) != 0;
+        }
+        return false;
+    }
+
+    public static void paddingContainer(Context context, View container) {
+        if (context == null || container == null) return;
+
+        if (context instanceof Activity) {
+            if (Version.hasKitKat() && isTranslucentStatus(context)) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) container.getLayoutParams();
+                params.height = ScreenUtil.getStatusHeight(context) + params.height;
+                container.setLayoutParams(params);
+                container.setPadding(0, ScreenUtil.getStatusHeight(context), 0, 0);
+            }
+        } else {
+            if (Version.hasKitKatAndUnderL() && isTranslucentStatus(context)) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) container.getLayoutParams();
+                params.height = ScreenUtil.getStatusHeight(context) + params.height;
+                container.setLayoutParams(params);
+                container.setPadding(0, ScreenUtil.getStatusHeight(context), 0, 0);
+            }
+        }
+
+    }
+
 }

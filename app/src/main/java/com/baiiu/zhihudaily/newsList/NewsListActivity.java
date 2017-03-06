@@ -9,12 +9,13 @@ import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.base.BaseActivity;
+import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.base.BaseActivity;
 
 /**
  * Activity将变成全局的Controller
@@ -39,12 +40,10 @@ public class NewsListActivity extends BaseActivity {
     @Override protected void initOnCreate(Bundle savedInstanceState) {
 
         // @formatter:off
-        if (LUtils.hasKitKat()) {
-            if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
-            } else {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
-            }
+        if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+            LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+        } else {
+            LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
         }
         // @formatter:on
 
@@ -63,8 +62,6 @@ public class NewsListActivity extends BaseActivity {
         }
 
         //newsListFragment.setRetainInstance(true);
-
-
     }
 
     //=====================Menu===================================
@@ -112,10 +109,11 @@ public class NewsListActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         netWorkReceiver = new NetWorkReceiver();
         registerReceiver(netWorkReceiver, filter);
+
+        HttpNetUtil.setConnected();
     }
 
     @Override protected void onDestroy() {
-        LUtils.clear();
         unregisterReceiver(netWorkReceiver);
         super.onDestroy();
     }

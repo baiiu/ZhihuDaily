@@ -24,7 +24,8 @@ public class HttpNetUtil {
      * 判断网络连接是否存在
      */
     public static boolean setConnected() {
-        ConnectivityManager manager = (ConnectivityManager) UIUtil.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) UIUtil.getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager == null) {
             setConnected(false);
             return false;
@@ -37,6 +38,5 @@ public class HttpNetUtil {
 
         return connected;
     }
-
 
 }

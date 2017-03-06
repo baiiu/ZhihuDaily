@@ -10,12 +10,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.base.BaseActivity;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.base.BaseActivity;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -51,13 +51,11 @@ public class NewsDetailActivity extends BaseActivity {
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
         // @formatter:off
-        if (LUtils.hasKitKat()) {
-            ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0).setFitsSystemWindows(true);
-            if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
-            } else {
-                LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
-            }
+        ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0).setFitsSystemWindows(true);
+        if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {
+            LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Day));
+        } else {
+            LUtils.instance(this).setStatusBarColor(UIUtil.getColor(R.color.colorPrimaryDark_Night));
         }
         // @formatter:on
 

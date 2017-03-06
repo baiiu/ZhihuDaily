@@ -3,7 +3,7 @@ package com.baiiu.zhihudaily.newsList;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.View;
 import com.baiiu.tsnackbar.Prompt;
-import com.baiiu.tsnackbar.TSnackbar;
+import com.baiiu.tsnackbar.TSnackBar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.list.fragment.BaseListFragment;
 import com.baiiu.zhihudaily.base.list.fragment.BaseRefreshLoadMoreAdapter;
@@ -90,12 +90,12 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     }
 
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(mRefreshLayout, info, Prompt.SUCCESS)
+        TSnackBar.make(mRefreshLayout, info, Prompt.SUCCESS)
                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(mRefreshLayout, info, Prompt.ERROR)
+        TSnackBar.make(mRefreshLayout, info, Prompt.ERROR)
                 .show();
     }
 

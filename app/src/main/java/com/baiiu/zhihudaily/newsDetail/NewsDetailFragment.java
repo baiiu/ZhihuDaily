@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
-import com.baiiu.tsnackbar.TSnackbar;
+import com.baiiu.tsnackbar.TSnackBar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
@@ -91,12 +91,12 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     }
 
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(webViewContainer, info, Prompt.SUCCESS)
+        TSnackBar.make(webViewContainer, info, Prompt.SUCCESS)
                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(webViewContainer, info, Prompt.ERROR)
+        TSnackBar.make(webViewContainer, info, Prompt.ERROR)
                 .show();
     }
 
