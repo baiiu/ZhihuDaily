@@ -39,8 +39,7 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
             url = data.images.get(0);
         }
 
-        Glide
-                .with(mContext)
+        Glide.with(mContext)
                 .load(url)
                 .placeholder(R.mipmap.ic_launcher)
                 .centerCrop()

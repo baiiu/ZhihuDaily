@@ -9,14 +9,15 @@ import android.view.View;
 
 /**
  * author: baiiu
- * date: on 16/10/12 14:17
+ * date: on 17/4/18 18:01
  * description:
  */
+public class ScrollAwareBehavior extends FloatingActionButton.Behavior {
+    public ScrollAwareBehavior() {
+    }
 
-public class ScrollAwareFABBehaviorDefault extends FloatingActionButton.Behavior {
-
-    public ScrollAwareFABBehaviorDefault(Context context, AttributeSet attrs) {
-        super();
+    public ScrollAwareBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override
@@ -30,16 +31,24 @@ public class ScrollAwareFABBehaviorDefault extends FloatingActionButton.Behavior
                                                                                                 nestedScrollAxes);
     }
 
+
     @Override public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child,
             final View target, final int dxConsumed, final int dyConsumed, final int dxUnconsumed,
             final int dyUnconsumed) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+
         if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
-            // User scrolled down and the FAB is currently visible -> hide the FAB
-            child.hide();
+            child.hide(listener);
         } else if (dyConsumed < 0 && child.getVisibility() != View.VISIBLE) {
-            // User scrolled up and the FAB is currently not visible -> show the FAB
             child.show();
         }
+
     }
+
+    private FloatingActionButton.OnVisibilityChangedListener listener =
+            new FloatingActionButton.OnVisibilityChangedListener() {
+                @Override public void onHidden(FloatingActionButton fab) {
+                    fab.setVisibility(View.INVISIBLE);
+                }
+            };
 }

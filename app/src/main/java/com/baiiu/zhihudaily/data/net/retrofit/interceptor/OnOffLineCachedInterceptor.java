@@ -16,35 +16,36 @@ import okhttp3.Response;
  * 无网络时,强制读取缓存,缓存保存时长为一个月
  */
 public class OnOffLineCachedInterceptor implements Interceptor {
-  /**
-   * 缓存多少秒
-   */
-  private static final int MAX_AGE = 0;
+    /**
+     * 缓存多少秒
+     */
+    private static final int MAX_AGE = 0;
 
-  @Override public Response intercept(Chain chain) throws IOException {
-    Request request = chain.request();
+    @Override public Response intercept(Chain chain) throws IOException {
+        Request request = chain.request();
 
-    if (!HttpNetUtil.isConnected()) {
-      request = request.newBuilder()
-          //强制使用缓存
-          .cacheControl(CacheControl.FORCE_CACHE).build();
+        if (!HttpNetUtil.isConnected()) {
+            request = request.newBuilder()
+                    //强制使用缓存
+                    .cacheControl(CacheControl.FORCE_CACHE)
+                    .build();
+        }
+
+        Response response = chain.proceed(request);
+
+        if (HttpNetUtil.isConnected()) {
+            int maxAge = MAX_AGE; // 有网络时 设置缓存超时Max秒
+            response = response.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + maxAge)
+                    .removeHeader("Pragma")
+                    .build();
+        } else {
+            int maxStale = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
+            response = response.newBuilder()
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .removeHeader("Pragma")
+                    .build();
+        }
+        return response;
     }
-
-    Response response = chain.proceed(request);
-
-    if (HttpNetUtil.isConnected()) {
-      int maxAge = MAX_AGE; // 有网络时 设置缓存超时Max秒
-      response.newBuilder()
-          .header("Cache-Control", "public, max-age=" + maxAge)
-          .removeHeader("Pragma")
-          .build();
-    } else {
-      int maxStale = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
-      response.newBuilder()
-          .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-          .removeHeader("Pragma")
-          .build();
-    }
-    return response;
-  }
 }
