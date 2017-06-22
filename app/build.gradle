@@ -86,12 +86,14 @@ dependencies {
     debugCompile project(':lib_component:LogUtil')
     releaseCompile project(':lib_component:LogUtilRelease')
 
-    compile project(':lib_uikit:tsnackbar')
-    compile project(':lib_uikit:stickyHeaderRecyclerView')
-
     //bug捕捉
     debugCompile project(':lib_component:CrashWoodpecker')
     releaseCompile project(':lib_component:CrashWoodpeckerRelease')
+
+    compile project(':lib_uikit:tsnackbar')
+    compile project(':lib_uikit:stickyHeaderRecyclerView')
+    compile project(':lib_uikit:ptr_lib')
+
 
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'

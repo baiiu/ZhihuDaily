@@ -17,6 +17,7 @@ include(
 // uikit
 include(
 
+        ':lib_uikit:ptr_lib',
         ':lib_uikit:tsnackbar',
         ':lib_uikit:stickyHeaderRecyclerView'
 
