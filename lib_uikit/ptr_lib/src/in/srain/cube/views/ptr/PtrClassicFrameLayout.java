@@ -34,8 +34,6 @@ public class PtrClassicFrameLayout extends PtrFrameLayout {
 
     /**
      * Specify the last update time by this key string
-     *
-     * @param key
      */
     public void setLastUpdateTimeKey(String key) {
         if (mPtrClassicHeader != null) {
@@ -45,8 +43,6 @@ public class PtrClassicFrameLayout extends PtrFrameLayout {
 
     /**
      * Using an object to specify the last update time.
-     *
-     * @param object
      */
     public void setLastUpdateTimeRelateObject(Object object) {
         if (mPtrClassicHeader != null) {

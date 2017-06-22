@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<in.srain.cube.views.ptr.PtrClassicFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/swipeRefreshLayout"
+    android:id="@id/ptr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@id/recyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarFadeDuration="500"
-        android:scrollbarSize="4dp"
-        android:scrollbars="vertical"
         />
 
-</android.support.v4.widget.SwipeRefreshLayout>
+
+</in.srain.cube.views.ptr.PtrClassicFrameLayout>

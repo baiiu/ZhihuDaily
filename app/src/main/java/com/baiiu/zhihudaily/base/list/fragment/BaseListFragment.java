@@ -4,10 +4,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import butterknife.BindView;
 import com.baiiu.zhihudaily.R;
@@ -17,6 +17,10 @@ import com.baiiu.zhihudaily.base.list.holder.FooterViewHolder;
 import com.baiiu.zhihudaily.data.net.ApiConstants;
 import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -25,9 +29,9 @@ import javax.inject.Inject;
  * date: on 16/7/1 17:45
  * description: ListFragment，带下拉刷新
  */
-public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPresenter<List<E>>> extends BaseFragment implements BaseListContract.IListMvpView<List<E>> {
+public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPresenter<List<E>>> extends BaseFragment implements BaseListContract.IListMvpView<List<E>>, PtrHandler {
 
-    @BindView(R.id.swipeRefreshLayout) protected SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.ptr) protected PtrClassicFrameLayout mPtr;
     @BindView(R.id.recyclerView) protected RecyclerView mRecyclerView;
 
     @Inject protected P mPresenter;
@@ -57,7 +61,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     @Override public void onDestroyView() {
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(null);
-            mRefreshLayout.setOnRefreshListener(null);
+            mPtr.setPtrHandler(null);
         }
 
         super.onDestroyView();
@@ -78,15 +82,16 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         mRecyclerView.setAdapter(mAdapter);
         //mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-        mRefreshLayout.setOnRefreshListener(mPresenter);
-        mRefreshLayout.getViewTreeObserver()
+        mPtr.setPtrHandler(this);
+
+        mPtr.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override public void onGlobalLayout() {
                         if (Build.VERSION.SDK_INT >= 16) {
-                            mRefreshLayout.getViewTreeObserver()
+                            mPtr.getViewTreeObserver()
                                     .removeOnGlobalLayoutListener(this);
                         } else {
-                            mRefreshLayout.getViewTreeObserver()
+                            mPtr.getViewTreeObserver()
                                     .removeGlobalOnLayoutListener(this);
                         }
 
@@ -111,7 +116,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
             RecyclerView同时进行下拉刷新、上拉加载数据刷新list时会报错。
             Release包中对LinearLayout进行捕获，可以不加。
          */
-        if (mRefreshLayout.isRefreshing()) {
+        if (mPtr.isRefreshing()) {
             mLoadingMoreScrollListener.setLoading(false);
             mAdapter.getFooterHolder()
                     .bind(FooterViewHolder.NO_MORE);
@@ -145,7 +150,11 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     protected abstract BaseRefreshLoadMoreAdapter<E> provideAdapter();
 
     @Override public void showLoadingIndicator(boolean show) {
-        mRefreshLayout.setRefreshing(show);
+        if (show) {
+            mPtr.autoRefresh(false);
+        } else {
+            mPtr.refreshComplete();
+        }
     }
 
     @Override public void showEmptyPage(String emptyInfo) {
@@ -250,4 +259,11 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         }
     }
 
+    @Override public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+        return PtrDefaultHandler.checkContentCanBePulledDown(frame, mRecyclerView, header);
+    }
+
+    @Override public void onRefreshBegin(PtrFrameLayout frame) {
+        mPresenter.onRefresh();
+    }
 }

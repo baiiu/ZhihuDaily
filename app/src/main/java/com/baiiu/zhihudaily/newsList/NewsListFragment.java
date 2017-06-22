@@ -43,9 +43,9 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     @Override protected void initRecyclerView() {
         if (PreferenceUtil.instance()
                 .get(Constant.UI_MODE, true)) {
-            mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Day));
+            //mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Day));
         } else {
-            mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Night));
+            //mRefreshLayout.setColorSchemeColors(UIUtil.getColor(R.color.colorPrimary_Night));
         }
 
         mRecyclerView.setLayoutManager(new FastScrollLinearLayoutManager(mContext));
@@ -90,12 +90,12 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     }
 
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(mRefreshLayout, info, Prompt.SUCCESS)
+        TSnackbar.make(mPtr, info, Prompt.SUCCESS)
                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(mRefreshLayout, info, Prompt.ERROR)
+        TSnackbar.make(mPtr, info, Prompt.ERROR)
                 .show();
     }
 

@@ -144,4 +144,5 @@ public class NewsListPresenter extends NewsListContract.IPresenter {
             }
         }
     }
+
 }
