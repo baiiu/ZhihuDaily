@@ -86,8 +86,6 @@ ext {
 
             //okHttp
             okHttp                : "com.squareup.okhttp3:okhttp:${okHttpVersion}",
-            loggingInterceptor    : "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
-            okHttpUtils           : "com.zhy:okhttputils:${okHttpUtilsVersion}",
 
             //retrofit
             retrofit              : "com.squareup.retrofit2:retrofit:${retrofitVersion}",

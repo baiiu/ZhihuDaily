@@ -58,7 +58,6 @@ dependencies {
 
     def majorFrame = rootProject.ext.majorFrame
     compile majorFrame.okHttp as String
-    compile majorFrame.loggingInterceptor as String
 
     compile majorFrame.retrofit as String
     compile majorFrame.converterGson as String

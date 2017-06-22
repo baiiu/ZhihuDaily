@@ -265,6 +265,9 @@ public final class HttpLoggingInterceptorM implements Interceptor {
 
                     logger.log(buffer.clone()
                                        .readString(charset), LogUtil.JSON);
+                    //logger.log(buffer.clone()
+                    //                   .readString(charset), LogUtil.D);
+
                 }
 
                 logger.log("<-- END HTTP: " + requestMessage + " (" + buffer.size() + "-byte body)", LogUtil.D);

@@ -75,21 +75,24 @@ public class NewsRepository implements INewsDataSource {
                 .filter(daily -> daily != null)
                 .doOnNext(daily -> {
                     mCurrentDate = daily.date;
-                    markRead(daily.stories);
+                    markRead(daily.date, daily.stories);
                 });
     }
 
 
     /**
-     * 标记已读
+     * 初始化
      */
-    private void markRead(List<Story> list) {
+    private void markRead(String date, List<Story> list) {
         Map<String, String> readedMap = ReadedListUtil.getReadedMap(READ_LIST);
 
-        if (!CommonUtil.isEmpty(list)) {
-            for (Story story : list) {
-                story.isRead = readedMap.get(String.valueOf(story.id)) != null;
-            }
+        if (CommonUtil.isEmpty(list)) {
+            return;
+        }
+
+        for (Story story : list) {
+            story.date = date;
+            story.isRead = readedMap.get(String.valueOf(story.id)) != null;
         }
     }
 

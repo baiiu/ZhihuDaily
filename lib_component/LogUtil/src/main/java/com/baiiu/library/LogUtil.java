@@ -8,6 +8,8 @@ import com.baiiu.library.klog.FileLog;
 import com.baiiu.library.klog.JsonLog;
 import com.baiiu.library.klog.XmlLog;
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * This is a Log tool，with this you can the following
@@ -48,13 +50,14 @@ public class LogUtil {
     public static final int JSON = 0x7;
     public static final int XML = 0x8;
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({ V, D, I, W, E, WTF, JSON, XML })
     public @interface LogType {}
 
     private static final int STACK_TRACE_INDEX = 6;
 
     public static String mGlobalTag = TAG_DEFAULT;
-    private static boolean IS_SHOW_LOG = false;
+    private static boolean IS_SHOW_LOG = true;
 
     public static void init(boolean isShowLog) {
         IS_SHOW_LOG = isShowLog;

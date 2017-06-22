@@ -3,6 +3,7 @@ package com.baiiu.zhihudaily;
 import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
+import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.baiiu.zhihudaily.di.component.DaggerAppComponent;
 import com.baiiu.zhihudaily.di.module.AppModule;
@@ -51,8 +52,6 @@ public class DailyApplication extends Application {
                 .appModule(new AppModule(this))
                 .repositoryModule(new RepositoryModule())
                 .build();
-
-
 
     }
 
