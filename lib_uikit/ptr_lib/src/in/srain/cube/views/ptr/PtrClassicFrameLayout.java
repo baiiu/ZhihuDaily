@@ -26,6 +26,28 @@ public class PtrClassicFrameLayout extends PtrFrameLayout {
         mPtrClassicHeader = new PtrClassicDefaultHeader(getContext());
         setHeaderView(mPtrClassicHeader);
         addPtrUIHandler(mPtrClassicHeader);
+        //addPtrUIHandler(new PtrUIHandler() {
+        //    @Override public void onUIReset(PtrFrameLayout frame) {
+        //
+        //    }
+        //
+        //    @Override public void onUIRefreshPrepare(PtrFrameLayout frame) {
+        //
+        //    }
+        //
+        //    @Override public void onUIRefreshBegin(PtrFrameLayout frame) {
+        //
+        //    }
+        //
+        //    @Override public void onUIRefreshComplete(PtrFrameLayout frame) {
+        //        mPtrClassicHeader.toggleInfo(false);
+        //    }
+        //
+        //    @Override public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status,
+        //            PtrIndicator ptrIndicator) {
+        //
+        //    }
+        //});
     }
 
     public PtrClassicDefaultHeader getHeader() {

@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="60dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_refresh_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="加载了n条"
+        android:textSize="20sp"
+        />
 
     <RelativeLayout
+        android:id="@+id/container_refresh_info"
         android:layout_width="fill_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
 
         <LinearLayout
             android:id="@+id/ptr_classic_header_rotate_view_header_text"
@@ -13,14 +28,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/ptr_classic_header_rotate_view_header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:textColor="#666666"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="加载中、释放刷新、刷新完成"
+                />
 
             <TextView
                 android:id="@+id/ptr_classic_header_rotate_view_header_last_update"
@@ -28,7 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textColor="#999999"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:text="上次更新时间"
+                />
         </LinearLayout>
 
         <FrameLayout
@@ -36,22 +57,25 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/ptr_classic_header_rotate_view_header_text">
+            android:layout_toLeftOf="@+id/ptr_classic_header_rotate_view_header_text"
+            >
 
             <ImageView
                 android:id="@+id/ptr_classic_header_rotate_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ptr_rotate_arrow" />
+                android:src="@drawable/ptr_rotate_arrow"
+                />
 
             <ProgressBar
                 android:id="@+id/ptr_classic_header_rotate_view_progressbar"
-                style="@android:style/Widget.ProgressBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                style="@android:style/Widget.ProgressBar.Small"
+                />
         </FrameLayout>
     </RelativeLayout>
 
-</LinearLayout>
+</FrameLayout>

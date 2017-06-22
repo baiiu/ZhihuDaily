@@ -83,6 +83,11 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         //mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         mPtr.setPtrHandler(this);
+        mPtr.setDurationToCloseHeader(1000);
+        mPtr.setDurationToClose(200);
+        mPtr.setDurationToCloseHeaderAfterComplete(500);
+        mPtr.setLoadingMinTime(0);
+        //mPtr.setPinContent(true);
 
         mPtr.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -151,7 +156,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
 
     @Override public void showLoadingIndicator(boolean show) {
         if (show) {
-            mPtr.autoRefresh(false);
+            mPtr.showLoadingIndicator();
         } else {
             mPtr.refreshComplete();
         }

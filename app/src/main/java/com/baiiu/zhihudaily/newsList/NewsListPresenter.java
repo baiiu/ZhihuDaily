@@ -73,7 +73,7 @@ public class NewsListPresenter extends NewsListContract.IPresenter {
     }
 
     private void dealDaily(boolean fromRemote, boolean refresh, Daily daily) {
-        if (refresh) {
+        if (fromRemote && refresh) {
             getMvpView().showLoadingIndicator(false);
         }
 

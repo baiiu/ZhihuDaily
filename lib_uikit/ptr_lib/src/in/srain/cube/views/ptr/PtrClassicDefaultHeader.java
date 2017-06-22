@@ -12,7 +12,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,6 +29,8 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     private TextView mLastUpdateTextView;
     private String mLastUpdateTimeKey;
     private boolean mShouldShowLastUpdate;
+    private TextView tv_refresh_info;
+    private View container_refresh_info;
 
     private LastUpdateTimeUpdater mLastUpdateTimeUpdater = new LastUpdateTimeUpdater();
 
@@ -54,7 +55,11 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
             mRotateAniTime = arr.getInt(R.styleable.PtrClassicHeader_ptr_rotate_ani_time, mRotateAniTime);
         }
         buildAnimation();
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.cube_ptr_classic_default_header, this);
+        View header = LayoutInflater.from(getContext())
+                .inflate(R.layout.cube_ptr_classic_default_header, this);
+
+        tv_refresh_info = (TextView) header.findViewById(R.id.tv_refresh_info);
+        container_refresh_info = header.findViewById(R.id.container_refresh_info);
 
         mRotateView = header.findViewById(R.id.ptr_classic_header_rotate_view);
 
@@ -65,8 +70,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         resetView();
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (mLastUpdateTimeUpdater != null) {
             mLastUpdateTimeUpdater.stop();
@@ -83,8 +87,6 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
 
     /**
      * Specify the last update time by this key string
-     *
-     * @param key
      */
     public void setLastUpdateTimeKey(String key) {
         if (TextUtils.isEmpty(key)) {
@@ -95,20 +97,23 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
 
     /**
      * Using an object to specify the last update time.
-     *
-     * @param object
      */
     public void setLastUpdateTimeRelateObject(Object object) {
-        setLastUpdateTimeKey(object.getClass().getName());
+        setLastUpdateTimeKey(object.getClass()
+                                     .getName());
     }
 
     private void buildAnimation() {
-        mFlipAnimation = new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        mFlipAnimation =
+                new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF,
+                                    0.5f);
         mFlipAnimation.setInterpolator(new LinearInterpolator());
         mFlipAnimation.setDuration(mRotateAniTime);
         mFlipAnimation.setFillAfter(true);
 
-        mReverseFlipAnimation = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        mReverseFlipAnimation =
+                new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF,
+                                    0.5f);
         mReverseFlipAnimation.setInterpolator(new LinearInterpolator());
         mReverseFlipAnimation.setDuration(mRotateAniTime);
         mReverseFlipAnimation.setFillAfter(true);
@@ -117,22 +122,27 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     private void resetView() {
         hideRotateView();
         mProgressBar.setVisibility(INVISIBLE);
+        toggleInfo(true);
     }
+
+    public void toggleInfo(boolean showContainer) {
+        tv_refresh_info.setVisibility(showContainer ? GONE : VISIBLE);
+        container_refresh_info.setVisibility(showContainer ? VISIBLE : GONE);
+    }
+
 
     private void hideRotateView() {
         mRotateView.clearAnimation();
         mRotateView.setVisibility(INVISIBLE);
     }
 
-    @Override
-    public void onUIReset(PtrFrameLayout frame) {
+    @Override public void onUIReset(PtrFrameLayout frame) {
         resetView();
         mShouldShowLastUpdate = true;
         tryUpdateLastUpdateTime();
     }
 
-    @Override
-    public void onUIRefreshPrepare(PtrFrameLayout frame) {
+    @Override public void onUIRefreshPrepare(PtrFrameLayout frame) {
 
         mShouldShowLastUpdate = true;
         tryUpdateLastUpdateTime();
@@ -149,8 +159,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         }
     }
 
-    @Override
-    public void onUIRefreshBegin(PtrFrameLayout frame) {
+    @Override public void onUIRefreshBegin(PtrFrameLayout frame) {
         mShouldShowLastUpdate = false;
         hideRotateView();
         mProgressBar.setVisibility(VISIBLE);
@@ -161,22 +170,25 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         mLastUpdateTimeUpdater.stop();
     }
 
-    @Override
-    public void onUIRefreshComplete(PtrFrameLayout frame) {
+    @Override public void onUIRefreshComplete(PtrFrameLayout frame) {
+        toggleInfo(false);
 
-        hideRotateView();
-        mProgressBar.setVisibility(INVISIBLE);
-
-        mTitleTextView.setVisibility(VISIBLE);
-        mTitleTextView.setText(getResources().getString(R.string.cube_ptr_refresh_complete));
+        //hideRotateView();
+        //mProgressBar.setVisibility(INVISIBLE);
+        //
+        //mTitleTextView.setVisibility(VISIBLE);
+        //mTitleTextView.setText(getResources().getString(R.string.cube_ptr_refresh_complete));
 
         // update last update time
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(KEY_SharedPreferences, 0);
         if (!TextUtils.isEmpty(mLastUpdateTimeKey)) {
             mLastUpdateTime = new Date().getTime();
-            sharedPreferences.edit().putLong(mLastUpdateTimeKey, mLastUpdateTime).commit();
+            sharedPreferences.edit()
+                    .putLong(mLastUpdateTimeKey, mLastUpdateTime)
+                    .commit();
         }
     }
+
 
     private void tryUpdateLastUpdateTime() {
         if (TextUtils.isEmpty(mLastUpdateTimeKey) || !mShouldShowLastUpdate) {
@@ -195,7 +207,8 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     private String getLastUpdateTime() {
 
         if (mLastUpdateTime == -1 && !TextUtils.isEmpty(mLastUpdateTimeKey)) {
-            mLastUpdateTime = getContext().getSharedPreferences(KEY_SharedPreferences, 0).getLong(mLastUpdateTimeKey, -1);
+            mLastUpdateTime = getContext().getSharedPreferences(KEY_SharedPreferences, 0)
+                    .getLong(mLastUpdateTimeKey, -1);
         }
         if (mLastUpdateTime == -1) {
             return null;
@@ -290,8 +303,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
             removeCallbacks(this);
         }
 
-        @Override
-        public void run() {
+        @Override public void run() {
             tryUpdateLastUpdateTime();
             if (mRunning) {
                 postDelayed(this, 1000);
