@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
 
-def cfg = rootProject.ext.androidVersionConfig
 
 android {
+    def cfg = rootProject.ext.androidVersionConfig
+
     compileSdkVersion cfg.androidCompileSdkVersion
     buildToolsVersion cfg.androidBuildToolsVersion
 

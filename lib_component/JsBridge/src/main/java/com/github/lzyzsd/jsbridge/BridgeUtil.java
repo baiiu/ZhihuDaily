@@ -1,13 +1,12 @@
 package com.github.lzyzsd.jsbridge;
 
 import android.content.Context;
-import android.util.Base64;
 import android.webkit.WebView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 public class BridgeUtil {
 	final static String YY_OVERRIDE_SCHEMA = "yy://";
@@ -77,7 +76,7 @@ public class BridgeUtil {
 		InputStream in = null;
 		try{
 			in = c.getAssets().open(urlStr);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, Charset.defaultCharset()));
             String line = null;
             StringBuilder sb = new StringBuilder();
             do {

@@ -31,7 +31,8 @@
         WebViewJavascriptBridge._messageHandler = messageHandler;
         var receivedMessages = receiveMessageQueue;
         receiveMessageQueue = null;
-        for (var i = 0; i < receivedMessages.length; i++) {
+
+        for (var i = 0; receivedMessages && i < receivedMessages.length; i++) {
             _dispatchMessageFromNative(receivedMessages[i]);
         }
     }

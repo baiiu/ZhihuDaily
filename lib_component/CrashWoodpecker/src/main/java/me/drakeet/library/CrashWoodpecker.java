@@ -34,21 +34,22 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
+import me.drakeet.library.ui.CatchActivity;
 
 /**
  * Created by drakeet(http://drakeet.me)
@@ -316,8 +317,10 @@ public class CrashWoodpecker implements UncaughtExceptionHandler {
 
         PrintWriter writer;
         try {
-            writer = new PrintWriter(file);
+            writer = new PrintWriter(file, Charset.defaultCharset().name());
         } catch (FileNotFoundException e) {
+            return false;
+        } catch (UnsupportedEncodingException e) {
             return false;
         }
         writer.write("Device: " + manufacturer + ", " + deviceModel + "\n");
@@ -340,7 +343,7 @@ public class CrashWoodpecker implements UncaughtExceptionHandler {
                 context.getApplicationInfo().packageName, 0);
             name = (String) packageManager.getApplicationLabel(applicationInfo);
         } catch (final PackageManager.NameNotFoundException e) {
-            String[] packages = context.getPackageName().split(".");
+            String[] packages = context.getPackageName().split("\\.");
             name = packages[packages.length - 1];
         }
         return name;

@@ -1,14 +1,16 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion as Integer
-    buildToolsVersion rootProject.ext.buildToolsVersion as String
+    def cfg = rootProject.ext.androidVersionConfig
+
+    compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion as int
-        targetSdkVersion rootProject.ext.targetSdkVersion as int
+        minSdkVersion cfg.androidMinSdkVersion
+        targetSdkVersion cfg.androidTargetSdkVersion
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0"
     }
 
     buildTypes {
@@ -20,4 +22,5 @@ android {
 }
 
 dependencies {
+    compile "com.android.support:support-annotations:${rootProject.supportLibVersion}"
 }

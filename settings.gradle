@@ -1,4 +1,4 @@
-include ':app', ':dao-generator', ':tsnackbar', ':stickyHeaderRecyclerView'
+include ':app', ':dao-generator'
 
 //include ':data'
 
@@ -9,7 +9,15 @@ include(
         ':lib_component:LogUtilRelease',
         ':lib_component:Stetho',
         ':lib_component:fragmentBackHelper',
-//        ':lib_component:CrashWoodpecker',
-//        ':lib_component:CrashWoodpeckerRelease'
+        ':lib_component:CrashWoodpecker',
+        ':lib_component:CrashWoodpeckerRelease'
+
+)
+
+// uikit
+include(
+
+        ':lib_uikit:tsnackbar',
+        ':lib_uikit:stickyHeaderRecyclerView'
 
 )
