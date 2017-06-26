@@ -26,6 +26,9 @@ public class LoadFrameLayout extends FrameLayout {
     public static final int EMPTY = 2;
     public static final int CONTENT = 3;
     public static final int NO_GONE = 4;
+
+    private String mEmptyText;
+    private String mErrorText;
     private OnClickListener mErrorClickListener;
 
 
@@ -158,10 +161,17 @@ public class LoadFrameLayout extends FrameLayout {
         if (emptyView == null || TextUtils.isEmpty(emptyText)) {
             return;
         }
+
+        if (emptyView instanceof ViewStub) {
+            this.mEmptyText = emptyText;
+            return;
+        }
+
         TextView textView = ButterKnife.findById(emptyView, R.id.tv_empty);
         if (textView != null) {
             textView.setText(emptyText);
         }
+        mEmptyText = null;
     }
 
     public void setErrorText(String errorText) {
@@ -169,10 +179,16 @@ public class LoadFrameLayout extends FrameLayout {
             return;
         }
 
+        if (errorView instanceof ViewStub) {
+            this.mErrorText = errorText;
+            return;
+        }
+
         TextView textView = ButterKnife.findById(errorView, R.id.tv_error);
         if (textView != null) {
             textView.setText(errorText);
         }
+        mErrorText = null;
     }
 
     public void setOnErrorClickListener(OnClickListener listener) {
@@ -185,12 +201,12 @@ public class LoadFrameLayout extends FrameLayout {
             return;
         }
 
-        mErrorClickListener = null;
 
         TextView textView = ButterKnife.findById(errorView, R.id.tv_retry);
         if (textView != null) {
             textView.setOnClickListener(listener);
         }
+        mErrorClickListener = null;
     }
 
     public void bind(@LoadFrameState int data) {
@@ -204,6 +220,7 @@ public class LoadFrameLayout extends FrameLayout {
             if (data == EMPTY) {
                 if (emptyView instanceof ViewStub) {
                     emptyView = ((ViewStub) emptyView).inflate();
+                    setEmptyText(mEmptyText);
                 }
                 emptyView.setVisibility(VISIBLE);
             } else {
@@ -216,6 +233,7 @@ public class LoadFrameLayout extends FrameLayout {
                 if (errorView instanceof ViewStub) {
                     errorView = ((ViewStub) errorView).inflate();
                     setOnErrorClickListener(mErrorClickListener);
+                    setErrorText(mErrorText);
                 }
                 errorView.setVisibility(VISIBLE);
             } else {
