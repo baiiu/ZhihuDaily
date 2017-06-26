@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.baiiu.zhihudaily.view.LoadFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/loadFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:layout_gravity="center"
+    />
 
-
-  <FrameLayout
-      android:id="@id/webViewContainer"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
-
-  <com.baiiu.zhihudaily.view.EmptyLayout
-      android:id="@+id/emptyLayout"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_gravity="center"
-      />
-
-</FrameLayout>
 
 

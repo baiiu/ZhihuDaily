@@ -11,14 +11,19 @@
     <item name="collapsingToolbar" type="id"/>
     <item name="textView" type="id"/>
     <item name="container" type="id"/>
+    <item name="progressBar" type="id"/>
+    <item name="loadFrameLayout" type="id"/>
+
+    <item name="tv_empty" type="id"/>
+    <item name="tv_retry" type="id"/>
 
     <item name="ptr" type="id"/>
     <item name="recyclerView" type="id"/>
 
 
     <item name="empty" type="id"/>
-    <item name="container_empty" type="id"/>
     <item name="error" type="id"/>
+    <item name="container_empty" type="id"/>
     <item name="container_error" type="id"/>
     <item name="loading" type="id"/>
     <item name="container_loading" type="id"/>

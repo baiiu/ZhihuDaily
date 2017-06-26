@@ -8,7 +8,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-
 /**
  * author: baiiu
  * date: on 16/5/12 15:05
@@ -19,7 +18,7 @@ public class NewsDetailPresenter extends NewsDetailContract.IPresenter {
     private final NewsRepository mNewsRepository;
     private long id;
 
-    @Inject public NewsDetailPresenter(NewsRepository newsDetailRepository) {
+    @Inject NewsDetailPresenter(NewsRepository newsDetailRepository) {
         mNewsRepository = newsDetailRepository;
         LogUtil.d(mNewsRepository.toString());//打印看是否为单例
     }
@@ -44,7 +43,7 @@ public class NewsDetailPresenter extends NewsDetailContract.IPresenter {
                             .subscribe(dailyDetail -> {
                                 getMvpView().showNewsDetail(dailyDetail);
                             }, e -> {
-                               LogUtil.e(e.toString());
+                                LogUtil.e(e.toString());
                                 getMvpView().showErrorPage();
                                 getMvpView().showErrorInfo("some error");
                             }, () -> LogUtil.d("onComplete"))

@@ -5,17 +5,16 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import butterknife.BindView;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.base.BaseFragment;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
 import com.baiiu.zhihudaily.util.HTMLUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.view.EmptyLayout;
-import com.baiiu.zhihudaily.base.BaseFragment;
+import com.baiiu.zhihudaily.view.LoadFrameLayout;
 import javax.inject.Inject;
 
 /**
@@ -27,11 +26,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     public static final String NEWS_ID = "id";
 
     @Inject NewsDetailPresenter mNewsDetailPresenter;
-
-    @BindView(R.id.webViewContainer) FrameLayout webViewContainer;
-    @BindView(R.id.emptyLayout) EmptyLayout emptyLayout;
-
-    private long id;
+    @BindView(R.id.loadFrameLayout) LoadFrameLayout loadFrameLayout;
 
     public static NewsDetailFragment instance(long newsId) {
         NewsDetailFragment newsDetailFragment = new NewsDetailFragment();
@@ -54,7 +49,6 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
                 .inject(this);
 
         mNewsDetailPresenter.attachView(this);
-
         mNewsDetailPresenter.processArguments(arguments);
     }
 
@@ -64,7 +58,13 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
     @Override protected void initOnCreateView() {
         webView = new WebView(mContext.getApplicationContext());
-        webViewContainer.addView(webView, -1, -1);
+        loadFrameLayout.setContentView(webView);
+        loadFrameLayout.bind(LoadFrameLayout.LOADING);
+        loadFrameLayout.setOnErrorClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                mNewsDetailPresenter.start();
+            }
+        });
 
         WebSettings mWebSettings = webView.getSettings();
         mWebSettings.setSupportZoom(true);
@@ -82,7 +82,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
         super.onDestroy();
         if (webView != null) {
             webView.removeAllViews();
-            webViewContainer.removeView(webView);
+            loadFrameLayout.removeView(webView);
             webView.destroy();
             webView = null;
         }
@@ -91,33 +91,26 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     }
 
     @Override public void showSuccessInfo(String info) {
-        TSnackbar.make(webViewContainer, info, Prompt.SUCCESS)
+        TSnackbar.make(loadFrameLayout, info, Prompt.SUCCESS)
                 .show();
     }
 
     @Override public void showErrorInfo(String info) {
-        TSnackbar.make(webViewContainer, info, Prompt.ERROR)
+        TSnackbar.make(loadFrameLayout, info, Prompt.ERROR)
                 .show();
     }
 
     @Override public void showErrorPage() {
-        emptyLayout.setVisibility(View.VISIBLE);
-        webViewContainer.setVisibility(View.GONE);
-        emptyLayout.setState(EmptyLayout.TYPE_ERROR);
+        loadFrameLayout.bind(LoadFrameLayout.ERROR);
     }
 
     @Override public void showLoadingPage() {
-        emptyLayout.setVisibility(View.VISIBLE);
-        webViewContainer.setVisibility(View.GONE);
-        emptyLayout.setState(EmptyLayout.TYPE_LOADING);
+        loadFrameLayout.bind(LoadFrameLayout.LOADING);
     }
 
     @Override public void showNewsDetail(DailyDetail dailyDetail) {
-        emptyLayout.setVisibility(View.GONE);
-        webViewContainer.setVisibility(View.VISIBLE);
-
-        ((NewsDetailActivity) mContext).setTopContent(dailyDetail.title, dailyDetail.image_source,
-                                                      dailyDetail.image);
+        loadFrameLayout.bind(LoadFrameLayout.CONTENT);
+        ((NewsDetailActivity) mContext).setTopContent(dailyDetail.title, dailyDetail.image_source, dailyDetail.image);
 
         webView.loadDataWithBaseURL("", HTMLUtil.handleHtml(dailyDetail.body, true)
                 .toString(), "text/html", "utf-8", null);

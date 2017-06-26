@@ -16,7 +16,7 @@ public class ErrorViewHolder extends BaseViewHolder<String> {
     @BindView(R.id.retry) View retry;
 
     public ErrorViewHolder(Context mContext, ViewGroup parent) {
-        super(mContext, R.layout.holder_error, parent);
+        super(mContext, R.layout.layout_error, parent);
     }
 
     @Override public void bind(String data) {

@@ -39,7 +39,16 @@ public class NewsLocalSource implements INewsDataSource {
     @Override public Observable<DailyDetail> loadNewsDetail(long id) {
         return Observable.just(id)
                 .flatMap(aLong -> Observable.just(DBManager.instance()
-                                                          .getDetailStory(id)));
+                                                          .getDetailStory(id))
+                         //.delay(1, TimeUnit.SECONDS)
+                )
+                .flatMap(dailyDetail -> {
+                    if (dailyDetail == null) {
+                        return Observable.error(new NullPointerException("存储为空"));
+                    }
+
+                    return Observable.just(dailyDetail);
+                });
 
     }
 

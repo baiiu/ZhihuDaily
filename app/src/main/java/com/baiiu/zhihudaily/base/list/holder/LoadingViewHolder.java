@@ -12,7 +12,7 @@ import com.baiiu.zhihudaily.base.BaseViewHolder;
  */
 public class LoadingViewHolder extends BaseViewHolder<String> {
     public LoadingViewHolder(Context mContext, ViewGroup parent) {
-        super(mContext, R.layout.holder_loading, parent);
+        super(mContext, R.layout.layout_loading, parent);
     }
 
     @Override public void bind(String data) {
