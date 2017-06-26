@@ -85,14 +85,14 @@ public class LoadFrameLayout extends FrameLayout {
     public void setEmptyView(@LayoutRes int emptyViewResId) {
         ViewStub viewStub = new ViewStub(getContext());
         viewStub.setLayoutResource(emptyViewResId);
-        viewStub.setInflatedId(R.id.container_empty);
+        //viewStub.setInflatedId(R.id.container_empty);
         setEmptyView(viewStub);
     }
 
     public void setErrorView(@LayoutRes int errorViewResId) {
         ViewStub viewStub = new ViewStub(getContext());
         viewStub.setLayoutResource(errorViewResId);
-        viewStub.setInflatedId(R.id.container_error);
+        //viewStub.setInflatedId(R.id.container_error);
         setErrorView(viewStub);
     }
 
