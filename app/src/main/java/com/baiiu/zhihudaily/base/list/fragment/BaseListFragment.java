@@ -87,6 +87,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         mPtr.setDurationToClose(200);
         mPtr.setDurationToCloseHeaderAfterComplete(500);
         mPtr.setLoadingMinTime(1000);
+        mPtr.setEnabledNextPtrAtOnce(true);
         //mPtr.setPinContent(true);
 
         mPtr.getViewTreeObserver()

@@ -143,7 +143,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     }
 
     @Override public void onUIRefreshPrepare(PtrFrameLayout frame) {
-
+        resetView();
         mShouldShowLastUpdate = true;
         tryUpdateLastUpdateTime();
         mLastUpdateTimeUpdater.start();
