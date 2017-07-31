@@ -6,6 +6,10 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +17,7 @@ import java.util.Map;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridge {
-
-    private final String TAG = "BridgeWebView";
+    private static final String TAG = "BridgeWebView";
 
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
@@ -67,7 +70,23 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
         //}
 
         this.setWebViewClient(generateBridgeWebViewClient());
+        setWebChromeClient(new WebChromeClient() {
+            @Override public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                //try {
+                //    message = URLDecoder.decode(message, "UTF-8");
+                //} catch (UnsupportedEncodingException e) {
+                //    e.printStackTrace();
+                //}
+                handlerReturnData(message);
+                result.confirm();//必须要调这一句
+                return true;
+                //return super.onJsAlert(view, url, message, result);
+            }
+        });
+    }
 
+    @Override public void setWebChromeClient(WebChromeClient client) {
+        super.setWebChromeClient(client);
     }
 
     private BridgeWebViewClient generateBridgeWebViewClient() {
@@ -78,9 +97,10 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
         String functionName = BridgeUtil.getFunctionFromReturnUrl(url);
         CallBackFunction f = responseCallbacks.get(functionName);
         String data = BridgeUtil.getDataFromReturnUrl(url);
+        Log.d("Bridge", data);
         if (f != null) {
             f.onCallBack(data);
-            responseCallbacks.remove(functionName);
+            //responseCallbacks.remove(functionName);
             return;
         }
     }
@@ -123,7 +143,11 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
         //escape special characters for json string
         messageJson = messageJson.replaceAll("(\\\\)([^utrn])", "\\\\\\\\$1$2");
         messageJson = messageJson.replaceAll("(?<=[^\\\\])(\")", "\\\\\"");
+        messageJson = messageJson.replaceAll("'", "\\\\\'");
+
         String javascriptCommand = String.format(BridgeUtil.JS_HANDLE_MESSAGE_FROM_JAVA, messageJson);
+        //Log.d(TAG, m.getHandlerName() + " ~~~~ " + m.toJson());
+
         if (Thread.currentThread() == Looper.getMainLooper()
                 .getThread()) {
             this.loadUrl(javascriptCommand);
@@ -136,6 +160,9 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
             loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, new CallBackFunction() {
 
                 @Override public void onCallBack(String data) {
+
+                    //Log.d(TAG, data);
+
                     // deserializeMessage
                     List<Message> list = null;
                     try {
@@ -184,6 +211,7 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
                             }
                             if (handler != null) {
                                 handler.handler(m.getData(), responseFunction);
+                                //Log.d(TAG, m.toJson());
                             }
                         }
                     }
@@ -208,6 +236,8 @@ public class BridgeWebView extends SafeWebView implements WebViewJavascriptBridg
 
     /**
      * call javascript registered handler
+     *
+     * @param callBack null is ok as well
      */
     public void callHandler(String handlerName, String data, CallBackFunction callBack) {
         doSend(handlerName, data, callBack);
