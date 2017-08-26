@@ -11,7 +11,7 @@ include(
         ':lib_component:fragmentBackHelper',
         ':lib_component:CrashWoodpecker',
         ':lib_component:CrashWoodpeckerRelease',
-//        ':lib_component:okhttpUtils'
+        //        ':lib_component:okhttpUtils'
 
 )
 
@@ -20,6 +20,7 @@ include(
 
         ':lib_uikit:ptr_lib',
         ':lib_uikit:tsnackbar',
-        ':lib_uikit:stickyHeaderRecyclerView'
+        ':lib_uikit:stickyHeaderRecyclerView',
+        ':lib_uikit:swipeBack'
 
 )

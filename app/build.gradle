@@ -92,6 +92,7 @@ dependencies {
     compile project(':lib_uikit:tsnackbar')
     compile project(':lib_uikit:stickyHeaderRecyclerView')
     compile project(':lib_uikit:ptr_lib')
+    compile project(':lib_uikit:swipeBack')
 
 
     //数据库

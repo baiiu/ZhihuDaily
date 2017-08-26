@@ -7,12 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.view.SwipeBackLayout;
+import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
@@ -67,7 +65,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
 
     //===============================swipeBack,在ProvideLayoutId前调用==============================================
     private SwipeBackLayout swipeBackLayout;
-    private ImageView ivShadow;
     private boolean canSwipeBack = false;
 
     public void setCanSwipeBack(boolean canSwipeBack) {
@@ -86,19 +83,26 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
     }
 
     private View getContainer() {
-        RelativeLayout container = new RelativeLayout(this);
-        swipeBackLayout = new SwipeBackLayout(this);
-        swipeBackLayout.setOnSwipeBackListener(this);
-        ivShadow = new ImageView(this);
-        ivShadow.setBackgroundColor(getResources().getColor(R.color.black_p50));
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                                                                             RelativeLayout.LayoutParams.MATCH_PARENT);
-        container.addView(ivShadow, params);
-        container.addView(swipeBackLayout);
-        return container;
+        getSwipeBackLayout().setDragEdge(SwipeBackLayout.DragEdge.LEFT);
+        getSwipeBackLayout().setOnSwipeBackListener(this);
+        return getSwipeBackLayout();
+    }
+
+    public void setDragEdge(SwipeBackLayout.DragEdge dragEdge) {
+        getSwipeBackLayout().setDragEdge(dragEdge);
+    }
+
+    public void setSwipeBackEnabled(boolean enabled) {
+        getSwipeBackLayout().setEnabled(enabled);
+    }
+
+    public SwipeBackLayout getSwipeBackLayout() {
+        if (swipeBackLayout == null) {
+            swipeBackLayout = new SwipeBackLayout(this);
+        }
+        return swipeBackLayout;
     }
 
     @Override public void onViewPositionChanged(float fractionAnchor, float fractionScreen) {
-        ivShadow.setAlpha(1 - fractionScreen);
     }
 }
