@@ -3,6 +3,7 @@ package in.srain.cube.views.ptr;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -337,6 +338,8 @@ public class PtrFrameLayout extends ViewGroup {
                 }
 
                 boolean moveDown = offsetY > 0;
+                Log.d("mLogU", "moveDown: " + moveDown + ", " + offsetY);
+
                 boolean moveUp = !moveDown;
                 boolean canMoveUp = mPtrIndicator.hasLeftStartPosition();
 

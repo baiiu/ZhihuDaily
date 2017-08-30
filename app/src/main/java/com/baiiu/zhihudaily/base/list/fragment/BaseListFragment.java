@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import butterknife.BindView;
+import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.BaseFragment;
 import com.baiiu.zhihudaily.base.list.WrapContentLinearLayoutManager;
@@ -266,7 +267,9 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     }
 
     @Override public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-        return PtrDefaultHandler.checkContentCanBePulledDown(frame, mRecyclerView, header);
+        boolean b = PtrDefaultHandler.checkContentCanBePulledDown(frame, mRecyclerView, header);
+        LogUtil.d("checkCanDoRefresh: " + b);
+        return b;
     }
 
     @Override public void onRefreshBegin(PtrFrameLayout frame) {
