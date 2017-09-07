@@ -67,6 +67,8 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         mLastUpdateTextView = (TextView) header.findViewById(R.id.ptr_classic_header_rotate_view_header_last_update);
         mProgressBar = header.findViewById(R.id.ptr_classic_header_rotate_view_progressbar);
 
+        arr.recycle();
+
         resetView();
     }
 
@@ -143,7 +145,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
     }
 
     @Override public void onUIRefreshPrepare(PtrFrameLayout frame) {
-        resetView();
+
         mShouldShowLastUpdate = true;
         tryUpdateLastUpdateTime();
         mLastUpdateTimeUpdater.start();
@@ -175,7 +177,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
 
         //hideRotateView();
         //mProgressBar.setVisibility(INVISIBLE);
-        //
+
         //mTitleTextView.setVisibility(VISIBLE);
         //mTitleTextView.setText(getResources().getString(R.string.cube_ptr_refresh_complete));
 
@@ -185,7 +187,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
             mLastUpdateTime = new Date().getTime();
             sharedPreferences.edit()
                     .putLong(mLastUpdateTimeKey, mLastUpdateTime)
-                    .commit();
+                    .apply();
         }
     }
 

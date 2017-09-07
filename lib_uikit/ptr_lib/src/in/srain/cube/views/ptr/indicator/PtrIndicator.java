@@ -14,7 +14,7 @@ public class PtrIndicator {
     private int mHeaderHeight;
     private int mPressedPos = 0;
 
-    private float mRatioOfHeaderHeightToRefresh = 1.2f;
+    private float mRatioOfHeaderHeightToRefresh = 1.0f;
     private float mResistance = 1.7f;
     private boolean mIsUnderTouch = false;
     private int mOffsetToKeepHeaderWhileLoading = -1;

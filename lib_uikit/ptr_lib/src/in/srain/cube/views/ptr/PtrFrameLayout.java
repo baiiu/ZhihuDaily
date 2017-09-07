@@ -3,7 +3,6 @@ package in.srain.cube.views.ptr;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -193,9 +192,9 @@ public class PtrFrameLayout extends ViewGroup {
             removeCallbacks(mPerformRefreshCompleteDelay);
         }
 
-        if (mCloseHeaderAfterCompleteDelay != null) {
-            removeCallbacks(mCloseHeaderAfterCompleteDelay);
-        }
+        //if (mCloseHeaderAfterCompleteDelay != null) {
+        //    removeCallbacks(mCloseHeaderAfterCompleteDelay);
+        //}
     }
 
     @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -338,8 +337,6 @@ public class PtrFrameLayout extends ViewGroup {
                 }
 
                 boolean moveDown = offsetY > 0;
-                Log.d("mLogU", "moveDown: " + moveDown + ", " + offsetY);
-
                 boolean moveUp = !moveDown;
                 boolean canMoveUp = mPtrIndicator.hasLeftStartPosition();
 
@@ -583,6 +580,25 @@ public class PtrFrameLayout extends ViewGroup {
         return false;
     }
 
+    public void notifyReset() {
+        //if (!mPtrIndicator.isInStartPosition()) {
+        //    //mHeaderView.offsetTopAndBottom(-mPtrIndicator.getCurrentPosY());
+        //    mPtrIndicator.setCurrentPos(PtrIndicator.POS_START);
+        //}
+
+        //if ((mStatus == PTR_STATUS_COMPLETE || mStatus == PTR_STATUS_PREPARE) && mPtrIndicator.isInStartPosition()) {
+        if (mPtrUIHandlerHolder.hasHandler()) {
+            mPtrUIHandlerHolder.onUIReset(this);
+            if (DEBUG) {
+                PtrCLog.i(LOG_TAG, "PtrUIHandler: onUIReset");
+            }
+        }
+        mStatus = PTR_STATUS_INIT;
+        clearFlag();
+        //}
+    }
+
+
     protected void onPtrScrollAbort() {
         if (mPtrIndicator.hasLeftStartPosition() && isAutoRefresh()) {
             if (DEBUG) {
@@ -721,6 +737,12 @@ public class PtrFrameLayout extends ViewGroup {
         }
     }
 
+    /*
+        第一次进页面时，使用此方法展示刷新信息会停一会，主要靠mShowLoadingIndicatorOnly控制
+        停一会的时间主要靠setDurationToCloseHeaderAfterComplete。
+
+        第二次时调用autoRefresh方法都可以停一会。
+     */
     public void showLoadingIndicator() {
         if (mStatus != PTR_STATUS_INIT) {
             return;
@@ -737,14 +759,7 @@ public class PtrFrameLayout extends ViewGroup {
         }
         mScrollChecker.tryToScrollTo(mPtrIndicator.getOffsetToRefresh(), mDurationToCloseHeader);
         mStatus = PTR_STATUS_LOADING;
-
-        mLoadingStartTime = System.currentTimeMillis();
-        if (mPtrUIHandlerHolder.hasHandler()) {
-            mPtrUIHandlerHolder.onUIRefreshBegin(this);
-            if (DEBUG) {
-                PtrCLog.i(LOG_TAG, "PtrUIHandler: onUIRefreshBegin");
-            }
-        }
+        performRefresh();
 
         mShowLoadingIndicatorOnly = true;
     }

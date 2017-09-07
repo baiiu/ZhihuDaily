@@ -7,12 +7,18 @@
 
     <TextView
         android:id="@+id/tv_refresh_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@drawable/rect_2e79f4"
         android:gravity="center"
-        android:text="加载了n条"
-        android:textSize="20sp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="7dp"
+        android:text="加载了2条"
+        android:textColor="#fff"
+        android:textSize="13sp"
         />
 
     <RelativeLayout

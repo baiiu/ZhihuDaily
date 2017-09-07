@@ -132,6 +132,8 @@ public class NewsListPresenter extends NewsListContract.IPresenter {
     }
 
     @Override public void onRefresh() {
+        LogUtil.d("onRefresh");
+
         if (HttpNetUtil.isConnected()) {
             //刷新数据时从网络拉取
             loadNewsList(true, true);

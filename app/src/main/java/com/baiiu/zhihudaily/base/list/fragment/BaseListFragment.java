@@ -158,7 +158,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
 
     @Override public void showLoadingIndicator(boolean show) {
         if (show) {
-            mPtr.showLoadingIndicator();
+            mPtr.autoRefresh();
         } else {
             mPtr.refreshComplete();
         }
