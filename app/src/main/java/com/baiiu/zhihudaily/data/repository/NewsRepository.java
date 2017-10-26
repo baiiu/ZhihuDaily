@@ -10,10 +10,8 @@ import com.baiiu.zhihudaily.data.repository.remote.NewsRemoteSource;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.data.util.ReadedListUtil;
-import com.baiiu.zhihudaily.di.scope.PerFragment;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Inject;
 import rx.Observable;
 
 /**
@@ -21,7 +19,6 @@ import rx.Observable;
  * date: on 16/5/11 10:43
  * description: NewsList数据管理类,控制从哪里取数据,并对数据进行处理.
  */
-@PerFragment
 public class NewsRepository implements INewsDataSource {
     public static final String LATEST_DATE = "Latest_Date";
     public static final String READ_LIST = "read_list";
@@ -36,9 +33,9 @@ public class NewsRepository implements INewsDataSource {
 
     private String mCurrentDate;
 
-    @Inject public NewsRepository(NewsLocalSource localSource, NewsRemoteSource remoteSource) {
-        mNewsLocalSource = localSource;
-        mNewsRemoteSource = remoteSource;
+    public NewsRepository() {
+        mNewsLocalSource = new NewsLocalSource();
+        mNewsRemoteSource = new NewsRemoteSource();
     }
 
     @Override public Observable<Daily> loadNewsList(String date, boolean refresh) {

@@ -23,7 +23,6 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 import java.util.List;
-import javax.inject.Inject;
 
 /**
  * author: baiiu
@@ -35,7 +34,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     @BindView(R.id.ptr) protected PtrClassicFrameLayout mPtr;
     @BindView(R.id.recyclerView) protected RecyclerView mRecyclerView;
 
-    @Inject protected P mPresenter;
+    protected P mPresenter;
     protected BaseRefreshLoadMoreAdapter<E> mAdapter;
     protected LoadingMoreScrollListenerM mLoadingMoreScrollListener;
 
@@ -46,7 +45,7 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initOnCreate();
-        providePresenter();
+        mPresenter = providePresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
@@ -151,8 +150,8 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
         mRecyclerView.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    protected void providePresenter() {
-    }
+    protected abstract P providePresenter();
+
 
     protected abstract BaseRefreshLoadMoreAdapter<E> provideAdapter();
 

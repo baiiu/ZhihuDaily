@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.baiiu.zhihudaily.DailyApplication;
-import com.baiiu.zhihudaily.di.component.AppComponent;
 import com.squareup.leakcanary.RefWatcher;
 
 /**
@@ -22,11 +21,6 @@ public class UIUtil {
      **/
     public static Context getContext() {
         return DailyApplication.getContext();
-    }
-
-    public static AppComponent getAppComponent() {
-        DailyApplication application = (DailyApplication) getContext().getApplicationContext();
-        return application.getAppComponent();
     }
 
     public static RefWatcher getRefWatcher() {

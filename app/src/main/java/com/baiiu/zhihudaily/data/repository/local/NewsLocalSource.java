@@ -25,10 +25,8 @@ public class NewsLocalSource implements INewsDataSource {
                 })
                 .flatMap(s -> {
                     Daily daily = new Daily();
-                    daily.top_stories = DBManager.instance()
-                            .getTopStoryList();
+                    //daily.top_stories = DBManager.instance().getTopStoryList();
                     daily.date = s;
-
                     daily.stories = DBManager.instance()
                             .getStoryList(s);
 

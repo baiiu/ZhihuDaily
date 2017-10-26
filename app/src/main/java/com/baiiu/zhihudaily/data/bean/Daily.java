@@ -10,7 +10,7 @@ import java.util.List;
 public class Daily {
     public String date;
     public List<Story> stories;
-    public List<TopStory> top_stories;
+    //public List<TopStory> top_stories;
 
     /**
      * 根据业务需求,第一次访问本地数据,之后有网的话访问网络数据.

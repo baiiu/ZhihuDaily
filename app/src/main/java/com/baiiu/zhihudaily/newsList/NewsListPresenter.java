@@ -9,7 +9,6 @@ import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.ReadedListUtil;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.UIUtil;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,14 +17,13 @@ import rx.schedulers.Schedulers;
  * time: 16/5/10 10 22:42
  * description:
  */
-
-public class NewsListPresenter extends NewsListContract.IPresenter {
+class NewsListPresenter extends NewsListContract.IPresenter {
     private NewsRepository mNewsListRepository;
 
     //很明显,使用构造函数注入依赖
-    @Inject public NewsListPresenter(NewsRepository newsListRepository) {
+    NewsListPresenter() {
         //持有 NewsList数据操作类,硬编码注入
-        this.mNewsListRepository = newsListRepository;
+        this.mNewsListRepository = new NewsRepository();
         LogUtil.d(mNewsListRepository.toString());
     }
 

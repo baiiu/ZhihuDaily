@@ -8,7 +8,6 @@ import com.baiiu.zhihudaily.base.list.fragment.BaseRefreshLoadMoreAdapter;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.newsList.holder.DateViewHolder;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.newsList.holder.TopicViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 /**
@@ -18,10 +17,6 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
  */
 
 public class DailyNewsAdapter extends BaseRefreshLoadMoreAdapter<Story> implements StickyRecyclerHeadersAdapter<DateViewHolder> {
-    public static final int TYPE_TOPIC = 0;
-    public static final int TYPE_NEWS = 1;
-
-    private TopicViewHolder topicViewHolder;
     private View.OnClickListener mOnClickListener;
 
     public DailyNewsAdapter(Context context, View.OnClickListener listener) {

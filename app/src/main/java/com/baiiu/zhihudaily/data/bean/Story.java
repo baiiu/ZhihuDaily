@@ -2,7 +2,6 @@ package com.baiiu.zhihudaily.data.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.baiiu.zhihudaily.newsList.DailyNewsAdapter;
 import java.util.List;
 
 /**
@@ -19,8 +18,6 @@ public class Story implements Parcelable {
     public String date;
     public boolean isRead;
 
-    public int mType = DailyNewsAdapter.TYPE_NEWS;
-
     public Story() {
     }
 
@@ -36,7 +33,6 @@ public class Story implements Parcelable {
                 "type=" + type +
                 ", id=" + id +
                 ", date='" + date + '\'' +
-                ", mType=" + mType +
                 '}';
     }
 
@@ -47,7 +43,6 @@ public class Story implements Parcelable {
         ga_prefix = in.readString();
         title = in.readString();
         isRead = in.readByte() != 0;
-        mType = in.readInt();
     }
 
     public static final Creator<Story> CREATOR = new Creator<Story>() {
@@ -71,6 +66,5 @@ public class Story implements Parcelable {
         dest.writeString(ga_prefix);
         dest.writeString(title);
         dest.writeByte((byte) (isRead ? 1 : 0));
-        dest.writeInt(mType);
     }
 }

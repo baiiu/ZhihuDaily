@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'android-apt'
 
 android {
     def cfg = rootProject.ext.androidVersionConfig
@@ -67,11 +66,10 @@ dependencies {
     compile majorFrame.Glide as String
 
     compile majorFrame.ButterKnife as String
-    apt majorFrame.aptButterKnifeCompiler as String
+    annotationProcessor majorFrame.aptButterKnifeCompiler as String
 
-    compile majorFrame.Dagger2 as String
-    apt majorFrame.aptDagger2Compiler as String
-
+    // compile majorFrame.Dagger2 as String
+    // annotationProcessor majorFrame.aptDagger2Compiler as String
 
     def assistance = rootProject.ext.assistance;
     debugCompile assistance.leakCanaryDebug as String

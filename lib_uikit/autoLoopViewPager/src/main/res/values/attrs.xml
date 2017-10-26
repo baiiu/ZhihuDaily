@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <declare-styleable name="SimpleCircleIndicator">
+        <attr format="dimension|reference" name="dot_interval"/>
+        <attr format="dimension|reference" name="selected_radius"/>
+        <attr format="dimension|reference" name="unselected_radius"/>
+        <attr format="color|reference" name="selected_color"/>
+        <attr format="color|reference" name="unselected_color"/>
+        <attr format="dimension|reference" name="selected_strokeWidth"/>
+        <attr format="dimension|reference" name="unselected_strokeWidth"/>
+        <attr format="boolean" name="selectedStroke"/>
+        <attr format="boolean" name="unselectedStroke"/>
+    </declare-styleable>
+
+    <declare-styleable name="LinePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
+        <attr format="boolean" name="centered"/>
+        <!-- Color of the unselected lines that represent the pages. -->
+        <attr format="color|reference" name="unselectedColor"/>
+        <!-- Color of the selected line that represents the current page. -->
+        <attr format="color|reference" name="selectedColor"/>
+        <!-- Width of each indicator line. -->
+        <attr format="dimension" name="lineWidth"/>
+        <!-- Width of each indicator line's stroke. -->
+        <attr format="dimension|reference" name="strokeWidth"/>
+        <!-- Width of the gap between each indicator line. -->
+        <attr format="dimension|reference" name="gapWidth"/>
+        <!-- View background -->
+        <attr name="android:background"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleIndicator">
+        <attr format="dimension" name="ci_width"/>
+        <attr format="dimension" name="ci_height"/>
+        <attr format="dimension" name="ci_margin"/>
+        <attr format="reference" name="ci_animator"/>
+        <attr format="reference" name="ci_animator_reverse"/>
+        <attr format="reference" name="ci_drawable"/>
+        <attr format="reference" name="ci_drawable_unselected"/>
+    </declare-styleable>
+
+
+</resources>

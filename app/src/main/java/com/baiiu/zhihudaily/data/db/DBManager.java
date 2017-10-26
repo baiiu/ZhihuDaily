@@ -7,11 +7,9 @@ import baiiu.greendao.gen.SavedDailyDetail;
 import baiiu.greendao.gen.SavedDailyDetailDao;
 import baiiu.greendao.gen.SavedStory;
 import baiiu.greendao.gen.SavedStoryDao;
-import baiiu.greendao.gen.SavedTopStory;
 import baiiu.greendao.gen.SavedTopStoryDao;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.data.bean.mapper.MappingConvertUtil;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.util.UIUtil;
@@ -56,7 +54,8 @@ public class DBManager {
     }
 
     public <T, K> List<T> query(AbstractDao<T, K> dao) {
-        return dao.queryBuilder().list();
+        return dao.queryBuilder()
+                .list();
     }
 
 
@@ -86,19 +85,19 @@ public class DBManager {
         return daoSession.getSavedTopStoryDao();
     }
 
-    public void saveTopStoryList(List<TopStory> list) {
-        if (CommonUtil.isEmpty(list)) {
-            return;
-        }
+    //public void saveTopStoryList(List<TopStory> list) {
+    //    if (CommonUtil.isEmpty(list)) {
+    //        return;
+    //    }
+    //
+    //    getSavedTopStoryDao().deleteAll();
+    //    getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
+    //}
 
-        getSavedTopStoryDao().deleteAll();
-        getSavedTopStoryDao().insertOrReplaceInTx(MappingConvertUtil.toSavedTopStory(list));
-    }
-
-    public List<TopStory> getTopStoryList() {
-        List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
-        return MappingConvertUtil.toTopStory(savedTopStories);
-    }
+    //public List<TopStory> getTopStoryList() {
+    //    List<SavedTopStory> savedTopStories = getSavedTopStoryDao().loadAll();
+    //    return MappingConvertUtil.toTopStory(savedTopStories);
+    //}
 
     //========================DailyDetail=====================================
     private SavedDailyDetailDao getDailyDetailDao() {

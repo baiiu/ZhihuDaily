@@ -4,7 +4,6 @@ package com.baiiu.zhihudaily.data.repository.remote;
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.bean.TopStory;
 import com.baiiu.zhihudaily.data.bean.mapper.MappingConvertUtil;
 import com.baiiu.zhihudaily.data.db.DBManager;
 import com.baiiu.zhihudaily.data.net.ApiFactory;
@@ -41,10 +40,10 @@ public class NewsRemoteSource implements INewsDataSource {
                 .doOnNext(daily -> saveStories(daily.stories, daily.date));
     }
 
-    private void saveTopStories(final List<TopStory> top_stories) {
-        DBManager.instance()
-                .saveTopStoryList(top_stories);
-    }
+    //private void saveTopStories(final List<TopStory> top_stories) {
+    //    DBManager.instance()
+    //            .saveTopStoryList(top_stories);
+    //}
 
     private void saveStories(final List<Story> stories, final String date) {
         DBManager.instance()

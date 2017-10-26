@@ -8,13 +8,11 @@ import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.list.fragment.BaseListFragment;
 import com.baiiu.zhihudaily.base.list.fragment.BaseRefreshLoadMoreAdapter;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
 import com.baiiu.zhihudaily.data.util.CommonUtil;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.DoubleClickListener;
-import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.util.router.Navigator;
 import com.baiiu.zhihudaily.view.fastscroll.FastScrollLinearLayoutManager;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -27,17 +25,11 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter> implements NewsListContract.IView, View.OnClickListener {
 
-    //@Inject protected NewsListPresenter mPresenter;
-
     public static NewsListFragment instance() {
         return new NewsListFragment();
     }
 
     @Override protected void initOnCreate() {
-        DaggerNewsComponent.builder()
-                .appComponent(UIUtil.getAppComponent())
-                .build()
-                .inject(this);
     }
 
     @Override protected void initRecyclerView() {
@@ -66,6 +58,11 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
             });
         }
     }
+
+    @Override protected NewsListPresenter providePresenter() {
+        return new NewsListPresenter();
+    }
+
 
     @Override protected BaseRefreshLoadMoreAdapter<Story> provideAdapter() {
         return new DailyNewsAdapter(mContext, this);

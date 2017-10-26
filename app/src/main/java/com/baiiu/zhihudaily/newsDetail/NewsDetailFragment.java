@@ -11,11 +11,8 @@ import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.BaseFragment;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
-import com.baiiu.zhihudaily.data.repository.DaggerNewsComponent;
 import com.baiiu.zhihudaily.util.HTMLUtil;
-import com.baiiu.zhihudaily.util.UIUtil;
 import com.baiiu.zhihudaily.view.LoadFrameLayout;
-import javax.inject.Inject;
 
 /**
  * author: baiiu
@@ -25,7 +22,7 @@ import javax.inject.Inject;
 public class NewsDetailFragment extends BaseFragment implements NewsDetailContract.IView {
     public static final String NEWS_ID = "id";
 
-    @Inject NewsDetailPresenter mNewsDetailPresenter;
+    NewsDetailPresenter mNewsDetailPresenter;
     @BindView(R.id.loadFrameLayout) LoadFrameLayout loadFrameLayout;
 
     public static NewsDetailFragment instance(long newsId) {
@@ -43,11 +40,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
         Bundle arguments = getArguments();
 
-        DaggerNewsComponent.builder()
-                .appComponent(UIUtil.getAppComponent())
-                .build()
-                .inject(this);
-
+        mNewsDetailPresenter = new NewsDetailPresenter();
         mNewsDetailPresenter.attachView(this);
         mNewsDetailPresenter.processArguments(arguments);
     }

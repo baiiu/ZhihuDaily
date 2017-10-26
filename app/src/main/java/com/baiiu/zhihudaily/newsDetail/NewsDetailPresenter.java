@@ -3,7 +3,6 @@ package com.baiiu.zhihudaily.newsDetail;
 import android.os.Bundle;
 import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,8 +17,8 @@ public class NewsDetailPresenter extends NewsDetailContract.IPresenter {
     private final NewsRepository mNewsRepository;
     private long id;
 
-    @Inject NewsDetailPresenter(NewsRepository newsDetailRepository) {
-        mNewsRepository = newsDetailRepository;
+    NewsDetailPresenter() {
+        mNewsRepository = new NewsRepository();
         LogUtil.d(mNewsRepository.toString());//打印看是否为单例
     }
 

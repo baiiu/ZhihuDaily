@@ -3,11 +3,6 @@ package com.baiiu.zhihudaily;
 import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
-import com.baiiu.library.LogUtil;
-import com.baiiu.zhihudaily.di.component.AppComponent;
-import com.baiiu.zhihudaily.di.component.DaggerAppComponent;
-import com.baiiu.zhihudaily.di.module.AppModule;
-import com.baiiu.zhihudaily.di.module.RepositoryModule;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -21,7 +16,6 @@ public class DailyApplication extends Application {
     private static Context mContext;
 
     private RefWatcher refWatcher;
-    private AppComponent appComponent;
 
     @Override public void onCreate() {
         if (BuildConfig.DEBUG) {
@@ -48,11 +42,6 @@ public class DailyApplication extends Application {
 
         refWatcher = LeakCanary.install(this);
 
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .repositoryModule(new RepositoryModule())
-                .build();
-
     }
 
     public static Context getContext() {
@@ -64,7 +53,4 @@ public class DailyApplication extends Application {
         return refWatcher;
     }
 
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
 }

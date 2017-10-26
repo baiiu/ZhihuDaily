@@ -67,10 +67,10 @@ public class NewsListActivity extends BaseActivity {
 
     }
 
-    //=====================Menu===================================
+    // =====================Menu===================================
   /*
-  个人认为,Menu里面涉及的操作全部是View相关,所拥有的逻辑也仅仅是与UI相关,但不与业务逻辑UI相关,所以放在Activity中实现.
-  这样的好处是:在业务变化时需要替换Fragment时,不需要修改这段代码.
+        个人认为,Menu里面涉及的操作全部是View相关,所拥有的逻辑也仅仅是与UI相关,但不与业务逻辑UI相关,所以放在Activity中实现.
+        这样的好处是:在业务变化时需要替换Fragment时,不需要修改这段代码.
    */
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {

@@ -32,8 +32,6 @@ As well, the project is continue refactoring.
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
-
-
 ## Branches
 - `the master` has a lot of tags, and the first version code is on it.
 - `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
@@ -46,6 +44,13 @@ As well, the project is continue refactoring.
 
 ## ScreenShot
 ![ZhihuDaily](images/daily.gif "Gif Example")
+
+## TODO
+- 17/10/26
+使用GreenDao造成了多个实体类，如在项目中GreenDao生成的SavedStory一系列，和Story重复，而此时又没有使用Clean架构来使用该bean，造成重复和难以理解。
+所以这也算GreenDao的一个弊端吧。
+将会使用liteOrm或其他一些数据库来解决该问题。
+
 
 ## ThanksTo
 [知乎日报API](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)<br>
