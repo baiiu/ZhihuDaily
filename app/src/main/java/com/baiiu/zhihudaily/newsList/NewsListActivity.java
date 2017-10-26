@@ -8,13 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
+import com.baiiu.zhihudaily.MainActivity;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.base.BaseActivity;
 import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
 import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
 import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.base.BaseActivity;
 
 /**
  * Activity将变成全局的Controller
@@ -33,7 +34,7 @@ public class NewsListActivity extends BaseActivity {
         // @formatter:on
 
 
-        return R.layout.activity_main;
+        return R.layout.activity_list;
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class NewsListActivity extends BaseActivity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_theme:
                 // @formatter:off

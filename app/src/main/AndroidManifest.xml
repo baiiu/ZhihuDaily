@@ -30,6 +30,7 @@
             android:theme="@style/DayTransparentTheme"/>
 
         <activity android:name=".util.SwitchModeActivity"/>
+        <activity android:name=".MainActivity"/>
 
     </application>
 
