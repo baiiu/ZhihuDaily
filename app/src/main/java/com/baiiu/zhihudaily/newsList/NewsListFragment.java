@@ -5,6 +5,7 @@ import android.view.View;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
+import com.baiiu.zhihudaily.base.BaseActivity;
 import com.baiiu.zhihudaily.base.list.fragment.BaseListFragment;
 import com.baiiu.zhihudaily.base.list.fragment.BaseRefreshLoadMoreAdapter;
 import com.baiiu.zhihudaily.data.bean.Story;
@@ -46,10 +47,12 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
         StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration((DailyNewsAdapter) mAdapter);
         mRecyclerView.addItemDecoration(headersDecor);
 
-        getActivity().findViewById(R.id.fab)
-                .setOnClickListener(v -> mRecyclerView.smoothScrollToPosition(0));
+        View fab = getActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> mRecyclerView.smoothScrollToPosition(0));
+        }
 
-        View view = ((NewsListActivity) getActivity()).mToolbar;
+        View view = ((BaseActivity) getActivity()).mToolbar;
         if (view != null) {
             view.setOnClickListener(new DoubleClickListener() {
                 @Override public void onDoubleClick(View v) {

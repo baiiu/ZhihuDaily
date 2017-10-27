@@ -11,21 +11,25 @@
     tools:showIn="@layout/activity_main"
     >
 
-    <FrameLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#654321"
         />
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/black_p50"
+        />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:itemBackground="@color/white"
-        app:itemIconTint="#123456"
-        app:itemTextColor="#000000"
         app:menu="@menu/menu_bottom"
         />
 
