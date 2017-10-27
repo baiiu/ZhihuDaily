@@ -1,5 +1,6 @@
-package com.baiiu.zhihudaily;
+package com.baiiu.zhihudaily.gankList;
 
+import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.base.BaseFragment;
 
 /**

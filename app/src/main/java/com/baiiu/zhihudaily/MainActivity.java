@@ -18,7 +18,6 @@ public class MainActivity extends BaseActivity {
     @BindView(viewPager) ViewPager mViewPager;
     @BindView(bottomNavigation) BottomNavigationView mBottomNavigation;
 
-
     @Override public int provideLayoutId() {
         return R.layout.activity_main;
     }
