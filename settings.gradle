@@ -1,4 +1,4 @@
-include ':app', ':dao-generator'
+include ':app', ':dao-generator', ':module_daily'
 
 
 //common组件
