@@ -1,11 +1,11 @@
 package com.baiiu.zhihudaily.data.repository.local;
 
 
+import com.baiiu.common.util.DateUtil;
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.db.DBManager;
 import com.baiiu.zhihudaily.data.repository.INewsDataSource;
-import com.baiiu.zhihudaily.data.util.DateUtil;
 import rx.Observable;
 
 /**

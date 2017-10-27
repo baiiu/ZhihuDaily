@@ -8,11 +8,11 @@ import baiiu.greendao.gen.SavedDailyDetailDao;
 import baiiu.greendao.gen.SavedStory;
 import baiiu.greendao.gen.SavedStoryDao;
 import baiiu.greendao.gen.SavedTopStoryDao;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.UIUtil;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.bean.mapper.MappingConvertUtil;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.util.UIUtil;
 import de.greenrobot.dao.AbstractDao;
 import java.util.List;
 

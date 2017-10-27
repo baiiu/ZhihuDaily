@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import com.baiiu.common.base.BaseActivity;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.PreferenceUtil;
+import com.baiiu.common.util.UIUtil;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
-import com.baiiu.zhihudaily.util.UIUtil;
-import com.baiiu.zhihudaily.base.BaseActivity;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {

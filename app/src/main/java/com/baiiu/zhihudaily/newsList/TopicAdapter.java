@@ -3,9 +3,9 @@ package com.baiiu.zhihudaily.newsList;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import com.baiiu.common.base.BasePagerAdapter;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.TopStory;
-import com.baiiu.zhihudaily.base.BasePagerAdapter;
 import com.bumptech.glide.Glide;
 import java.util.List;
 

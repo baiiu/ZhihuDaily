@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.baiiu.zhihudaily.view.LoadFrameLayout
+<com.baiiu.common.view.LoadFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/loadFrameLayout"
     android:layout_width="match_parent"

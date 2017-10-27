@@ -1,10 +1,10 @@
 package com.baiiu.zhihudaily.newsDetail;
 
 import android.os.Bundle;
+import com.baiiu.common.base.mvp.IToastInfoView;
+import com.baiiu.common.base.mvp.MVPPresenter;
+import com.baiiu.common.base.mvp.MvpView;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
-import com.baiiu.zhihudaily.base.mvp.MVPPresenter;
-import com.baiiu.zhihudaily.base.mvp.MvpView;
-import com.baiiu.zhihudaily.base.mvp.IToastInfoView;
 
 /**
  * author: baiiu

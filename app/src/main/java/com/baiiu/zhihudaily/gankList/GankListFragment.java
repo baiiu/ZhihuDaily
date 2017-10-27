@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.gankList;
 
+import com.baiiu.common.base.BaseFragment;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.base.BaseFragment;
 
 /**
  * author: baiiu

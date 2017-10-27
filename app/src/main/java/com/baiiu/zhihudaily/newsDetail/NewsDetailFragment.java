@@ -6,13 +6,13 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import butterknife.BindView;
+import com.baiiu.common.base.BaseFragment;
+import com.baiiu.common.util.HTMLUtil;
+import com.baiiu.common.view.LoadFrameLayout;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.base.BaseFragment;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
-import com.baiiu.zhihudaily.util.HTMLUtil;
-import com.baiiu.zhihudaily.view.LoadFrameLayout;
 
 /**
  * author: baiiu

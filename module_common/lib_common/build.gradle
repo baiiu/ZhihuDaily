@@ -1,0 +1,80 @@
+apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    def cfg = rootProject.ext.androidVersionConfig
+
+    compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.androidMinSdkVersion
+        targetSdkVersion cfg.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility as JavaVersion
+        targetCompatibility rootProject.ext.javaTargetCompatibility as JavaVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+//        debug {
+//            minifyEnabled false
+//        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    def support = rootProject.ext.support
+    compile support.appcompat as String
+    compile support.design as String
+    compile support.recyclerView as String
+    compile support.cardView as String
+
+    def rx = rootProject.ext.rx;
+    compile rx.rxJava as String
+    compile rx.rxAndroid as String
+    compile rx.rxLifecycle as String
+    compile rx.rxLlifecycleComponents as String
+    compile rx.rxBinding as String
+
+    def majorFrame = rootProject.ext.majorFrame
+    compile majorFrame.okHttp as String
+    compile majorFrame.retrofit as String
+    compile majorFrame.converterGson as String
+    compile majorFrame.adapterRxJava as String
+    compile majorFrame.Gson as String
+    compile majorFrame.Glide as String
+    compile majorFrame.ButterKnife as String
+    annotationProcessor majorFrame.aptButterKnifeCompiler as String
+
+    def assistance = rootProject.ext.assistance;
+    debugCompile assistance.leakCanaryDebug as String
+    releaseCompile assistance.leakCanaryRelease as String
+    testCompile assistance.leakCanaryTest as String
+    debugCompile assistance.stetho as String
+    debugCompile assistance.stethoOkHttp as String
+
+    // 基础module引用基础库
+    debugCompile project(':module_common:lib_component:LogUtil')
+    releaseCompile project(':module_common:lib_component:LogUtilRelease')
+    debugCompile project(':module_common:lib_component:CrashWoodpecker')
+    releaseCompile project(':module_common:lib_component:CrashWoodpeckerRelease')
+    compile project(':module_common:lib_uikit:tsnackbar')
+    compile project(':module_common:lib_uikit:stickyHeaderRecyclerView')
+    compile project(':module_common:lib_uikit:ptr_lib')
+    compile project(':module_common:lib_uikit:swipeBack')
+}

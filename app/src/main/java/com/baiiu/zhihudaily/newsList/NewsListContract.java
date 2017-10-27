@@ -1,7 +1,7 @@
 package com.baiiu.zhihudaily.newsList;
 
-import com.baiiu.zhihudaily.base.list.fragment.BaseListContract;
-import com.baiiu.zhihudaily.base.mvp.IToastInfoView;
+import com.baiiu.common.base.list.fragment.BaseListContract;
+import com.baiiu.common.base.mvp.IToastInfoView;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
 import java.util.List;

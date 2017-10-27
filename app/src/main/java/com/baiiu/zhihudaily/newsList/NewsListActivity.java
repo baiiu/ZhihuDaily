@@ -6,16 +6,16 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.baiiu.common.base.BaseActivity;
+import com.baiiu.common.net.http.NetWorkReceiver;
+import com.baiiu.common.util.PreferenceUtil;
+import com.baiiu.common.util.UIUtil;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 import com.baiiu.zhihudaily.MainActivity;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.base.BaseActivity;
-import com.baiiu.zhihudaily.data.net.http.NetWorkReceiver;
-import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.util.Constant;
 import com.baiiu.zhihudaily.util.SwitchModeActivity;
-import com.baiiu.zhihudaily.util.UIUtil;
 
 /**
  * Activity将变成全局的Controller

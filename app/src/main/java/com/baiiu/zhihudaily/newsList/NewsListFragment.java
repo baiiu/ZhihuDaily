@@ -2,20 +2,20 @@ package com.baiiu.zhihudaily.newsList;
 
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.View;
+import com.baiiu.common.base.BaseActivity;
+import com.baiiu.common.base.list.fragment.BaseListFragment;
+import com.baiiu.common.base.list.fragment.BaseRefreshLoadMoreAdapter;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.DoubleClickListener;
+import com.baiiu.common.util.PreferenceUtil;
+import com.baiiu.common.view.fastscroll.FastScrollLinearLayoutManager;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.baiiu.zhihudaily.R;
-import com.baiiu.zhihudaily.base.BaseActivity;
-import com.baiiu.zhihudaily.base.list.fragment.BaseListFragment;
-import com.baiiu.zhihudaily.base.list.fragment.BaseRefreshLoadMoreAdapter;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.data.util.PreferenceUtil;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
 import com.baiiu.zhihudaily.util.Constant;
-import com.baiiu.zhihudaily.util.DoubleClickListener;
 import com.baiiu.zhihudaily.util.router.Navigator;
-import com.baiiu.zhihudaily.view.fastscroll.FastScrollLinearLayoutManager;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 /**

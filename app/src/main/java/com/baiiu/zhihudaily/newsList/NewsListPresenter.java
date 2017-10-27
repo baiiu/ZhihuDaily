@@ -1,14 +1,14 @@
 package com.baiiu.zhihudaily.newsList;
 
+import com.baiiu.common.net.ApiConstants;
+import com.baiiu.common.net.http.HttpNetUtil;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.ReadedListUtil;
+import com.baiiu.common.util.UIUtil;
 import com.baiiu.library.LogUtil;
 import com.baiiu.zhihudaily.data.bean.Daily;
-import com.baiiu.zhihudaily.data.net.ApiConstants;
-import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.repository.NewsRepository;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.data.util.ReadedListUtil;
 import com.baiiu.zhihudaily.newsList.holder.NewsViewHolder;
-import com.baiiu.zhihudaily.util.UIUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

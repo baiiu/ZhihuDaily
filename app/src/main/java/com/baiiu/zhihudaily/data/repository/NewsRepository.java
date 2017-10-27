@@ -1,15 +1,15 @@
 package com.baiiu.zhihudaily.data.repository;
 
 import android.text.TextUtils;
+import com.baiiu.common.net.http.HttpNetUtil;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.PreferenceUtil;
+import com.baiiu.common.util.ReadedListUtil;
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.net.http.HttpNetUtil;
 import com.baiiu.zhihudaily.data.repository.local.NewsLocalSource;
 import com.baiiu.zhihudaily.data.repository.remote.NewsRemoteSource;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.data.util.PreferenceUtil;
-import com.baiiu.zhihudaily.data.util.ReadedListUtil;
 import java.util.List;
 import java.util.Map;
 import rx.Observable;

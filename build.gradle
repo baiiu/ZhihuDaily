@@ -8,7 +8,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
     }
+
 }
 
 task clean(type: Delete) {

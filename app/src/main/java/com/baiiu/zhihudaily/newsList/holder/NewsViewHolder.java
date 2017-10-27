@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
+import com.baiiu.common.base.BaseViewHolder;
+import com.baiiu.common.util.CommonUtil;
+import com.baiiu.common.util.ReadedListUtil;
 import com.baiiu.zhihudaily.R;
 import com.baiiu.zhihudaily.data.bean.Story;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
-import com.baiiu.zhihudaily.data.util.ReadedListUtil;
-import com.baiiu.zhihudaily.base.BaseViewHolder;
 import com.bumptech.glide.Glide;
 
 /**

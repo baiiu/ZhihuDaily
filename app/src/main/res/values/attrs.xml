@@ -8,16 +8,7 @@
     <attr format="color" name="news_read"/>
 
 
-    <declare-styleable name="LoopViewPager">
-        <attr format="float|reference" name="scale"/>
-    </declare-styleable>
 
-    <declare-styleable name="SimpleCircleIndicator">
-        <attr format="dimension|reference" name="dot_interval"/>
-        <attr format="dimension|reference" name="dot_radius"/>
-        <attr format="color|reference" name="selected_color"/>
-        <attr format="color|reference" name="unselected_color"/>
-    </declare-styleable>
 
     <declare-styleable name="LoadFrameLayout">
         <attr format="reference" name="emptyView"/>

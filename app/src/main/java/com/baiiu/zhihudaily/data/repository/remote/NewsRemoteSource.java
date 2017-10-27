@@ -1,14 +1,14 @@
 package com.baiiu.zhihudaily.data.repository.remote;
 
 
+import com.baiiu.common.util.CommonUtil;
 import com.baiiu.zhihudaily.data.bean.Daily;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.bean.mapper.MappingConvertUtil;
 import com.baiiu.zhihudaily.data.db.DBManager;
-import com.baiiu.zhihudaily.data.net.ApiFactory;
+import com.baiiu.zhihudaily.data.net.DailyFactory;
 import com.baiiu.zhihudaily.data.repository.INewsDataSource;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
 import java.util.List;
 import rx.Observable;
 
@@ -28,10 +28,10 @@ public class NewsRemoteSource implements INewsDataSource {
         Observable<Daily> dailyObservable;
 
         if (refresh) {
-            dailyObservable = ApiFactory.getDailyAPI()
+            dailyObservable = DailyFactory.getDailyAPI()
                     .newsLatest();
         } else {
-            dailyObservable = ApiFactory.getDailyAPI()
+            dailyObservable = DailyFactory.getDailyAPI()
                     .newsBefore(date);
         }
 
@@ -51,7 +51,7 @@ public class NewsRemoteSource implements INewsDataSource {
     }
 
     @Override public Observable<DailyDetail> loadNewsDetail(long id) {
-        return ApiFactory.getDailyAPI()
+        return DailyFactory.getDailyAPI()
                 .newsDetail(id)
                 .doOnNext(this::saveData);
     }

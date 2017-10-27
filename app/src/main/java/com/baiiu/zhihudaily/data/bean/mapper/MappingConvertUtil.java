@@ -4,10 +4,10 @@ import android.text.TextUtils;
 import baiiu.greendao.gen.SavedDailyDetail;
 import baiiu.greendao.gen.SavedStory;
 import baiiu.greendao.gen.SavedTopStory;
+import com.baiiu.common.util.CommonUtil;
 import com.baiiu.zhihudaily.data.bean.DailyDetail;
 import com.baiiu.zhihudaily.data.bean.Story;
 import com.baiiu.zhihudaily.data.bean.TopStory;
-import com.baiiu.zhihudaily.data.util.CommonUtil;
 import java.util.ArrayList;
 import java.util.List;
 

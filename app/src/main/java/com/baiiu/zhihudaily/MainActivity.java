@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import butterknife.BindView;
-import com.baiiu.zhihudaily.base.BaseActivity;
+import com.baiiu.common.base.BaseActivity;
 
 import static com.baiiu.zhihudaily.R.id.bottomNavigation;
 import static com.baiiu.zhihudaily.R.id.viewPager;

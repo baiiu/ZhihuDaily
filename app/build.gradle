@@ -41,56 +41,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    def support = rootProject.ext.support
+    compile project(':module_common:lib_common')
 
-    compile support.appcompat as String
-    compile support.design as String
-    compile support.recyclerView as String
-    compile support.cardView as String
-
-    def rx = rootProject.ext.rx;
-    compile rx.rxJava as String
-    compile rx.rxAndroid as String
-    compile rx.rxLifecycle as String
-    compile rx.rxLlifecycleComponents as String
-    compile rx.rxBinding as String
-
-    def majorFrame = rootProject.ext.majorFrame
-    compile majorFrame.okHttp as String
-
-    compile majorFrame.retrofit as String
-    compile majorFrame.converterGson as String
-    compile majorFrame.adapterRxJava as String
-
-    compile majorFrame.Gson as String
-    compile majorFrame.Glide as String
-
-    compile majorFrame.ButterKnife as String
+    compile rootProject.ext.majorFrame.ButterKnife as String
     annotationProcessor majorFrame.aptButterKnifeCompiler as String
-
-    // compile majorFrame.Dagger2 as String
-    // annotationProcessor majorFrame.aptDagger2Compiler as String
-
-    def assistance = rootProject.ext.assistance;
-    debugCompile assistance.leakCanaryDebug as String
-    releaseCompile assistance.leakCanaryRelease as String
-    testCompile assistance.leakCanaryTest as String
-
-    debugCompile assistance.stetho as String
-    debugCompile assistance.stethoOkHttp as String
-    releaseCompile project(':lib_component:Stetho')
-
-    debugCompile project(':lib_component:LogUtil')
-    releaseCompile project(':lib_component:LogUtilRelease')
-
-    //bug捕捉
-    debugCompile project(':lib_component:CrashWoodpecker')
-    releaseCompile project(':lib_component:CrashWoodpeckerRelease')
-
-    compile project(':lib_uikit:tsnackbar')
-    compile project(':lib_uikit:stickyHeaderRecyclerView')
-    compile project(':lib_uikit:ptr_lib')
-    compile project(':lib_uikit:swipeBack')
 
 
     //数据库
