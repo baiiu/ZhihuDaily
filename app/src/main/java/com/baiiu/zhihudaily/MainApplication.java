@@ -1,6 +1,7 @@
 package com.baiiu.zhihudaily;
 
 import com.baiiu.common.BaseApplication;
+import com.baiiu.library.LogUtil;
 
 /**
  * author: baiiu
@@ -9,5 +10,9 @@ import com.baiiu.common.BaseApplication;
  */
 public class MainApplication extends BaseApplication {
 
+    @Override public void onCreate() {
+        super.onCreate();
+        LogUtil.init(BuildConfig.DEBUG);
+    }
 
 }

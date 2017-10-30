@@ -1,4 +1,4 @@
-package com.baiiu.module.daily;
+package com.baiiu.common.util;
 
 import android.graphics.Bitmap;
 
