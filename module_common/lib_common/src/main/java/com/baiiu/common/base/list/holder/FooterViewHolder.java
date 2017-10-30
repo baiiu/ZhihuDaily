@@ -32,10 +32,6 @@ public class FooterViewHolder extends BaseViewHolder<Integer> {
         super(UIUtil.inflate(context, R.layout.holder_footer));
     }
 
-    public FooterViewHolder(Context context, ViewGroup parent) {
-        super(UIUtil.inflate(context, R.layout.holder_footer, parent));
-    }
-
     @Override public void bind(Integer data) {
         mRootView.setVisibility(data == View.GONE ? View.GONE : View.VISIBLE);
 

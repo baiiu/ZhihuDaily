@@ -43,10 +43,8 @@ dependencies {
 
     compile project(':module_common:lib_common')
 
+    compile rootProject.ext.support.appcompat as String
     compile rootProject.ext.majorFrame.ButterKnife as String
     annotationProcessor majorFrame.aptButterKnifeCompiler as String
 
-
-    //数据库
-    compile 'de.greenrobot:greendao:2.1.0'
 }

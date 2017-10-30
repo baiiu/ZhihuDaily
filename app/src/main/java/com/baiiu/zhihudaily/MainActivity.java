@@ -6,17 +6,14 @@ import android.support.v4.view.ViewPager;
 import butterknife.BindView;
 import com.baiiu.common.base.BaseActivity;
 
-import static com.baiiu.zhihudaily.R.id.bottomNavigation;
-import static com.baiiu.zhihudaily.R.id.viewPager;
-
 /**
  * author: baiiu
  * date: on 17/10/26 18:34
  * description:
  */
 public class MainActivity extends BaseActivity {
-    @BindView(viewPager) ViewPager mViewPager;
-    @BindView(bottomNavigation) BottomNavigationView mBottomNavigation;
+    @BindView(R.id.viewPager) ViewPager mViewPager;
+    @BindView(R.id.bottomNavigation) BottomNavigationView mBottomNavigation;
 
     @Override public int provideLayoutId() {
         return R.layout.activity_main;

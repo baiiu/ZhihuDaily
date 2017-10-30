@@ -19,6 +19,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
+    // TODO: 17/10/30 ButterKnife的module中和application中toolbarId不一致
     @Nullable @BindView(R2.id.toolbar) public Toolbar mToolbar;
     protected ActionBar actionBar;
 
@@ -27,6 +28,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
         setContentView(provideLayoutId());
 
         ButterKnife.bind(this);
+        initView();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -40,6 +42,9 @@ public abstract class BaseActivity extends RxAppCompatActivity implements SwipeB
         }
 
         initOnCreate(savedInstanceState);
+    }
+
+    protected void initView() {
     }
 
     public abstract int provideLayoutId();

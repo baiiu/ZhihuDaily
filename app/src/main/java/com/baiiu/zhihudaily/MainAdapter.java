@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.baiiu.zhihudaily.gankList.GankListFragment;
-import com.baiiu.zhihudaily.newsList.NewsListFragment;
 
 /**
  * author: baiiu
@@ -17,11 +16,11 @@ public class MainAdapter extends FragmentPagerAdapter {
     }
 
     @Override public Fragment getItem(int position) {
-        if (position == 0) {
-            return NewsListFragment.instance();
-        } else {
-            return new GankListFragment();
-        }
+        //if (position == 0) {
+        //return NewsListFragment.instance();
+        //} else {
+        return new GankListFragment();
+        //}
     }
 
     @Override public int getCount() {
