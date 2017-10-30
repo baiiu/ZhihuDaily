@@ -3,6 +3,7 @@ package com.baiiu.zhihudaily;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import com.baiiu.common.base.BaseActivity;
 
@@ -17,6 +18,10 @@ public class MainActivity extends BaseActivity {
 
     @Override public int provideLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override protected void initView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {

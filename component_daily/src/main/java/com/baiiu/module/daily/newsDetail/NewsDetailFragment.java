@@ -10,6 +10,7 @@ import com.baiiu.common.base.BaseFragment;
 import com.baiiu.common.util.HTMLUtil;
 import com.baiiu.common.view.LoadFrameLayout;
 import com.baiiu.module.daily.R;
+import com.baiiu.module.daily.R2;
 import com.baiiu.module.daily.data.bean.DailyDetail;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
@@ -23,7 +24,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     public static final String NEWS_ID = "id";
 
     NewsDetailPresenter mNewsDetailPresenter;
-    @BindView(R.id.loadFrameLayout) LoadFrameLayout loadFrameLayout;
+    @BindView(R2.id.loadFrameLayout) LoadFrameLayout loadFrameLayout;
 
     public static NewsDetailFragment instance(long newsId) {
         NewsDetailFragment newsDetailFragment = new NewsDetailFragment();

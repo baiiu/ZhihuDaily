@@ -74,4 +74,5 @@ dependencies {
     compile project(':module_common:lib_uikit:stickyHeaderRecyclerView')
     compile project(':module_common:lib_uikit:ptr_lib')
     compile project(':module_common:lib_uikit:swipeBack')
+
 }

@@ -41,10 +41,16 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile project(':module_common:lib_common')
-
     compile rootProject.ext.support.appcompat as String
     compile rootProject.ext.majorFrame.ButterKnife as String
-    annotationProcessor majorFrame.aptButterKnifeCompiler as String
+    annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
 
+    compile project(':component_service')
+
+    if (isRunAlone.toBoolean()) {
+        compile project(':module_common:lib_common')
+    } else {
+        compile project(':module_common:lib_common')
+        compile project(':component_daily')
+    }
 }

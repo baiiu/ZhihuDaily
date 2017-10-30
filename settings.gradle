@@ -1,7 +1,14 @@
-include ':app', ':dao-generator', ':module_daily'
+include ':app', ':dao-generator', ':component_service'
 
 
-//common组件
+// 组件
+include(
+
+        'component_daily:module_daily'
+
+)
+
+//通用库
 include(
 
         ':module_common:lib_common', //引用以下

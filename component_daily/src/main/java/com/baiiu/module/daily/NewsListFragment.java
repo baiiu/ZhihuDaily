@@ -71,11 +71,11 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     @Override public void onClick(View v) {
         long id = 0;
         switch (v.getId()) {
-            case R.id.item_news:
+            case R2.id.item_news:
                 NewsViewHolder holder = (NewsViewHolder) v.getTag();
                 mPresenter.openNewsDetail(holder);
                 break;
-            case R.id.item_topic_news:
+            case R2.id.item_topic_news:
                 id = (long) v.getTag(R.id.item_topic_news);
                 mContext.startActivity(NewsDetailActivity.instance(mContext, id));
                 break;

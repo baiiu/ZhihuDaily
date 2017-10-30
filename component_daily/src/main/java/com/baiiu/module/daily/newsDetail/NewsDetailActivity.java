@@ -15,6 +15,7 @@ import com.baiiu.common.util.Constant;
 import com.baiiu.common.util.PreferenceUtil;
 import com.baiiu.common.util.UIUtil;
 import com.baiiu.module.daily.R;
+import com.baiiu.module.daily.R2;
 import com.baiiu.module.daily.data.bean.Story;
 import com.baiiu.tsnackbar.LUtils;
 import com.bumptech.glide.Glide;
@@ -22,9 +23,9 @@ import com.bumptech.glide.Glide;
 public class NewsDetailActivity extends BaseActivity {
     public static final String CONTENT_STORY = "content_story";
 
-    @BindView(R.id.imageView) ImageView imageView;
-    @BindView(R.id.tv_title) TextView tv_title;
-    @BindView(R.id.tv_source) TextView tv_source;
+    @BindView(R2.id.imageView) ImageView imageView;
+    @BindView(R2.id.tv_title) TextView tv_title;
+    @BindView(R2.id.tv_source) TextView tv_source;
 
     public static Intent instance(Context context, long id) {
         return new Intent(context, NewsDetailActivity.class).putExtra(NewsDetailFragment.NEWS_ID, id);

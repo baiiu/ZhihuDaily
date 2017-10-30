@@ -10,6 +10,7 @@ import com.baiiu.common.base.BaseViewHolder;
 import com.baiiu.common.util.CommonUtil;
 import com.baiiu.common.util.ReadedListUtil;
 import com.baiiu.module.daily.R;
+import com.baiiu.module.daily.R2;
 import com.baiiu.module.daily.data.bean.Story;
 import com.bumptech.glide.Glide;
 
@@ -20,8 +21,8 @@ import com.bumptech.glide.Glide;
  */
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
-    @BindView(R.id.imageView) ImageView imageView;
-    public @BindView(R.id.textView) TextView textView;
+    @BindView(R2.id.imageView) ImageView imageView;
+    public @BindView(R2.id.textView) TextView textView;
 
     public Story mStroy;
 

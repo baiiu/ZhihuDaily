@@ -6,6 +6,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import com.baiiu.common.base.BaseViewHolder;
 import com.baiiu.module.daily.R;
+import com.baiiu.module.daily.R2;
 import com.baiiu.module.daily.data.bean.Story;
 
 /**
@@ -15,7 +16,7 @@ import com.baiiu.module.daily.data.bean.Story;
  */
 public class DateViewHolder extends BaseViewHolder<Story> {
 
-    @BindView(R.id.textView) TextView textView;
+    @BindView(R2.id.textView) TextView textView;
 
     public DateViewHolder(Context mContext, ViewGroup parent) {
         super(mContext, R.layout.holder_date, parent);
