@@ -1,4 +1,4 @@
-include ':dao-generator'
+include ':dao-generator', ':component_setting'
 
 // 组件
 include(

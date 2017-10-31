@@ -2,6 +2,7 @@ package com.baiiu.componentservice;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import com.baiiu.library.LogUtil;
 import java.util.HashMap;
 
 /**
@@ -49,12 +50,14 @@ public enum Router {
                 .contains(classname)) {
             return;
         }
+
         try {
             Class clazz = Class.forName(classname);
             ApplicationDelegate applicationLike = (ApplicationDelegate) clazz.newInstance();
             applicationLike.onCreate();
             components.put(classname, applicationLike);
         } catch (Exception e) {
+            LogUtil.e(e.toString());
             e.printStackTrace();
         }
     }

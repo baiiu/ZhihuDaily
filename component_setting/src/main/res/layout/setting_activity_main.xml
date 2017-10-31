@@ -23,7 +23,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/setting_content_main"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@id/fab"
@@ -45,7 +45,7 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:itemBackground="@color/white"
-        app:menu="@menu/menu_bottom"
+        app:menu="@menu/setting_menu_bottom"
         />
 
 </android.support.design.widget.CoordinatorLayout>

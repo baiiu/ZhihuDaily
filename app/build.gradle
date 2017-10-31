@@ -48,12 +48,13 @@ dependencies {
     annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
 
     compile project(':component_service')
+    compile project(':module_common:lib_common')
 
     if (isRunAlone.toBoolean()) {
-        compile project(':module_common:lib_common')
+        //
     } else {
-        compile project(':module_common:lib_common')
         compile project(':component_daily')
         compile project(':component_gank')
+        compile project(':component_sett')
     }
 }

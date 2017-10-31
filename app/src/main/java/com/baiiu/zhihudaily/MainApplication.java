@@ -17,6 +17,7 @@ public class MainApplication extends BaseApplication {
 
         Router.registerComponent("com.baiiu.daily.DailyApplicationDelegate");
         Router.registerComponent("com.baiiu.gank.GankApplicationDelegate");
+        Router.registerComponent("com.baiiu.setting.SettingApplicationDelegate");
     }
 
 }

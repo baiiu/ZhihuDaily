@@ -69,17 +69,23 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     }
 
     @Override public void onClick(View v) {
-        //long id = 0;
-        switch (v.getId()) {
-            case R.id.daily_item_news:
-                NewsViewHolder holder = (NewsViewHolder) v.getTag();
-                mPresenter.openNewsDetail(holder);
-                break;
-            //case R.id.daily_item_topic_news:
-            //    id = (long) v.getTag(R.id.daily_item_topic_news);
-            //    mContext.startActivity(NewsDetailActivity.instance(mContext, id));
-            //    break;
+
+        if (v.getId() == R.id.daily_item_news) {
+            NewsViewHolder holder = (NewsViewHolder) v.getTag();
+            mPresenter.openNewsDetail(holder);
         }
+
+        //long id = 0;
+        //switch (v.getId()) {
+        //    case R.id.daily_item_news:
+        //        NewsViewHolder holder = (NewsViewHolder) v.getTag();
+        //        mPresenter.openNewsDetail(holder);
+        //        break;
+        //case R.id.daily_item_topic_news:
+        //    id = (long) v.getTag(R.id.daily_item_topic_news);
+        //    mContext.startActivity(NewsDetailActivity.instance(mContext, id));
+        //    break;
+        //}
     }
 
     @Override public boolean isDataEmpty() {

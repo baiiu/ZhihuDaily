@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.baiiu.setting">
+
+    <application
+        android:theme="@style/DayTheme"
+        >
+
+        <activity android:name=".SettingActivity"/>
+
+    </application>
+
+</manifest>

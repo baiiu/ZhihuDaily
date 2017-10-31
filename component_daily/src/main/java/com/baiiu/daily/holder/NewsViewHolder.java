@@ -1,6 +1,8 @@
 package com.baiiu.daily.holder;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,9 +11,9 @@ import butterknife.BindView;
 import com.baiiu.common.base.BaseViewHolder;
 import com.baiiu.common.util.CommonUtil;
 import com.baiiu.common.util.ReadedListUtil;
-import com.baiiu.daily.data.bean.Story;
 import com.baiiu.daily.R;
 import com.baiiu.daily.R2;
+import com.baiiu.daily.data.bean.Story;
 import com.bumptech.glide.Glide;
 
 /**
@@ -42,7 +44,7 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
 
         Glide.with(mContext)
                 .load(url)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(new ColorDrawable(Color.parseColor("#66123456")))
                 .centerCrop()
                 .into(imageView);
 

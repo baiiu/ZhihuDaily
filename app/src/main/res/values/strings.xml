@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_app_name">ZhihuDaily</string>
+    <string name="app_name">ZhihuDaily</string>
     <string name="action_settings">Settings</string>
     <string name="action_theme">切换</string>
 

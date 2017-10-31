@@ -7,9 +7,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:allowBackup="false"
-        android:label="@string/daily_app_name"
-        android:supportsRtl="true"
         android:theme="@style/DayTheme">
 
         <activity
