@@ -19,7 +19,7 @@ public class DateViewHolder extends BaseViewHolder<Story> {
     @BindView(R2.id.textView) TextView textView;
 
     public DateViewHolder(Context mContext, ViewGroup parent) {
-        super(mContext, R.layout.holder_date, parent);
+        super(mContext, R.layout.daily_holder_date, parent);
     }
 
     @Override public void bind(Story data) {

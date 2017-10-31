@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">lib_common</string>
-
     <string name="load_error">网络请求失败</string>
     <string name="error_retry">重试</string>
 </resources>

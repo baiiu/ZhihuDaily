@@ -47,6 +47,8 @@ android {
             }
         }
     }
+
+    resourcePrefix "daily_"
 }
 
 dependencies {

@@ -14,6 +14,6 @@ public class GankListFragment extends BaseFragment {
     }
 
     @Override public int provideLayoutId() {
-        return R.layout.fragment_gank;
+        return R.layout.gank_fragment_gank;
     }
 }

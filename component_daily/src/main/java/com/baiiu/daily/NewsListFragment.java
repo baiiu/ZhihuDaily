@@ -11,7 +11,6 @@ import com.baiiu.common.view.fastscroll.FastScrollLinearLayoutManager;
 import com.baiiu.daily.data.bean.Story;
 import com.baiiu.daily.holder.NewsViewHolder;
 import com.baiiu.daily.newsDetail.NewsDetailActivity;
-import com.baiiu.daily.R;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -70,16 +69,16 @@ public class NewsListFragment extends BaseListFragment<Story, NewsListPresenter>
     }
 
     @Override public void onClick(View v) {
-        long id = 0;
+        //long id = 0;
         switch (v.getId()) {
-            case R2.id.item_news:
+            case R.id.daily_item_news:
                 NewsViewHolder holder = (NewsViewHolder) v.getTag();
                 mPresenter.openNewsDetail(holder);
                 break;
-            case R2.id.item_topic_news:
-                id = (long) v.getTag(R.id.item_topic_news);
-                mContext.startActivity(NewsDetailActivity.instance(mContext, id));
-                break;
+            //case R.id.daily_item_topic_news:
+            //    id = (long) v.getTag(R.id.daily_item_topic_news);
+            //    mContext.startActivity(NewsDetailActivity.instance(mContext, id));
+            //    break;
         }
     }
 

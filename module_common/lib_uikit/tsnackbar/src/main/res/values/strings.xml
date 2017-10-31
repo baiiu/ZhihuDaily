@@ -1,3 +1,3 @@
 <resources>
-  <string name="app_name">TSnackbar</string>
+    <string name="tsnackbar_app_name">TSnackbar</string>
 </resources>

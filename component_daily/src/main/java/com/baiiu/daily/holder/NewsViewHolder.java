@@ -27,8 +27,8 @@ public class NewsViewHolder extends BaseViewHolder<Story> {
     public Story mStroy;
 
     public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
-        super(context, R.layout.holder_news, parent, listener);
-        itemView.setId(R.id.item_news);
+        super(context, R.layout.daily_holder_news, parent, listener);
+        itemView.setId(R.id.daily_item_news);
     }
 
     @Override public void bind(Story data) {

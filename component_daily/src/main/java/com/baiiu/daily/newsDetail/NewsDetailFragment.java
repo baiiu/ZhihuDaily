@@ -47,7 +47,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     }
 
     @Override public int provideLayoutId() {
-        return R.layout.fragment_news_detail;
+        return R.layout.daily_fragment_news_detail;
     }
 
     @Override protected void initOnCreateView() {

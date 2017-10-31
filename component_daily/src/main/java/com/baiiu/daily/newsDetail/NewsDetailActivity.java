@@ -47,7 +47,7 @@ public class NewsDetailActivity extends BaseActivity {
         // @formatter:on
 
 
-        return R.layout.activity_news_detail;
+        return R.layout.daily_activity_news_detail;
     }
 
     @Override protected void initView() {

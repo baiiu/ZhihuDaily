@@ -41,6 +41,8 @@ android {
             }
         }
     }
+
+    resourcePrefix "gank_"
 }
 
 dependencies {
