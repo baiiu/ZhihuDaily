@@ -55,6 +55,6 @@ dependencies {
     } else {
         compile project(':component_daily')
         compile project(':component_gank')
-        compile project(':component_sett')
+        compile project(':component_setting')
     }
 }

@@ -1,7 +1,5 @@
 package com.baiiu.componentservice.service;
 
-import android.content.Context;
-
 /**
  * author: baiiu
  * date: on 17/10/31 15:55
@@ -9,6 +7,8 @@ import android.content.Context;
  */
 public interface SettingService {
 
-    void toSettingPage(Context context);
+    String URL_TO_SETTING = "daily://setting/main";
+
+    //void toSettingPage(Context context);
 
 }

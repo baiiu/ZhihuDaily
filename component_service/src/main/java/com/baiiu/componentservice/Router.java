@@ -6,7 +6,9 @@ import com.baiiu.library.LogUtil;
 import java.util.HashMap;
 
 /**
- * 组件初始化、各个组件注册服务
+ * 组件初始化、各个组件注册服务。各组件提供的服务：如提供的View等，可以包括路由服务
+ *
+ * 主要解决的是数据传递的问题
  */
 public enum Router {
 

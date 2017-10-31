@@ -14,6 +14,7 @@ import com.baiiu.common.util.PreferenceUtil;
 import com.baiiu.common.util.SwitchModeActivity;
 import com.baiiu.common.util.UIUtil;
 import com.baiiu.componentservice.Router;
+import com.baiiu.componentservice.UIRouter;
 import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.componentservice.service.SettingService;
 import com.baiiu.tsnackbar.LUtils;
@@ -87,10 +88,11 @@ public class NewsListActivity extends BaseActivity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Object service = Router.INSTANCE.getService(SettingService.class.getName());
-                if (service != null) {
-                    ((SettingService) service).toSettingPage(this);
-                }
+                //Object service = Router.INSTANCE.getService(SettingService.class.getName());
+                //if (service != null) {
+                //    ((SettingService) service).toSettingPage(this);
+                //}
+                UIRouter.router(this, SettingService.URL_TO_SETTING);
 
                 return true;
             case R.id.action_theme:
