@@ -5,15 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.baiiu.componentservice.Router;
 import com.baiiu.componentservice.service.DailyService;
-import com.baiiu.zhihudaily.gankList.GankListFragment;
+import com.baiiu.componentservice.service.GankService;
 
 /**
  * author: baiiu
  * date: on 17/10/27 11:16
  * description:
  */
-public class MainAdapter extends FragmentPagerAdapter {
-    public MainAdapter(FragmentManager fm) {
+class MainAdapter extends FragmentPagerAdapter {
+    MainAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -26,7 +26,10 @@ public class MainAdapter extends FragmentPagerAdapter {
             }
 
         } else {
-            return new GankListFragment();
+            Object service = Router.INSTANCE.getService(GankService.class.getName());
+            if (service != null) {
+                return ((GankService) service).getGankFragment();
+            }
         }
 
         return null;

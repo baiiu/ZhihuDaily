@@ -1,12 +1,18 @@
-include ':app', ':dao-generator', ':component_service'
-
+include ':dao-generator'
 
 // 组件
 include(
 
-        'component_daily:module_daily'
+        ':app',
+        ':component_daily',
+        ':component_gank'
 
 )
+
+
+// 中间件
+include ':component_service'
+
 
 //通用库
 include(

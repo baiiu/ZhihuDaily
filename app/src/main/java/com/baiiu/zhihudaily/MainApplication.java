@@ -15,7 +15,8 @@ public class MainApplication extends BaseApplication {
         super.onCreate();
         LogUtil.init(BuildConfig.DEBUG);
 
-        Router.registerComponent("com.baiiu.module.daily.DailyApplicationDelegate");
+        Router.registerComponent("com.baiiu.daily.DailyApplicationDelegate");
+        Router.registerComponent("com.baiiu.gank.GankApplicationDelegate");
     }
 
 }

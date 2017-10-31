@@ -52,5 +52,6 @@ dependencies {
     } else {
         compile project(':module_common:lib_common')
         compile project(':component_daily')
+        compile project(':component_gank')
     }
 }
