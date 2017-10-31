@@ -1,4 +1,4 @@
-package debug;
+package com.baiiu.module.daily.runalone;
 
 import com.baiiu.common.BaseApplication;
 

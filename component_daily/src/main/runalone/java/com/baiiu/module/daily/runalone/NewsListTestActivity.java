@@ -1,4 +1,4 @@
-package debug;
+package com.baiiu.module.daily.runalone;
 
 import android.os.Bundle;
 import com.baiiu.common.base.BaseActivity;
@@ -10,10 +10,10 @@ import com.baiiu.module.daily.R;
  * 1. 负责创建View和Presenter
  * 2. 并负责绑定View和Presenter
  */
-public class NewsListActivity extends BaseActivity {
+public class NewsListTestActivity extends BaseActivity {
 
     @Override public int provideLayoutId() {
-        return R.layout.activity_list;
+        return R.layout.activity_test_list;
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {

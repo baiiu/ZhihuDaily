@@ -17,16 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/DayTheme"
         tools:replace="android:allowBackup">
-        <!--<activity-->
-        <!--android:name=".newsList.NewsListActivity">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN"/>-->
-        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
 
         <activity
-            android:name=".MainActivity">
+            android:name=".NewsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -34,12 +27,7 @@
         </activity>
 
 
-        <!--<activity-->
-        <!--android:name=".newsDetail.NewsDetailActivity"-->
-        <!--android:theme="@style/DayTransparentTheme"/>-->
-
-        <activity android:name=".util.SwitchModeActivity"/>
-        <!--<activity android:name=".MainActivity"/>-->
+        <activity android:name=".MainActivity"/>
 
     </application>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.baiiu.common.base.BaseActivity;
@@ -12,6 +13,8 @@ import com.baiiu.common.util.Constant;
 import com.baiiu.common.util.PreferenceUtil;
 import com.baiiu.common.util.SwitchModeActivity;
 import com.baiiu.common.util.UIUtil;
+import com.baiiu.componentservice.Router;
+import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
 
@@ -32,7 +35,7 @@ public class NewsListActivity extends BaseActivity {
         // @formatter:on
 
 
-        return R.layout.activity_main;
+        return R.layout.activity_list;
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
@@ -51,26 +54,29 @@ public class NewsListActivity extends BaseActivity {
         initBroadCast();
 
         //1. 创建Fragment,这样写Activity在重新创建时不用重建Fragment
-        //NewsListFragment newsListFragment =
-        //        (NewsListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
-        //if (newsListFragment == null) {
-        //    newsListFragment = NewsListFragment.instance();
-        //
-        //    getSupportFragmentManager().beginTransaction()
-        //            .replace(R.id.container, newsListFragment, "MainFragment")
-        //            .commit();
-        //}
+        Fragment newsListFragment = null;
 
-        //newsListFragment.setRetainInstance(true);
+        Object service = Router.INSTANCE.getService(DailyService.class.getName());
+        if (service != null) {
+            newsListFragment = ((DailyService) service).getNewsListFragment();
+        }
 
+        if (newsListFragment != null) {
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, newsListFragment, "MainFragment")
+                    .commit();
+
+            newsListFragment.setRetainInstance(true);
+        }
 
     }
 
     //=====================Menu===================================
-  /*
-  个人认为,Menu里面涉及的操作全部是View相关,所拥有的逻辑也仅仅是与UI相关,但不与业务逻辑UI相关,所以放在Activity中实现.
-  这样的好处是:在业务变化时需要替换Fragment时,不需要修改这段代码.
-   */
+    /*
+        个人认为,Menu里面涉及的操作全部是View相关,所拥有的逻辑也仅仅是与UI相关,但不与业务逻辑UI相关,所以放在Activity中实现.
+        这样的好处是:在业务变化时需要替换Fragment时,不需要修改这段代码.
+    */
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -80,6 +86,7 @@ public class NewsListActivity extends BaseActivity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_theme:
                 // @formatter:off

@@ -23,6 +23,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_list"/>
+    <include layout="@layout/content_test_list"/>
 
 </android.support.design.widget.CoordinatorLayout>
