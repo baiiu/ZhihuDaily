@@ -32,6 +32,17 @@ As well, the project is continue refactoring.
      - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
      - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
+- v1.4
+
+    make it componentization, better than before. But there is still some problem with component.
+    The component cannot compile other components,it must be run as a single application, which means the project
+    must run as all in application or an application with other modules.
+    将项目初步进行组件化。
+    这种结构下的组件化不能做到组件依赖其他组件运行。因为当前项目运行的状态要么是全是application，或者是一个application和其他module.
+
+
+
+
 ## Branches
 - `the master` has a lot of tags, and the first version code is on it.
 - `the branch_mvp_variant` is a variant of MVP,which use Fragment/Activity as Presenter. In this way, you can do it with no interfaces, using Generic to decoupled(little hard to understand), and I put `clickListeners` in Presenters, so it looks more clearly. (This branch does not merge into master. I prefer the normal one.)
