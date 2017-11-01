@@ -62,6 +62,11 @@ As well, the project is continue refactoring.
 所以这也算GreenDao的一个弊端吧。
 将会使用liteOrm或其他一些数据库来解决该问题。
 
+- 17/11/1
+在v1.4版本基础上，需要再次进行组件化，使用gradle插件将组件完全分离。
+模仿[DDComponentForAndroid](https://github.com/luojilab/DDComponentForAndroid)
+
+
 
 ## ThanksTo
 [知乎日报API](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)<br>
