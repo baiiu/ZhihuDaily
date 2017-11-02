@@ -52,6 +52,7 @@ As well, the project is continue refactoring.
 
 - `master`分支上的tag表示每次重构后的完整代码
 - `branch_mvp_variant`分支是 MVP变种 分支,使用Fragment作为Presenter,我把点击事件当做逻辑放在Presenter中,代码简化了不少
+- `the branch_rxcache` 替换了GreenDao，使用RxCache来做缓存
 
 ## ScreenShot
 ![ZhihuDaily](images/daily.gif "Gif Example")
