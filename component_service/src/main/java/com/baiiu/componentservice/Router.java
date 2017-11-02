@@ -2,7 +2,7 @@ package com.baiiu.componentservice;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import com.baiiu.library.LogUtil;
+import android.util.Log;
 import java.util.HashMap;
 
 /**
@@ -59,7 +59,8 @@ public enum Router {
             applicationLike.onCreate();
             components.put(classname, applicationLike);
         } catch (Exception e) {
-            LogUtil.e(e.toString());
+            //LogUtil.e(e.toString());
+            Log.e("mLogUtil", e.toString());
             e.printStackTrace();
         }
     }

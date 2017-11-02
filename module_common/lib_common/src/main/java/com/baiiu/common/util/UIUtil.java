@@ -24,7 +24,7 @@ public class UIUtil {
     }
 
     public static RefWatcher getRefWatcher() {
-        BaseApplication application = (BaseApplication) getContext().getApplicationContext();
+        BaseApplication application = BaseApplication.getBaseApplication();
         return application.getRefWatcher();
     }
 

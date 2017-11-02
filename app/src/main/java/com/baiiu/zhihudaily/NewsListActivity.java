@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import com.baiiu.common.base.BaseActivity;
 import com.baiiu.common.net.http.NetWorkReceiver;
 import com.baiiu.common.util.Constant;
@@ -41,6 +42,8 @@ public class NewsListActivity extends BaseActivity {
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {
+        Toast.makeText(this, "patach here", Toast.LENGTH_SHORT)
+                .show();
 
         // @formatter:off
         if (LUtils.hasKitKat()) {

@@ -75,4 +75,5 @@ dependencies {
     compile project(':module_common:lib_uikit:ptr_lib')
     compile project(':module_common:lib_uikit:swipeBack')
 
+    compile "com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}"
 }

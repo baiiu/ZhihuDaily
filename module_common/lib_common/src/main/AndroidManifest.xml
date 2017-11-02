@@ -5,7 +5,14 @@
     <application
         >
 
-        <activity android:name="com.baiiu.common.util.SwitchModeActivity"/>
+        <activity
+            android:name="com.baiiu.common.util.SwitchModeActivity"
+            android:exported="false"/>
+
+        <service
+            android:name="com.baiiu.common.tinker.service.SampleResultService"
+            android:exported="false"/>
+
 
     </application>
 

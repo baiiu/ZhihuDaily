@@ -1,82 +1,3 @@
-apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-
-android {
-    def cfg = rootProject.ext.androidVersionConfig
-
-    compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
-
-    defaultConfig {
-        minSdkVersion cfg.androidMinSdkVersion
-        targetSdkVersion cfg.androidTargetSdkVersion
-        versionCode cfg.versionCode as int
-        versionName cfg.versionName
-
-
-        /**
-         * you can use multiDex and install it in your ApplicationLifeCycle implement
-         */
-        multiDexEnabled true
-        /**
-         * buildConfig can change during patch!
-         * we can use the newly value when patch
-         */
-        buildConfigField "String", "MESSAGE", "\"I am the base apk\""
-        //        buildConfigField "String", "MESSAGE", "\"I am the patch apk\""
-        /**
-         * client version would update with patch
-         * so we can get the newly git version easily!
-         */
-        buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
-        buildConfigField "String", "PLATFORM",  "\"all\""
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-
-        debug {
-            minifyEnabled false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility rootProject.ext.javaSourceCompatibility as JavaVersion
-        targetCompatibility rootProject.ext.javaTargetCompatibility as JavaVersion
-    }
-
-    //    resourcePrefix "app_"
-
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java']
-        }
-    }
-}
-
-dependencies {
-    testCompile 'junit:junit:4.12'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    compile rootProject.ext.support.appcompat as String
-    compile rootProject.ext.majorFrame.ButterKnife as String
-    annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
-
-    compile project(':component_service')
-    compile project(':module_common:lib_common')
-
-    if (isRunAlone.toBoolean()) {
-        //
-    } else {
-        compile project(':component_daily')
-        compile project(':component_gank')
-        compile project(':component_setting')
-    }
-}
-
 
 def bakPath = file("${buildDir}/bakApk/")
 
@@ -87,11 +8,11 @@ def bakPath = file("${buildDir}/bakApk/")
  */
 ext {
     //for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
-    tinkerEnabled = true
+    tinkerEnabled = false
 
     //for normal build
     //old apk file to build patch apk
-    tinkerOldApkPath = "${bakPath}/app-debug-1102-19-44-40.apk"
+    tinkerOldApkPath = "${bakPath}/app-debug-1018-17-32-47.apk"
     //proguard mapping file to build patch apk
     tinkerApplyMappingPath = "${bakPath}/app-debug-1018-17-32-47-mapping.txt"
     //resource R.txt to build patch apk, must input if there is resource changed
@@ -115,7 +36,7 @@ def getApplyResourceMappingPath() {
 }
 
 def getTinkerIdValue() {
-    return hasProperty("TINKER_ID") ? TINKER_ID : "17110215"
+    return hasProperty("TINKER_ID") ? TINKER_ID : rootProject.ext.androidVersionConfig.versionCode
 }
 
 def buildWithTinker() {
