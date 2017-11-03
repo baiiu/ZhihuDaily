@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.componentservice.service.SettingService;
 import com.baiiu.tsnackbar.LUtils;
 import com.baiiu.tsnackbar.ScreenUtil;
+import com.tencent.tinker.lib.tinker.TinkerInstaller;
 
 /**
  * Activity将变成全局的Controller
@@ -98,6 +100,11 @@ public class NewsListActivity extends BaseActivity {
                 UIRouter.router(this, SettingService.URL_TO_SETTING);
 
                 return true;
+            case R.id.action_patch:
+                TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), Environment.getExternalStorageDirectory()
+                        .getAbsolutePath() + "/patch_signed_7zip.apk");
+
+                break;
             case R.id.action_theme:
                 // @formatter:off
                 if (PreferenceUtil.instance().get(Constant.UI_MODE, true)) {

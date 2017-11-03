@@ -9,6 +9,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_patch"
+        android:orderInCategory="100"
+        android:title="@string/action_patch"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_theme"
         android:orderInCategory="100"
         android:title="@string/action_theme"
