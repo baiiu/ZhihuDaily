@@ -60,5 +60,5 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
 
     compile project(':module_common:lib_common')
-    compile project(':component_service')
+    compile project(':module_service')
 }

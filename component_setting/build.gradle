@@ -57,6 +57,6 @@ dependencies {
     annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
 
     compile project(':module_common:lib_common')
-    compile project(':component_service')
+    compile project(':module_service')
 
 }

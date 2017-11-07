@@ -11,7 +11,7 @@ include(
 
 
 // 中间件
-include ':component_service'
+include ':module_service'
 
 
 //通用库
