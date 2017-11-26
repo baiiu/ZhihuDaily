@@ -47,5 +47,5 @@ android {
 
 dependencies {
     // Keep the same dependencies with debug
-    compile rootProject.ext.support.recyclerView
+    implementation rootProject.ext.support.recyclerView
 }

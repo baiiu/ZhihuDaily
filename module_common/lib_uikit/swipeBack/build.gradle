@@ -2,17 +2,18 @@ apply plugin: 'com.android.library'
 //apply from: 'https://raw.github.com/liuguangqiang/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    def cfg = rootProject.ext.androidVersionConfig
 
-    lintOptions {
-        abortOnError false
-    }
+    compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion cfg.androidMinSdkVersion
+        targetSdkVersion cfg.androidTargetSdkVersion
+        versionCode cfg.versionCode as int
+        versionName cfg.versionName
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,8 +23,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile "com.android.support:recyclerview-v7:25.3.1"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${rootProject.supportLibVersion}"
 
 }

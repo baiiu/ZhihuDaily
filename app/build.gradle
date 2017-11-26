@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply from: '../buildSystem/tinker.gradle'
 
 def getTinkerIdValue() {
@@ -60,21 +59,21 @@ android {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile rootProject.ext.support.appcompat as String
-    compile rootProject.ext.majorFrame.ButterKnife as String
+    implementation rootProject.ext.support.appcompat as String
+    implementation rootProject.ext.majorFrame.ButterKnife as String
     annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
 
-    compile project(':module_service')
-    compile project(':module_common:lib_common')
+    implementation project(':module_service')
+    implementation project(':module_common:lib_common')
 
     if (isRunAlone.toBoolean()) {
         //
     } else {
-        compile project(':component_daily')
-        compile project(':component_gank')
-        compile project(':component_setting')
+        implementation project(':component_daily')
+        implementation project(':component_gank')
+        implementation project(':component_setting')
     }
 }

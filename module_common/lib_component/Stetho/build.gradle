@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.majorFrame.okHttp
-    compile rootProject.ext.support.appcompat
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.majorFrame.okHttp
+    implementation rootProject.ext.support.appcompat
 }
