@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'channel'
 apply from: '../buildSystem/tinker.gradle'
 
 def getTinkerIdValue() {
@@ -7,7 +8,6 @@ def getTinkerIdValue() {
 
 android {
     def cfg = rootProject.ext.androidVersionConfig
-
     compileSdkVersion cfg.androidCompileSdkVersion
     buildToolsVersion cfg.androidBuildToolsVersion
 
@@ -33,47 +33,61 @@ android {
         buildConfigField "String", "PLATFORM", "\"all\""
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'dailyAlias'
+            keyPassword '654321'
+            storeFile file('../daily.keystore')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
-
         debug {
             minifyEnabled false
         }
     }
-
     compileOptions {
         sourceCompatibility rootProject.ext.javaSourceCompatibility as JavaVersion
         targetCompatibility rootProject.ext.javaTargetCompatibility as JavaVersion
     }
-
     //    resourcePrefix "app_"
-
     sourceSets {
         main {
             java.srcDirs = ['src/main/java']
         }
     }
+
+    channel{
+        channelFile = file("../channelDaily.txt")
+    }
+
+    rebuildChannel{
+        channelFile = file("../channelRebuild.txt")
+    }
+
 }
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.support.appcompat as String
     implementation rootProject.ext.majorFrame.ButterKnife as String
     annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
-
     implementation project(':module_service')
     implementation project(':module_common:lib_common')
 
     if (isRunAlone.toBoolean()) {
-        //
+        api 'com.leon.channel:helper:1.1.5'
     } else {
         implementation project(':component_daily')
         implementation project(':component_gank')
         implementation project(':component_setting')
     }
+
 }
