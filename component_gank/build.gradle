@@ -47,8 +47,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.majorFrame.ButterKnife as String
-    annotationProcessor rootProject.ext.majorFrame.aptButterKnifeCompiler as String
 
     api project(':module_common:lib_common')
     api project(':module_service')

@@ -1,13 +1,18 @@
 package com.baiiu.daily.runalone;
 
-import com.baiiu.common.BaseApplication;
+import com.tencent.tinker.loader.app.TinkerApplication;
+import com.tencent.tinker.loader.shareutil.ShareConstants;
 
 /**
  * author: baiiu
  * date: on 17/10/30 15:03
  * description:
  */
-public class DailyApplication extends BaseApplication {
+public class DailyApplication extends TinkerApplication {
 
+    public DailyApplication() {
+        super(ShareConstants.TINKER_ENABLE_ALL, "com.baiiu.common.BaseApplication",
+              "com.tencent.tinker.loader.TinkerLoader", false);
+    }
 
 }
