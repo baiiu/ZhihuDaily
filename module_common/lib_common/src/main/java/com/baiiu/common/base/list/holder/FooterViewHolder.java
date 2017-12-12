@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseViewHolder;
 import com.baiiu.common.util.UIUtil;
 import com.baiiu.lib_common.R;
-import com.baiiu.lib_common.R2;
 
 /**
  * Created by baiiu on 2015/11/21.
@@ -22,14 +20,18 @@ public class FooterViewHolder extends BaseViewHolder<Integer> {
 
     private int mCurrentState = -1;
 
-    @BindView(R2.id.loading) ViewGroup loadingView;
-    @BindView(R2.id.error) ViewGroup errorView;
-    @BindView(R2.id.nomore) ViewGroup noMoreView;
-    @BindView(R2.id.container) FrameLayout mRootView;
+    private ViewGroup loadingView;
+    private ViewGroup errorView;
+    private ViewGroup noMoreView;
+    private FrameLayout mRootView;
 
 
     public FooterViewHolder(Context context) {
         super(UIUtil.inflate(context, R.layout.holder_footer));
+        loadingView = itemView.findViewById(R.id.loading);
+        errorView = itemView.findViewById(R.id.error);
+        errorView = itemView.findViewById(R.id.nomore);
+        mRootView = itemView.findViewById(R.id.container);
     }
 
     @Override public void bind(Integer data) {

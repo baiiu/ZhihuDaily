@@ -20,6 +20,11 @@ android {
         versionName "1.0"
     }
 
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility as JavaVersion
+        targetCompatibility rootProject.ext.javaTargetCompatibility as JavaVersion
+    }
+
     buildTypes {
         release {
             minifyEnabled false

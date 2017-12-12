@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.baiiu.lib_common.R;
 
 /**
@@ -167,7 +166,8 @@ public class LoadFrameLayout extends FrameLayout {
             return;
         }
 
-        TextView textView = ButterKnife.findById(emptyView, R.id.tv_empty);
+        TextView textView = findViewById(R.id.tv_empty);
+
         if (textView != null) {
             textView.setText(emptyText);
         }
@@ -184,7 +184,8 @@ public class LoadFrameLayout extends FrameLayout {
             return;
         }
 
-        TextView textView = ButterKnife.findById(errorView, R.id.tv_error);
+        TextView textView = errorView.findViewById(R.id.tv_error);
+
         if (textView != null) {
             textView.setText(errorText);
         }
@@ -202,7 +203,7 @@ public class LoadFrameLayout extends FrameLayout {
         }
 
 
-        TextView textView = ButterKnife.findById(errorView, R.id.tv_retry);
+        TextView textView = errorView.findViewById(R.id.tv_retry);
         if (textView != null) {
             textView.setOnClickListener(listener);
         }

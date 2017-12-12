@@ -3,11 +3,9 @@ package com.baiiu.daily.holder;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseViewHolder;
-import com.baiiu.daily.data.bean.Story;
 import com.baiiu.daily.R;
-import com.baiiu.daily.R2;
+import com.baiiu.daily.data.bean.Story;
 
 /**
  * author: baiiu
@@ -16,10 +14,11 @@ import com.baiiu.daily.R2;
  */
 public class DateViewHolder extends BaseViewHolder<Story> {
 
-    @BindView(R2.id.textView) TextView textView;
+    private TextView textView;
 
     public DateViewHolder(Context mContext, ViewGroup parent) {
         super(mContext, R.layout.daily_holder_date, parent);
+        textView = itemView.findViewById(R.id.textView);
     }
 
     @Override public void bind(Story data) {

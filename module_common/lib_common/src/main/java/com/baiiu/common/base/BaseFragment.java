@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
 import com.baiiu.common.base.mvp.MvpView;
 import com.baiiu.common.util.UIUtil;
 
@@ -32,9 +31,12 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         if (view == null) {
             view = inflater.inflate(provideLayoutId(), container, false);
         }
-        ButterKnife.bind(this, view);
+        initView(view);
         initOnCreateView();
         return view;
+    }
+
+    protected void initView(View view) {
     }
 
     public abstract int provideLayoutId();

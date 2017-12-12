@@ -3,8 +3,6 @@ package com.baiiu.setting;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseActivity;
 
 /**
@@ -13,15 +11,17 @@ import com.baiiu.common.base.BaseActivity;
  * description:
  */
 public class SettingActivity extends BaseActivity {
-    @BindView(R2.id.viewPager) ViewPager mViewPager;
-    @BindView(R2.id.bottomNavigation) BottomNavigationView mBottomNavigation;
+    private ViewPager mViewPager;
+    private BottomNavigationView mBottomNavigation;
 
     @Override public int provideLayoutId() {
         return R.layout.setting_activity_main;
     }
 
     @Override protected void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        mViewPager = findViewById(R.id.viewPager);
+        mBottomNavigation = findViewById(R.id.bottomNavigation);
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {

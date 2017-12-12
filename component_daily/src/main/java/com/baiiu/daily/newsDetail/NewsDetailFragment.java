@@ -5,12 +5,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseFragment;
 import com.baiiu.common.util.HTMLUtil;
 import com.baiiu.common.view.LoadFrameLayout;
 import com.baiiu.daily.R;
-import com.baiiu.daily.R2;
 import com.baiiu.daily.data.bean.DailyDetail;
 import com.baiiu.tsnackbar.Prompt;
 import com.baiiu.tsnackbar.TSnackbar;
@@ -24,7 +22,7 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
     public static final String NEWS_ID = "id";
 
     NewsDetailPresenter mNewsDetailPresenter;
-    @BindView(R2.id.loadFrameLayout) LoadFrameLayout loadFrameLayout;
+    private LoadFrameLayout loadFrameLayout;
 
     public static NewsDetailFragment instance(long newsId) {
         NewsDetailFragment newsDetailFragment = new NewsDetailFragment();
@@ -48,6 +46,10 @@ public class NewsDetailFragment extends BaseFragment implements NewsDetailContra
 
     @Override public int provideLayoutId() {
         return R.layout.daily_fragment_news_detail;
+    }
+
+    @Override protected void initView(View view) {
+        loadFrameLayout = view.findViewById(R.id.loadFrameLayout);
     }
 
     @Override protected void initOnCreateView() {

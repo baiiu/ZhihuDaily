@@ -3,29 +3,26 @@ package com.baiiu.daily.newsDetail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseActivity;
 import com.baiiu.common.util.CommonUtil;
 import com.baiiu.common.util.Constant;
 import com.baiiu.common.util.PreferenceUtil;
 import com.baiiu.common.util.UIUtil;
-import com.baiiu.daily.data.bean.Story;
 import com.baiiu.daily.R;
-import com.baiiu.daily.R2;
+import com.baiiu.daily.data.bean.Story;
 import com.baiiu.tsnackbar.LUtils;
 import com.bumptech.glide.Glide;
 
 public class NewsDetailActivity extends BaseActivity {
     public static final String CONTENT_STORY = "content_story";
 
-    @BindView(R2.id.imageView) ImageView imageView;
-    @BindView(R2.id.tv_title) TextView tv_title;
-    @BindView(R2.id.tv_source) TextView tv_source;
+    private ImageView imageView;
+    private TextView tv_title;
+    private TextView tv_source;
 
     public static Intent instance(Context context, long id) {
         return new Intent(context, NewsDetailActivity.class).putExtra(NewsDetailFragment.NEWS_ID, id);
@@ -51,7 +48,10 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     @Override protected void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        imageView = findViewById(R.id.imageView);
+        tv_title = findViewById(R.id.tv_title);
+        tv_source = findViewById(R.id.tv_source);
     }
 
     @Override protected void initOnCreate(Bundle savedInstanceState) {

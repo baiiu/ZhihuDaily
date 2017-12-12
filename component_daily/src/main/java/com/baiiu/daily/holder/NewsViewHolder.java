@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseViewHolder;
 import com.baiiu.common.util.CommonUtil;
 import com.baiiu.common.util.ReadedListUtil;
 import com.baiiu.daily.R;
-import com.baiiu.daily.R2;
 import com.baiiu.daily.data.bean.Story;
 import com.bumptech.glide.Glide;
 
@@ -23,14 +21,16 @@ import com.bumptech.glide.Glide;
  */
 public class NewsViewHolder extends BaseViewHolder<Story> {
 
-    @BindView(R2.id.imageView) ImageView imageView;
-    public @BindView(R2.id.textView) TextView textView;
+    private ImageView imageView;
+    private TextView textView;
 
     public Story mStroy;
 
     public NewsViewHolder(Context context, ViewGroup parent, View.OnClickListener listener) {
         super(context, R.layout.daily_holder_news, parent, listener);
         itemView.setId(R.id.daily_item_news);
+        imageView = itemView.findViewById(R.id.imageView);
+        textView = itemView.findViewById(R.id.textView);
     }
 
     @Override public void bind(Story data) {

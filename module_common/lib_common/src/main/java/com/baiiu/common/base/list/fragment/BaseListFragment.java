@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import butterknife.BindView;
 import com.baiiu.common.base.BaseFragment;
 import com.baiiu.common.base.list.WrapContentLinearLayoutManager;
 import com.baiiu.common.base.list.holder.FooterViewHolder;
@@ -17,7 +16,6 @@ import com.baiiu.common.net.ApiConstants;
 import com.baiiu.common.net.http.HttpNetUtil;
 import com.baiiu.common.util.CommonUtil;
 import com.baiiu.lib_common.R;
-import com.baiiu.lib_common.R2;
 import com.baiiu.library.LogUtil;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -32,8 +30,8 @@ import java.util.List;
  */
 public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPresenter<List<E>>> extends BaseFragment implements BaseListContract.IListMvpView<List<E>>, PtrHandler {
 
-    @BindView(R2.id.ptr) protected PtrClassicFrameLayout mPtr;
-    @BindView(R2.id.recyclerView) protected RecyclerView mRecyclerView;
+    protected PtrClassicFrameLayout mPtr;
+    protected RecyclerView mRecyclerView;
 
     protected P mPresenter;
     protected BaseRefreshLoadMoreAdapter<E> mAdapter;
@@ -67,6 +65,11 @@ public abstract class BaseListFragment<E, P extends BaseListContract.IRefreshPre
 
         super.onDestroyView();
         mPresenter.detachView();
+    }
+
+    @Override protected void initView(View view) {
+        mPtr = view.findViewById(R.id.ptr);
+        mRecyclerView = view.findViewById(R.id.recyclerView);
     }
 
     @Override protected void initOnCreateView() {

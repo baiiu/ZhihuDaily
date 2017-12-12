@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import com.baiiu.library.LogUtil;
 
 /**
  * Created by shaozi on 16/3/15.
@@ -34,6 +35,7 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         try {
             super.onLayoutChildren(recycler, state);
         } catch (Exception e) {
+            LogUtil.e(e.toString());
         }
     }
 

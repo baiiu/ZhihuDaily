@@ -1,15 +1,12 @@
 package com.baiiu.common.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.baiiu.lib_common.R2;
+import com.baiiu.lib_common.R;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
@@ -20,15 +17,15 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
     // TODO: 17/10/30 ButterKnife的module中和application中toolbarId不一致
-    @Nullable @BindView(R2.id.toolbar) public Toolbar mToolbar;
+    public Toolbar mToolbar;
     protected ActionBar actionBar;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(provideLayoutId());
 
-        ButterKnife.bind(this);
         initView();
+        mToolbar = findViewById(R.id.toolbar);
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);

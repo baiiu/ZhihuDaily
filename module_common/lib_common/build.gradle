@@ -25,9 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-//        debug {
-//            minifyEnabled false
-//        }
+        //        debug {
+        //            minifyEnabled false
+        //        }
     }
 }
 
@@ -54,8 +54,9 @@ dependencies {
     api majorFrame.adapterRxJava as String
     api majorFrame.Gson as String
     api majorFrame.Glide as String
-    api majorFrame.ButterKnife as String
-    annotationProcessor majorFrame.aptButterKnifeCompiler as String
+
+    //    api majorFrame.ButterKnife as String
+    //    annotationProcessor majorFrame.aptButterKnifeCompiler as String
 
     def assistance = rootProject.ext.assistance;
     debugApi assistance.leakCanaryDebug as String
