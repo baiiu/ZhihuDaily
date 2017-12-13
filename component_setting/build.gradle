@@ -4,9 +4,6 @@ if (isRunAlone.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 
-apply plugin: 'com.jakewharton.butterknife'
-
-
 android {
     def cfg = rootProject.ext.androidVersionConfig
 
