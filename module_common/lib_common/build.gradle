@@ -4,6 +4,7 @@ android {
     def cfg = rootProject.ext.androidVersionConfig
 
     compileSdkVersion cfg.androidCompileSdkVersion
+    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion
@@ -27,7 +28,7 @@ android {
         //            minifyEnabled false
         //        }
     }
-    buildToolsVersion '27.0.3'
+
 }
 
 dependencies {
