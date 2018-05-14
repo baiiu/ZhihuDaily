@@ -5,8 +5,8 @@ ext {
     supportLibVersion = '26.1.0'
     junitVersion = '4.12'
 
-    retrofitVersion = '2.1.0'
-    okHttpVersion = '3.3.1'
+    retrofitVersion = '2.4.0'
+    okHttpVersion = '3.10.0'
     okHttpUtilsVersion = '2.6.2'
 
     rxJavaVersion = '1.2.4'
@@ -29,7 +29,7 @@ ext {
 
     androidVersionConfig = [
 
-            androidBuildToolsVersion: '26.0.2',
+            androidBuildToolsVersion: '27.0.3',
             androidMinSdkVersion    : 16,
             androidTargetSdkVersion : 23,
             androidCompileSdkVersion: 26,

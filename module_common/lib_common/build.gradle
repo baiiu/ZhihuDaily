@@ -4,7 +4,6 @@ android {
     def cfg = rootProject.ext.androidVersionConfig
 
     compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion
@@ -28,6 +27,7 @@ android {
         //            minifyEnabled false
         //        }
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -60,7 +60,7 @@ dependencies {
     def assistance = rootProject.ext.assistance;
     debugApi assistance.leakCanaryDebug as String
     releaseApi assistance.leakCanaryRelease as String
-    testApi assistance.leakCanaryTest as String
+    testImplementation assistance.leakCanaryTest as String
     debugApi assistance.stetho as String
     debugApi assistance.stethoOkHttp as String
 
