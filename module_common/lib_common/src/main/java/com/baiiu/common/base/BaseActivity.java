@@ -1,20 +1,22 @@
 package com.baiiu.common.base;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.baiiu.lib_common.R;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
  * Created by baiiu on 15/11/16.
  * Base
  */
-public abstract class BaseActivity extends RxAppCompatActivity implements SwipeBackLayout.SwipeBackListener {
+public abstract class BaseActivity extends AppCompatActivity implements SwipeBackLayout.SwipeBackListener {
 
     // TODO: 17/10/30 ButterKnife的module中和application中toolbarId不一致
     public Toolbar mToolbar;

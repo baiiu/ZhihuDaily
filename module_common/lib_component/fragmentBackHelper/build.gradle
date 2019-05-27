@@ -4,7 +4,6 @@ def cfg = rootProject.ext.androidVersionConfig
 
 android {
     compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion
@@ -23,5 +22,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${rootProject.supportLibVersion}"
+    implementation 'androidx.appcompat:appcompat:1.0.0'
 }

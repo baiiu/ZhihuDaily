@@ -4,7 +4,6 @@ def cfg = rootProject.ext.androidVersionConfig
 
 android {
     compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion

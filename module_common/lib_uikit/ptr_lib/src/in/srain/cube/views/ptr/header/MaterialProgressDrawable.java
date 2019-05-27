@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 /**
  * Fancy progress indicator for Material theme.
- * It's taken from {@link android.support.v4.widget}.
+ * It's taken from {@link androidx.core.widget}.
  * I've done some slight changes.
  *
  * @hide

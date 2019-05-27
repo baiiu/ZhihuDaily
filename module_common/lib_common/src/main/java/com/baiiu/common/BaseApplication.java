@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
+
 import com.baiiu.common.tinker.TinkerManager;
 import com.baiiu.lib_common.BuildConfig;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.loader.app.DefaultApplicationLike;
 
@@ -21,36 +21,36 @@ public class BaseApplication extends DefaultApplicationLike {
     private static BaseApplication baseApplication;
     private static Context mContext;
 
-    private RefWatcher refWatcher;
-
     public BaseApplication(Application application, int tinkerFlags, boolean tinkerLoadVerifyFlag,
-            long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
+                           long applicationStartElapsedTime, long applicationStartMillisTime, Intent tinkerResultIntent) {
         super(application, tinkerFlags, tinkerLoadVerifyFlag, applicationStartElapsedTime, applicationStartMillisTime,
-              tinkerResultIntent);
+                tinkerResultIntent);
     }
 
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll()
-                                               .penaltyLog()
-                                               //.detectDiskReads()
-                                               //.detectDiskWrites()
-                                               //.detectNetwork()
-                                               //.detectCustomSlowCalls()
-                                               .build());
+                    .penaltyLog()
+                    //.detectDiskReads()
+                    //.detectDiskWrites()
+                    //.detectNetwork()
+                    //.detectCustomSlowCalls()
+                    .build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll()
-                                           .penaltyLog()
-                                           //.detectLeakedSqlLiteObjects()
-                                           //.detectLeakedClosableObjects()
-                                           //.detectActivityLeaks()
-                                           //.penaltyDeath() //Crashes the whole process on violation，一旦发现问题崩溃进程
-                                           .build());
+                    .penaltyLog()
+                    //.detectLeakedSqlLiteObjects()
+                    //.detectLeakedClosableObjects()
+                    //.detectActivityLeaks()
+                    //.penaltyDeath() //Crashes the whole process on violation，一旦发现问题崩溃进程
+                    .build());
         }
 
         super.onCreate();
         mContext = getApplication();
-        refWatcher = LeakCanary.install(getApplication());
+        LeakCanary.install(getApplication());
+
 
         TinkerManager.setTinkerApplicationLike(this);
         TinkerManager.initFastCrashProtect();
@@ -73,11 +73,6 @@ public class BaseApplication extends DefaultApplicationLike {
 
     public static Context getContext() {
         return mContext;
-    }
-
-
-    public RefWatcher getRefWatcher() {
-        return refWatcher;
     }
 
 }

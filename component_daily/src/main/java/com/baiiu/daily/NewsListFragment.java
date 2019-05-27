@@ -1,6 +1,6 @@
 package com.baiiu.daily;
 
-import android.support.v7.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import android.view.View;
 import com.baiiu.common.base.BaseActivity;
 import com.baiiu.common.base.list.fragment.BaseListFragment;

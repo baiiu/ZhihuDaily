@@ -1,6 +1,6 @@
 package com.baiiu.daily.serviceImpl;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.daily.NewsListFragment;
 

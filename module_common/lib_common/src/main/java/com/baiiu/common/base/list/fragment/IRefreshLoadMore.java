@@ -1,7 +1,7 @@
 package com.baiiu.common.base.list.fragment;
 
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * author: baiiu

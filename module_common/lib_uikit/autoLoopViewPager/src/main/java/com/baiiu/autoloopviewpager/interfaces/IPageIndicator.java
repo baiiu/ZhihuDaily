@@ -1,7 +1,7 @@
 package com.baiiu.autoloopviewpager.interfaces;
 
 
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * auther: baiiu

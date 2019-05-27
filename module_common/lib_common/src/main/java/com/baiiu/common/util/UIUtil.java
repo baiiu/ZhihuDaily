@@ -3,13 +3,14 @@ package com.baiiu.common.util;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.LayoutRes;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.LayoutRes;
+
 import com.baiiu.common.BaseApplication;
-import com.squareup.leakcanary.RefWatcher;
 
 /**
  * UI 工具包
@@ -21,11 +22,6 @@ public class UIUtil {
      **/
     public static Context getContext() {
         return BaseApplication.getContext();
-    }
-
-    public static RefWatcher getRefWatcher() {
-        BaseApplication application = BaseApplication.getBaseApplication();
-        return application.getRefWatcher();
     }
 
     public static Handler mMainHandler;

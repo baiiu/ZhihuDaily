@@ -16,7 +16,7 @@ public class BridgeWebViewClient extends WebViewClient {
         this.webView = webView;
     }
 
-    @android.support.annotation.CallSuper @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    @androidx.annotation.CallSuper @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
         try {
             url = URLDecoder.decode(url, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -38,7 +38,7 @@ public class BridgeWebViewClient extends WebViewClient {
         super.onPageStarted(view, url, favicon);
     }
 
-    @android.support.annotation.CallSuper @Override public void onPageFinished(WebView view, String url) {
+    @androidx.annotation.CallSuper @Override public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
 
         if (BridgeWebView.toLoadJs != null) {

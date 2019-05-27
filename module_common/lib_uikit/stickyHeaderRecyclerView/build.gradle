@@ -4,7 +4,6 @@ android {
     def cfg = rootProject.ext.androidVersionConfig
 
     compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion
@@ -16,5 +15,5 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:recyclerview-v7:${rootProject.supportLibVersion}"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }

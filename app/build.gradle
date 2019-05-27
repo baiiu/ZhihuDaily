@@ -9,7 +9,6 @@ def getTinkerIdValue() {
 android {
     def cfg = rootProject.ext.androidVersionConfig
     compileSdkVersion cfg.androidCompileSdkVersion
-    buildToolsVersion cfg.androidBuildToolsVersion
 
     defaultConfig {
         minSdkVersion cfg.androidMinSdkVersion

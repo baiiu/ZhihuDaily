@@ -1,7 +1,7 @@
 package com.baiiu.common.base.list.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.baiiu.common.base.BaseFragment;
 import com.baiiu.library.LogUtil;
 
