@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.baiiu.zhihudaily">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".MainApplication"
@@ -18,13 +18,36 @@
         android:theme="@style/DayTheme"
         tools:replace="android:allowBackup">
 
-        <activity
-            android:name=".NewsListActivity">
+        <activity android:name=".signin.ChooserActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name=".signin.SignInActivity"
+            android:label="@string/name_sign_in_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
+        <activity
+            android:name=".signin.SignInActivityWithDrive"
+            android:label="@string/name_sign_in_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
+        <activity
+            android:name=".signin.IdTokenActivity"
+            android:label="@string/name_id_token_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
+
+        <activity
+            android:name=".signin.ServerAuthCodeActivity"
+            android:label="@string/name_auth_code_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
+
+        <activity
+            android:name=".signin.RestApiActivity"
+            android:label="@string/name_rest_activity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"></activity>
 
 
     </application>

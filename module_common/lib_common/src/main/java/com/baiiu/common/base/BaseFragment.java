@@ -61,8 +61,5 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     @Override public void onDestroy() {
         super.onDestroy();
-
-        UIUtil.getRefWatcher()
-                .watch(this);
     }
 }
