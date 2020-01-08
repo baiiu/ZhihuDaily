@@ -34,7 +34,7 @@ class SettingAdapter extends FragmentPagerAdapter {
         }
 
         try {
-            return (Fragment) Class.forName("com.baiiu.setting.runalone.TestFragment")
+            return (Fragment) Class.forName("com.baiiu.settiing.app.TestFragment")
                     .newInstance();
         } catch (Exception e) {
             LogUtil.e(e.toString());

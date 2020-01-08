@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.baiiu.settiing.app">
+
+    <application
+        android:label="@string/setting_app_name"
+        android:supportsRtl="true"
+        android:theme="@style/DayTheme">
+
+        <activity android:name="com.baiiu.setting.SettingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+    </application>
+
+
+</manifest>
