@@ -1,11 +1,20 @@
-include ':dao-generator', ':component_setting'
+include ':dao-generator'
 
 // 组件
 include(
 
         ':app',
         ':component_daily',
-        ':component_gank'
+        ':component_gank',
+        ':component_setting'
+
+)
+
+
+// runalone
+include(
+
+        ':runalone:gank'
 
 )
 
