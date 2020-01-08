@@ -11,6 +11,6 @@ import com.baiiu.gank.GankListFragment;
  */
 public class GankServiceImpl implements GankService {
     @Override public Fragment getGankFragment() {
-        return GankListFragment.instance();
+        return new GankListFragment();
     }
 }

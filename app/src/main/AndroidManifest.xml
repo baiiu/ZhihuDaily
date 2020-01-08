@@ -18,7 +18,7 @@
         android:theme="@style/DayTheme"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".signin.ChooserActivity">
+        <activity android:name=".NewsListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -27,6 +27,8 @@ ext {
     leakCanaryVersion = '1.6'
     stethoVersion = '1.3.1'
 
+    lifecycleVersion = '2.1.0'
+
     androidVersionConfig = [
 
             androidBuildToolsVersion: '27.0.3',

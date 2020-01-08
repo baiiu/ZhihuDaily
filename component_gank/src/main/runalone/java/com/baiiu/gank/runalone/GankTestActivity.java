@@ -2,7 +2,6 @@ package com.baiiu.gank.runalone;
 
 import android.os.Bundle;
 import com.baiiu.common.base.BaseActivity;
-import com.baiiu.gank.GankListFragment;
 import com.baiiu.gank.R;
 
 /**

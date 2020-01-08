@@ -4,6 +4,10 @@ if (isRunAlone.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     def cfg = rootProject.ext.androidVersionConfig
 
@@ -51,4 +55,8 @@ dependencies {
 
     api project(':module_common:lib_common')
     api project(':module_service')
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
 }
