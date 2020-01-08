@@ -9,6 +9,11 @@ import kotlinx.android.synthetic.main.gank_fragment_gank.*
  * author: zhuzhe
  * time: 2020-01-08
  * description:
+ *
+ * LiveData 和 LifecycleOwner 处理生命周期
+ *
+ * ViewModelProviders封装mViewModelStore，获取ViewModule，destroy时自动释放引用
+ * 业务上继承ViewModel，实现业务逻辑，通过观察者模式发出，UI层观察到后进行响应。
  */
 class GankListFragment : BaseFragment() {
 
