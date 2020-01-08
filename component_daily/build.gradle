@@ -1,8 +1,4 @@
-if (isRunAlone.toBoolean()) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.library'
 
 android {
     def cfg = rootProject.ext.androidVersionConfig
@@ -32,14 +28,7 @@ android {
 
     sourceSets {
         main {
-
-            if (isRunAlone.toBoolean()) {
-                manifest.srcFile 'src/main/runalone/AndroidManifest.xml'
-                java.srcDirs = ['src/main/java', 'src/main/runalone/java', 'src/main/java-gen']
-                res.srcDirs = ['src/main/res', 'src/main/runalone/res']
-            } else {
-                java.srcDirs = ['src/main/java', 'src/main/java-gen']
-            }
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
         }
     }
 

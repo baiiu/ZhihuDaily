@@ -1,4 +1,4 @@
-package com.baiiu.daily.runalone;
+package com.baiiu.daily.app;
 
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;

@@ -8,7 +8,7 @@ class GankTestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.gank_test_main)
 
 
         supportFragmentManager.beginTransaction()

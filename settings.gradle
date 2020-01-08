@@ -14,7 +14,8 @@ include(
 // runalone
 include(
 
-        ':runalone:gank'
+        ':runalone:gank',
+        ':runalone:daily'
 
 )
 
