@@ -1,6 +1,9 @@
 package com.baiiu.module;
 
 import com.baiiu.annotations.Module;
+import java.util.ArrayList;
+import java.util.List;
+import org.checkerframework.checker.regex.RegexUtil;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -19,7 +22,8 @@ public class ModuleVisitor extends ClassVisitor {
     private String superName;
     private boolean isApplicationClass = false;
 
-    private String[] mApplication;
+    private List<String> mApplicationAnnotation;
+    private List<String> mDependenciesAnnotation;
 
     public ModuleVisitor(String className, ClassVisitor classVisitor) {
         super(Opcodes.ASM6, classVisitor);
@@ -76,19 +80,46 @@ public class ModuleVisitor extends ClassVisitor {
             super(Opcodes.ASM6);
         }
 
-        @Override public void visit(String name, Object value) {
-            super.visit(name, value);
+        @Override public AnnotationVisitor visitArray(String name) {
+            AnnotationVisitor av = super.visitArray(name);
+            return new ArrayAnnotationVisitor(av, name);
+        }
 
-            switch (name) {
-                case "dependencies":
+        class ArrayAnnotationVisitor extends AnnotationVisitor {
 
-                    break;
-                case "application":
-                    mApplication = (String[]) value;
-                    break;
+            final String key;
+
+            private ArrayAnnotationVisitor(AnnotationVisitor av, String name) {
+                super(Opcodes.ASM5, av);
+                this.key = name;
             }
 
+            @Override
+            public void visit(String name, Object value) {
+                super.visit(name, value);
+                //String propValue = String.valueOf(value);
+                //String className = propValue.substring(0, propValue.lastIndexOf("."));
+                //String methodName = propValue.substring(propValue.lastIndexOf(".") + 1, propValue.indexOf("("));
+                //String methodDesc = propValue.substring(propValue.indexOf("("), propValue.length());
+
+                if ("application".equals(key)) {
+                    if (mApplicationAnnotation == null) {
+                        mApplicationAnnotation = new ArrayList<>();
+                    }
+
+                    mApplicationAnnotation.add((String) value);
+                } else if ("dependencies".equals(key)) {
+                    if (mDependenciesAnnotation == null) {
+                        mDependenciesAnnotation = new ArrayList<>();
+                    }
+
+                    mDependenciesAnnotation.add((String) value);
+                }
+
+                System.out.println("ArrayAnnotationVisitor: " + key + ", " + value);
+            }
         }
+
     }
 
     private class ModuleAdviceAdapter extends AdviceAdapter {
@@ -102,9 +133,9 @@ public class ModuleVisitor extends ClassVisitor {
 
 
         @Override protected void onMethodEnter() {
-            if ("onCreate".equals(methodName) && mApplication != null && mApplication.length > 0) {
+            if ("onCreate".equals(methodName) && mApplicationAnnotation != null) {
 
-                for (String s : mApplication) {
+                for (String s : mApplicationAnnotation) {
 
                     mv.visitLdcInsn(s);
                     mv.visitMethodInsn(INVOKESTATIC,

@@ -34,10 +34,6 @@ public class MainApplication extends TinkerApplication {
     @Override public void onCreate() {
         super.onCreate();
         LogUtil.init(BuildConfig.DEBUG);
-
-        //Router.registerComponent("com.baiiu.daily.DailyApplicationDelegate");
-        //Router.registerComponent("com.baiiu.gank.GankApplicationDelegate");
-        //Router.registerComponent("com.baiiu.setting.SettingApplicationDelegate");
     }
 
 }

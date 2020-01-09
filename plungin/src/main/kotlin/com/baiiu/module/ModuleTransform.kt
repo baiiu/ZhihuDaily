@@ -23,7 +23,7 @@ class ModuleTransform : Transform() {
     }
 
     override fun isIncremental(): Boolean {
-        return true
+        return false
     }
 
     override fun getScopes(): MutableSet<in QualifiedContent.Scope> {
