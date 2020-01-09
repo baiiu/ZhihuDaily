@@ -7,6 +7,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url file(rootDir.absolutePath + '/repo/module')
+        }
+        maven {
+            url file(rootDir.absolutePath + '/repo/annotation')
+        }
     }
 
     dependencies {
@@ -15,6 +21,8 @@ buildscript {
         classpath 'com.leon.channel:plugin:1.1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        classpath 'com.baiiu.plugin:module:1.0-SNAPSHOT'
     }
 }
 
@@ -23,6 +31,12 @@ allprojects {
         jcenter()
         google()
         maven { url "https://jitpack.io" }
+        maven {
+            url file(rootDir.absolutePath + '/repo/module')
+        }
+        maven {
+            url file(rootDir.absolutePath + '/repo/annotation')
+        }
     }
 }
 

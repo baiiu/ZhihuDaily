@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+//设置maven deployer
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo/annotation'))
+
+            pom.groupId = 'com.baiiu.plugin'
+            pom.artifactId = 'annotations'
+            pom.version = '1.0-SNAPSHOT'
+        }
+    }
+}

@@ -18,11 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0'
-//    implementation project(':module_common:lib_component:LogUtil')
+    api project(":annotations")
+    //    implementation project(':module_common:lib_component:LogUtil')
 }

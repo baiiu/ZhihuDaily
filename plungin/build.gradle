@@ -1,0 +1,29 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'kotlin'
+apply plugin: 'maven'
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api gradleApi()
+    api localGroovy()
+
+    //    implementation 'com.android.tools.build:gradle-api:3.5.3'
+    api 'com.android.tools.build:gradle:3.5.3'
+    api 'org.ow2.asm:asm:7.1'
+    //    implementation 'org.ow2.asm:asm-commons:5.0.3'
+
+    api 'com.baiiu.plugin:annotations:1.0-SNAPSHOT'
+}
+
+//设置maven deployer
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo/module'))
+
+            pom.groupId = 'com.baiiu.plugin'
+            pom.artifactId = 'module'
+            pom.version = '1.0-SNAPSHOT'
+        }
+    }
+}
