@@ -3,6 +3,7 @@
     package="com.baiiu.settiing.app">
 
     <application
+        android:name=".SettingApplication"
         android:label="@string/setting_app_name"
         android:supportsRtl="true"
         android:theme="@style/DayTheme">

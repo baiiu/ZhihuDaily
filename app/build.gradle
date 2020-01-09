@@ -63,14 +63,13 @@ android {
         }
     }
 
-    channel{
+    channel {
         channelFile = file("../channelDaily.txt")
     }
 
-    rebuildChannel{
+    rebuildChannel {
         channelFile = file("../channelRebuild.txt")
     }
-
 }
 
 dependencies {
@@ -79,13 +78,9 @@ dependencies {
     implementation project(':module_service')
     implementation project(':module_common:lib_common')
 
-    if (isRunAlone.toBoolean()) {
-        api 'com.leon.channel:helper:1.1.5'
-    } else {
-        implementation project(':component_daily')
-        implementation project(':component_gank')
-        implementation project(':component_setting')
-    }
+    implementation project(':component_daily')
+    implementation project(':component_gank')
+    implementation project(':component_setting')
 
 
     // Dependency for Google Sign-In
@@ -95,6 +90,4 @@ dependencies {
     implementation 'com.google.api-client:google-api-client:1.22.0'
     implementation 'com.google.api-client:google-api-client-android:1.22.0'
     implementation 'com.google.apis:google-api-services-people:v1-rev139-1.22.0'
-
-
 }
