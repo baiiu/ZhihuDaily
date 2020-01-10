@@ -101,8 +101,10 @@ public class NewsListActivity extends BaseActivity {
 
                 return true;
             case R.id.action_patch:
-                TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(), Environment.getExternalStorageDirectory()
-                        .getAbsolutePath() + "/patch_signed_7zip.apk");
+                TinkerInstaller.onReceiveUpgradePatch(getApplicationContext(),
+                                                      Environment.getExternalStorageDirectory()
+                                                              .getAbsolutePath()
+                                                              + "/patch_signed_7zip.apk");
 
                 break;
             case R.id.action_theme:

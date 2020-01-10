@@ -9,7 +9,9 @@ import org.gradle.api.Project
 /**
  * author: zhuzhe
  * time: 2020-01-09
- * description:
+ * description: 参考：
+ *
+ * https://github.com/mqzhangw/JIMU/blob/master/jimu-core/build-gradle/src/main/groovy/com.dd.buildgradle/ComBuild.groovy
  */
 class ModulePlugin : Plugin<Project> {
 
@@ -30,20 +32,8 @@ class ModulePlugin : Plugin<Project> {
         val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
         println("moduleExtension: " + moduleExtension.modules)
 
-//        val implementationConfiguration = project.configurations.getByName("implementation")
-//        for (dependency in implementationConfiguration.dependencies) {
-//            println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
-//        }
-//
-//        val apiConfiguration = project.configurations.getByName("api")
-//        for (dependency in implementationConfiguration.dependencies) {
-//            println("apiConfiguration: " + apiConfiguration.dependencies + ", " + dependency)
-//        }
-//
-//        val testImplementation = project.configurations.getByName("testImplementation")
-//        for (dependency in implementationConfiguration.dependencies) {
-//            println("testImplementation: " + testImplementation.dependencies + ", " + dependency)
-//        }
+        val assembleTask = getTaskInfo(project.gradle.startParameter.taskNames)
+        println("taskNames: " + assembleTask + ", " + project.gradle.startParameter.taskNames)
 
 
         project.configurations.all { configuration ->
@@ -54,7 +44,8 @@ class ModulePlugin : Plugin<Project> {
             println("allDependencies is: " + configuration.allDependencies)
             println("==========================================================\n")
 
-            if (moduleExtension.modules.isNotEmpty() && isFirst) {
+            // assemble的时候添加runtime依赖
+            if (moduleExtension.modules.isNotEmpty() && isFirst && assembleTask) {
                 println("moduleExtension: " + moduleExtension.modules)
                 isFirst = false
 
@@ -69,22 +60,30 @@ class ModulePlugin : Plugin<Project> {
                     runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
                 }
             }
-
-            //为Project加入Gson依赖
         }
-
-
-//        project.configurations.all { configuration ->
-//            val name = configuration.name
-//            System.out.println("this configuration is $name")
-//
-//            for (module in moduleExtension.modules) {
-//                configuration.dependencies.add(project.dependencies.module(module))
-//            }
-//
-//        }
-
 
         android.registerTransform(ModuleTransform(project))
     }
+
+
+    private fun getTaskInfo(tasks: List<String>): Boolean {
+
+        for (task in tasks) {
+            if (
+                    task.toUpperCase().contains("ASSEMBLE")
+                    || task.toUpperCase().contains("TINKER")
+                    || task.toUpperCase().contains("INSTALL")
+                    || task.toUpperCase().contains("RESGUARD")
+                    || task.contains("aR")
+                    || task.contains("asR")
+                    || task.contains("asD")) {
+
+
+                return true
+            }
+        }
+
+        return false
+    }
+
 }
