@@ -41,6 +41,7 @@ As well, the project is continue refactoring.
     这种结构下的组件化不能做到组件依赖其他组件运行。因为当前项目运行的状态要么是全是application，或者是一个application和其他module.
 
 - v1.5
+
   make the componentization more beautiful to run. every component can run alone, and can be run
   with other components, also each components is separate from each other.
   完善组件化。各个组件能单独运行；各个组件能选取依赖项；各个组件代码互相隔离；
