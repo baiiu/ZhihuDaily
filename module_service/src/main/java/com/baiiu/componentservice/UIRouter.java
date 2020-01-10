@@ -15,7 +15,8 @@ import java.util.Map;
  */
 public final class UIRouter {
 
-    private static final Map<String, Class<? extends AppCompatActivity>> mRouterMap = new HashMap<>();
+    private static final Map<String, Class<? extends AppCompatActivity>> mRouterMap =
+            new HashMap<>();
 
     public static void put(String url, Class<? extends AppCompatActivity> clazz) {
         mRouterMap.put(url, clazz);
@@ -27,6 +28,10 @@ public final class UIRouter {
 
     public static void router(Context context, String url) {
         Class<? extends AppCompatActivity> clazz = mRouterMap.get(url);
+        if (clazz == null) {
+            return;
+        }
+
         context.startActivity(new Intent(context, clazz));
     }
 

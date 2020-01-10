@@ -3,6 +3,9 @@ apply plugin: 'channel'
 apply from: '../buildSystem/tinker.gradle'
 
 apply plugin: 'com.baiiu.log'
+module {
+    implementModule(':component_daily', ':component_gank', ':component_setting')
+}
 
 def getTinkerIdValue() {
     return hasProperty("TINKER_ID") ? TINKER_ID : rootProject.ext.androidVersionConfig.versionCode
@@ -80,10 +83,9 @@ dependencies {
     implementation project(':module_service')
     implementation project(':module_common:lib_common')
 
-    implementation project(':component_daily')
-    implementation project(':component_gank')
-    implementation project(':component_setting')
-
+    //    implementation project(':component_daily')
+    //    implementation project(':component_gank')
+    //    implementation project(':component_setting')
 
     // Dependency for Google Sign-In
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
