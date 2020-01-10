@@ -1,6 +1,7 @@
-package com.baiiu.settiing.app;
+package com.baiiu.setting.test;
 
 import com.baiiu.common.base.BaseFragment;
+import com.baiiu.setting.R;
 
 /**
  * author: baiiu

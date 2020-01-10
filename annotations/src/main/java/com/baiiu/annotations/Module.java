@@ -16,6 +16,4 @@ public @interface Module {
 
     String[] application() default {};
 
-    String[] dependencies() default {};
-
 }

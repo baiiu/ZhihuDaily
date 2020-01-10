@@ -30,6 +30,22 @@ class ModulePlugin : Plugin<Project> {
         val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
         println("moduleExtension: " + moduleExtension.modules)
 
+//        val implementationConfiguration = project.configurations.getByName("implementation")
+//        for (dependency in implementationConfiguration.dependencies) {
+//            println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
+//        }
+//
+//        val apiConfiguration = project.configurations.getByName("api")
+//        for (dependency in implementationConfiguration.dependencies) {
+//            println("apiConfiguration: " + apiConfiguration.dependencies + ", " + dependency)
+//        }
+//
+//        val testImplementation = project.configurations.getByName("testImplementation")
+//        for (dependency in implementationConfiguration.dependencies) {
+//            println("testImplementation: " + testImplementation.dependencies + ", " + dependency)
+//        }
+
+
         project.configurations.all { configuration ->
             val name = configuration.name
 
@@ -42,10 +58,15 @@ class ModulePlugin : Plugin<Project> {
                 println("moduleExtension: " + moduleExtension.modules)
                 isFirst = false
 
+                val implementationConfiguration = project.configurations.getByName("implementation")
+                for (dependency in implementationConfiguration.dependencies) {
+                    println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
+                }
+
                 for (module in moduleExtension.modules) {
                     println("addImplementation: $module")
 
-                    configuration.dependencies.add(project.dependencies.create(project.project(module)))
+                    implementationConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
                 }
             }
 
@@ -64,6 +85,6 @@ class ModulePlugin : Plugin<Project> {
 //        }
 
 
-        android.registerTransform(ModuleTransform())
+        android.registerTransform(ModuleTransform(project))
     }
 }

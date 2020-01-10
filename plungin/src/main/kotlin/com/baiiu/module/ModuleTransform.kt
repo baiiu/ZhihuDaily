@@ -2,6 +2,7 @@ package com.baiiu.module
 
 import com.android.build.api.transform.*
 import org.apache.commons.io.FileUtils
+import org.gradle.api.Project
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.File
@@ -12,7 +13,9 @@ import java.io.FileOutputStream
  * time: 2020-01-09
  * description:
  */
-class ModuleTransform : Transform() {
+class ModuleTransform(project: Project) : Transform() {
+    val project = project
+
 
     override fun getName(): String {
         return "CustomTransform"
@@ -39,6 +42,29 @@ class ModuleTransform : Transform() {
         super.transform(transformInvocation)
 
         println("==============================TracePlugin visit start========================================")
+        val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
+        println("moduleExtension: " + moduleExtension.modules)
+
+        val implementationConfiguration = project.configurations.getByName("implementation")
+        for (dependency in implementationConfiguration.dependencies) {
+            println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
+        }
+//        for (module in moduleExtension.modules) {
+//            println("addImplementation: $module")
+//
+//            implementationConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
+//        }
+
+//        val apiConfiguration = project.configurations.getByName("api")
+//        for (dependency in implementationConfiguration.dependencies) {
+//            println("apiConfiguration: " + apiConfiguration.dependencies + ", " + dependency)
+//        }
+//
+//        val testImplementation = project.configurations.getByName("testImplementation")
+//        for (dependency in implementationConfiguration.dependencies) {
+//            println("testImplementation: " + testImplementation.dependencies + ", " + dependency)
+//        }
+
 
         val isIncremental = transformInvocation?.isIncremental
 

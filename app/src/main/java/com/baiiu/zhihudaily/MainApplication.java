@@ -16,12 +16,6 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
                 "com.baiiu.daily.DailyApplicationDelegate",
                 "com.baiiu.gank.GankApplicationDelegate",
                 "com.baiiu.setting.SettingApplicationDelegate"
-        },
-
-        dependencies = {
-                ":component_daily",
-                ":component_gank",
-                ":component_setting"
         }
 )
 public class MainApplication extends TinkerApplication {

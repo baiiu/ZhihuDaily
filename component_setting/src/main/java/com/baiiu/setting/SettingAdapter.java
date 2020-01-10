@@ -7,6 +7,7 @@ import com.baiiu.componentservice.Router;
 import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.componentservice.service.GankService;
 import com.baiiu.library.LogUtil;
+import com.baiiu.setting.test.TestFragment;
 
 /**
  * author: baiiu
@@ -33,14 +34,7 @@ class SettingAdapter extends FragmentPagerAdapter {
             }
         }
 
-        try {
-            return (Fragment) Class.forName("com.baiiu.settiing.app.TestFragment")
-                    .newInstance();
-        } catch (Exception e) {
-            LogUtil.e(e.toString());
-        }
-
-        return null;
+        return new TestFragment();
     }
 
     @Override public int getCount() {
