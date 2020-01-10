@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'channel'
 apply from: '../buildSystem/tinker.gradle'
 
-apply plugin: 'com.baiiu.log'
+apply plugin: 'com.baiiu.module'
 module {
     implementModule(':component_daily', ':component_gank', ':component_setting')
 }
@@ -49,6 +49,8 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

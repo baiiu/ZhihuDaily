@@ -18,3 +18,10 @@
 - 初始化顺序
 - 加载、卸载
 - 降维，可配置成h5
+
+
+
+> 参考：
+https://www.jianshu.com/p/1b1d77f58e84
+https://juejin.im/post/5bb9c0d55188255c7566e1e2
+https://tech.youzan.com/you-zan-androidzu-jian-hua-bian-yi-ti-xiao-fang-an/

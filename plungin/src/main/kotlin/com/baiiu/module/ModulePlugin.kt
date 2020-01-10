@@ -58,15 +58,15 @@ class ModulePlugin : Plugin<Project> {
                 println("moduleExtension: " + moduleExtension.modules)
                 isFirst = false
 
-                val implementationConfiguration = project.configurations.getByName("implementation")
-                for (dependency in implementationConfiguration.dependencies) {
-                    println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
+                val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
+                for (dependency in runtimeOnlyConfiguration.dependencies) {
+                    println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
                 }
 
                 for (module in moduleExtension.modules) {
                     println("addImplementation: $module")
 
-                    implementationConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
+                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
                 }
             }
 
