@@ -67,7 +67,10 @@ As well, the project is continue refactoring.
 在v1.4版本基础上，需要再次进行组件化，使用gradle插件将组件完全分离。
 模仿[DDComponentForAndroid](https://github.com/luojilab/DDComponentForAndroid)
 
-
+- 20/1/10
+各个组件能单独运行；
+各个组件能选取依赖项；
+各个组件代码隔离；
 
 ## ThanksTo
 [知乎日报API](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)<br>

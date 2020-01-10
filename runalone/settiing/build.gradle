@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'com.baiiu.module'
+module {
+    implementModule(':component_gank')
+}
+
 android {
     def cfg = rootProject.ext.androidVersionConfig
 
