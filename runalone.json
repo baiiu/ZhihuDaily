@@ -1,0 +1,16 @@
+[
+  {
+    "module": "app",
+    "implement": [
+      ":component_daily",
+      ":component_gank",
+      ":component_setting"
+    ]
+  },
+  {
+    "module": "setting",
+    "implement": [
+      ":component_gank"
+    ]
+  }
+]

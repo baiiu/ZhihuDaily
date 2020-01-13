@@ -1,14 +1,12 @@
 package com.baiiu.module
 
 import com.android.build.gradle.AppExtension
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.reflect.TypeOf
-import org.gradle.internal.extensibility.ExtensionsStorage
 import java.io.File
-import java.io.FileInputStream
-import java.util.*
 
 
 /**
@@ -27,13 +25,13 @@ class ModulePlugin : Plugin<Project> {
 
         println("ModulePlugin#apply: " + project.name + ", " + project.displayName)
 
-        project.extensions.add("module", ModuleExtension::class.java)
         if (!project.plugins.hasPlugin("com.android.application")) {
             throw GradleException("ModulePlugin must be used in Android Application plugin")
         }
 
-        val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
-        println("moduleExtension: " + moduleExtension.modules)
+//        project.extensions.add("module", ModuleExtension::class.java)
+//        val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
+//        println("moduleExtension: " + moduleExtension.modules)
 
         val assembleTask = isAssemble(project.gradle.startParameter.taskNames)
         println("taskNames: " + assembleTask + ", " + project.gradle.startParameter.taskNames)
@@ -59,29 +57,54 @@ class ModulePlugin : Plugin<Project> {
 
 
             // 文件配置
-            val moduleFile = File(project.projectDir, "module.properties")
-            if (!moduleFile.exists()) {
-                return@afterEvaluate
-            }
+//            val moduleFile = File(project.projectDir, "module.properties")
+//            if (!moduleFile.exists()) {
+//                return@afterEvaluate
+//            }
+//
+//            val prop = Properties()
+//            prop.load(FileInputStream(moduleFile))
+//            val implementModule = prop.getProperty("implementModule")
+//            println("module.properties: $implementModule")
+//
+//            val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
+//            for (dependency in runtimeOnlyConfiguration.dependencies) {
+//                println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
+//            }
+//
+//
+//            implementModule.split(",").forEach {
+//                it.replace("'", "").let { module ->
+//                    println("addImplementation: $module")
+//                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module.trim())))
+//                }
+//            }
 
-            val prop = Properties()
-            prop.load(FileInputStream(moduleFile))
-            val implementModule = prop.getProperty("implementModule")
-            println("module.properties: $implementModule")
+            // json配置
 
             val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
             for (dependency in runtimeOnlyConfiguration.dependencies) {
                 println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
             }
 
+            val jsonFile = File(project.rootDir, "runalone.json")
+            if (!jsonFile.exists()) {
+                return@afterEvaluate
+            }
+            val json = jsonFile.readText()
+            println("json: $json")
 
-            implementModule.split(",").forEach {
-                it.replace("'", "").let { module ->
-                    println("addImplementation: $module")
-                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module.trim())))
+            val list: List<RunAlone> = Gson().fromJson(json, object : TypeToken<List<RunAlone?>?>() {}.type)
+            println("runAloneList: $list")
+
+            list.forEach { item ->
+                if (project.name.contains(item.module, true)) {
+                    item.implement.forEach {
+                        println("addImplementation: $it")
+                        runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(it)))
+                    }
                 }
             }
-
 
         }
 

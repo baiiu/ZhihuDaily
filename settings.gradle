@@ -16,7 +16,7 @@ include(
 
         ':runalone:gank',
         ':runalone:daily',
-        ':runalone:settiing'
+        ':runalone:setting'
 
 )
 
