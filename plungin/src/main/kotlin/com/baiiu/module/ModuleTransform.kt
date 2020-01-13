@@ -1,11 +1,17 @@
 package com.baiiu.module
 
 import com.android.build.api.transform.*
+import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.File
 import java.io.FileOutputStream
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+import java.util.zip.ZipEntry
 
 /**
  * author: zhuzhe
@@ -44,7 +50,7 @@ class ModuleTransform : Transform() {
         val isIncremental = transformInvocation?.isIncremental
 
         //OutputProvider管理输出路径，如果消费型输入为空，你会发现OutputProvider == null
-        var outputProvider = transformInvocation?.outputProvider
+        val outputProvider = transformInvocation?.outputProvider
 
         if (isIncremental == false) {
             //不需要增量编译，先清除全部
@@ -117,10 +123,53 @@ class ModuleTransform : Transform() {
     //真正执行jar修改的函数
     private fun transformJarInput(jarInput: JarInput, dest: File?) {
 
-//        println("JarInputName: ${jarInput.file.name}, ${jarInput.file.absolutePath};"
-//                + " dest: ${dest?.name}, ${dest?.absolutePath}")
+        println("JarInputName: ${jarInput.file.name}, ${jarInput.file.absolutePath};" + " dest: ${dest?.name}, ${dest?.absolutePath}")
 
-        FileUtils.copyFile(jarInput.file, dest)
+        if (jarInput.file.absolutePath.endsWith(".jar")) {
+            //重名名输出文件,因为可能同名,会覆盖
+            var jarName = jarInput.name
+            val md5Name = DigestUtils.md5Hex(jarInput.file.absolutePath)
+            if (jarName.endsWith(".jar")) {
+                jarName = jarName.substring(0, jarName.length - 4)
+            }
+
+            val jarFile = JarFile(jarInput.file)
+            val enumeration = jarFile.entries()
+            val tmpFile = File(jarInput.file.parent + File.separator + "classes_temp.jar")
+            if (tmpFile.exists()) {
+                tmpFile.delete()
+            }
+            //
+            val jarOutputStream = JarOutputStream(FileOutputStream(tmpFile))
+            while (enumeration.hasMoreElements()) {
+                val jarEntry = enumeration.nextElement()
+                val entryName = jarEntry.name
+                val zipEntry = ZipEntry(entryName)
+                val inputStream = jarFile.getInputStream(jarEntry)
+                //插桩class
+                if (checkClassFile(entryName)) {
+                    jarOutputStream.putNextEntry(zipEntry)
+                    val classReader = ClassReader(IOUtils.toByteArray(inputStream))
+                    val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
+                    val cv = ModuleVisitor(classWriter, mRunalone)
+                    classReader.accept(cv, ClassReader.EXPAND_FRAMES)
+                    val code = classWriter.toByteArray()
+                    jarOutputStream.write(code)
+                } else {
+                    jarOutputStream.putNextEntry(zipEntry)
+                    jarOutputStream.write(IOUtils.toByteArray(inputStream))
+                }
+
+                jarOutputStream.closeEntry()
+            }
+
+            //结束
+            jarOutputStream.close()
+            jarFile.close()
+            FileUtils.copyFile(tmpFile, dest)
+            tmpFile.delete()
+        }
+
     }
 
 
@@ -192,7 +241,7 @@ class ModuleTransform : Transform() {
             fileTreeWalk.forEach { file ->
                 val name = file.name
 
-//                println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
+                println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
 
                 //在这里进行代码处理
                 if (name.endsWith(".class") && !name.startsWith("R\$")
@@ -200,11 +249,8 @@ class ModuleTransform : Transform() {
 
                     val classReader = ClassReader(file.readBytes())
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    val className = name.split(".class")[0]
 
-//                    println("className: $className")
-
-                    val classVisitor = ModuleVisitor(className, classWriter, mRunalone)
+                    val classVisitor = ModuleVisitor(classWriter, mRunalone)
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
                     val code = classWriter.toByteArray()
                     val fos = FileOutputStream(file.parentFile.absoluteFile.toString() + File.separator + name)
@@ -220,6 +266,15 @@ class ModuleTransform : Transform() {
 
     private fun transformSingleFile(inputFile: File, destFile: File, srcDirPath: String) {
         FileUtils.copyFile(inputFile, destFile)
+    }
+
+    private fun checkClassFile(name: String): Boolean {
+        //只处理需要的class文件
+        return (name.endsWith(".class")
+                && !name.startsWith("R\$")
+                && "R.class" != name
+                && "BuildConfig.class" != name
+                && !name.startsWith("android/support"))
     }
 
 }

@@ -21,7 +21,7 @@ class ModulePlugin : Plugin<Project> {
 //    var isFirst: Boolean = true
 
     override fun apply(project: Project) {
-        val android = project.extensions.getByType(AppExtension::class.java)
+
 
         println("ModulePlugin#apply: " + project.name + ", " + project.displayName)
 
@@ -41,49 +41,6 @@ class ModulePlugin : Plugin<Project> {
 
 
         project.afterEvaluate {
-
-            // extension插件配置
-//            if (moduleExtension.modules.isNotEmpty() && assembleTask) {
-//                println("moduleExtensionAfterEvaluate: " + moduleExtension.modules)
-//
-//                val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
-//                for (dependency in runtimeOnlyConfiguration.dependencies) {
-//                    println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
-//                }
-//
-//                for (module in moduleExtension.modules) {
-//                    println("addImplementation: $module")
-//
-//                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
-//                }
-//            }
-
-
-            // 文件配置
-//            val moduleFile = File(project.projectDir, "module.properties")
-//            if (!moduleFile.exists()) {
-//                return@afterEvaluate
-//            }
-//
-//            val prop = Properties()
-//            prop.load(FileInputStream(moduleFile))
-//            val implementModule = prop.getProperty("implementModule")
-//            println("module.properties: $implementModule")
-//
-//            val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
-//            for (dependency in runtimeOnlyConfiguration.dependencies) {
-//                println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
-//            }
-//
-//
-//            implementModule.split(",").forEach {
-//                it.replace("'", "").let { module ->
-//                    println("addImplementation: $module")
-//                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module.trim())))
-//                }
-//            }
-
-            // json配置
 
             val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
             for (dependency in runtimeOnlyConfiguration.dependencies) {
@@ -113,6 +70,7 @@ class ModulePlugin : Plugin<Project> {
 
         }
 
+        val android = project.extensions.getByType(AppExtension::class.java)
         android.registerTransform(transfrom)
     }
 

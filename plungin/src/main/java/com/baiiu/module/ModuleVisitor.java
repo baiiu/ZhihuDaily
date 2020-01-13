@@ -1,8 +1,5 @@
 package com.baiiu.module;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -15,14 +12,12 @@ import org.objectweb.asm.commons.AdviceAdapter;
  */
 public class ModuleVisitor extends ClassVisitor {
 
-    private String className;
-    private RunAlone mRunAlone;
     private boolean isApplicationClass = false;
+    private boolean hasOncreateMethod = false;
 
-    private List<String> mApplicationAnnotation;
-    private List<String> mDependenciesAnnotation;
+    private RunAlone mRunAlone;
 
-    public ModuleVisitor(String className, ClassVisitor classVisitor, RunAlone runAlone) {
+    public ModuleVisitor(ClassVisitor classVisitor, RunAlone runAlone) {
         super(Opcodes.ASM6, classVisitor);
         this.mRunAlone = runAlone;
     }
@@ -34,25 +29,11 @@ public class ModuleVisitor extends ClassVisitor {
     public void visit(int version, int access, String name, String signature, String superName,
             String[] interfaces) {
         super.visit(version, access, name, signature, superName, interfaces);
-        this.className = name;
         isApplicationClass = superName.contains("Application");
+
         System.out.println(
-                "isApplicationClass: " + superName + ", " + className + ", " + isApplicationClass);
+                "isApplicationClass: " + superName + ", " + name + ", " + isApplicationClass);
     }
-
-
-    //@Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-    //    isApplicationClass = superName.contains("Application") &&
-    //            Type.getType(Module.class)
-    //                    .getDescriptor()
-    //                    .equals(descriptor);
-    //
-    //    if (isApplicationClass) {
-    //        return new ModuleAnnotationVisitor();
-    //    } else {
-    //        return super.visitAnnotation(descriptor, visible);
-    //    }
-    //}
 
     /**
      * ASM进入到类的方法时进行回调
@@ -66,59 +47,11 @@ public class ModuleVisitor extends ClassVisitor {
 
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
-        if (isApplicationClass) {
+        if (isApplicationClass && mRunAlone != null) {
             return new ModuleAdviceAdapter(Opcodes.ASM6, methodVisitor, access, name, desc);
         }
 
         return methodVisitor;
-    }
-
-    private class ModuleAnnotationVisitor extends AnnotationVisitor {
-
-        ModuleAnnotationVisitor() {
-            super(Opcodes.ASM6);
-        }
-
-        @Override public AnnotationVisitor visitArray(String name) {
-            AnnotationVisitor av = super.visitArray(name);
-            return new ArrayAnnotationVisitor(av, name);
-        }
-
-        class ArrayAnnotationVisitor extends AnnotationVisitor {
-
-            final String key;
-
-            private ArrayAnnotationVisitor(AnnotationVisitor av, String name) {
-                super(Opcodes.ASM5, av);
-                this.key = name;
-            }
-
-            @Override
-            public void visit(String name, Object value) {
-                super.visit(name, value);
-                //String propValue = String.valueOf(value);
-                //String className = propValue.substring(0, propValue.lastIndexOf("."));
-                //String methodName = propValue.substring(propValue.lastIndexOf(".") + 1, propValue.indexOf("("));
-                //String methodDesc = propValue.substring(propValue.indexOf("("), propValue.length());
-
-                if ("application".equals(key)) {
-                    if (mApplicationAnnotation == null) {
-                        mApplicationAnnotation = new ArrayList<>();
-                    }
-
-                    mApplicationAnnotation.add((String) value);
-                } else if ("dependencies".equals(key)) {
-                    if (mDependenciesAnnotation == null) {
-                        mDependenciesAnnotation = new ArrayList<>();
-                    }
-
-                    mDependenciesAnnotation.add((String) value);
-                }
-
-                System.out.println("ArrayAnnotationVisitor: " + key + ", " + value);
-            }
-        }
-
     }
 
     private class ModuleAdviceAdapter extends AdviceAdapter {
@@ -132,33 +65,27 @@ public class ModuleVisitor extends ClassVisitor {
 
 
         @Override protected void onMethodEnter() {
-            System.out.println("ModuleAdviceAdapter#onMethodEnter: " + methodName);
-
             if ("onCreate".equals(methodName)) {
+                hasOncreateMethod = true;
 
-                if (mApplicationAnnotation != null) {
-
-                    for (String s : mApplicationAnnotation) {
-
-                        mv.visitLdcInsn(s);
-                        mv.visitMethodInsn(INVOKESTATIC,
-                                           "com/baiiu/componentservice/Router",
-                                           "registerComponent", "(Ljava/lang/String;)V",
-                                           false);
-                    }
+                for (String s : mRunAlone.getApplication()) {
+                    mv.visitLdcInsn(s);
+                    mv.visitMethodInsn(INVOKESTATIC,
+                                       "com/baiiu/componentservice/Router",
+                                       "registerComponent", "(Ljava/lang/String;)V",
+                                       false);
                 }
 
-                if (mRunAlone != null) {
-                    for (String s : mRunAlone.getApplication()) {
-                        mv.visitLdcInsn(s);
-                        mv.visitMethodInsn(INVOKESTATIC,
-                                           "com/baiiu/componentservice/Router",
-                                           "registerComponent", "(Ljava/lang/String;)V",
-                                           false);
-                    }
-                }
-
+            } else {
+                hasOncreateMethod = false;
             }
+
+            System.out.println(
+                    "ModuleAdviceAdapter#onMethodEnter: "
+                            + methodName
+                            + ", "
+                            + "hasOncreateMethod:"
+                            + hasOncreateMethod);
         }
 
         @Override protected void onMethodExit(int opcode) {
