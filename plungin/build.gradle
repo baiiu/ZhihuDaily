@@ -12,7 +12,7 @@ dependencies {
     api 'org.ow2.asm:asm:7.1'
     //    implementation 'org.ow2.asm:asm-commons:5.0.3'
 
-    api 'com.baiiu.plugin:annotations:1.0-SNAPSHOT'
+    //    api 'com.baiiu.plugin:annotations:1.0-SNAPSHOT'
 }
 
 //设置maven deployer

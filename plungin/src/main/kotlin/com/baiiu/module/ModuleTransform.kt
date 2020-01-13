@@ -8,7 +8,6 @@ import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.File
 import java.io.FileOutputStream
-import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
@@ -151,7 +150,7 @@ class ModuleTransform : Transform() {
                     jarOutputStream.putNextEntry(zipEntry)
                     val classReader = ClassReader(IOUtils.toByteArray(inputStream))
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    val cv = ModuleVisitor(classWriter, mRunalone)
+                    val cv = ModuleVisitor(classWriter, mRunalone, false)
                     classReader.accept(cv, ClassReader.EXPAND_FRAMES)
                     val code = classWriter.toByteArray()
                     jarOutputStream.write(code)
@@ -250,7 +249,7 @@ class ModuleTransform : Transform() {
                     val classReader = ClassReader(file.readBytes())
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
 
-                    val classVisitor = ModuleVisitor(classWriter, mRunalone)
+                    val classVisitor = ModuleVisitor(classWriter, mRunalone, true)
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
                     val code = classWriter.toByteArray()
                     val fos = FileOutputStream(file.parentFile.absoluteFile.toString() + File.separator + name)

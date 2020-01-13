@@ -13,13 +13,14 @@ import org.objectweb.asm.commons.AdviceAdapter;
 public class ModuleVisitor extends ClassVisitor {
 
     private boolean isApplicationClass = false;
-    private boolean hasOncreateMethod = false;
-
+    private boolean hasOnCreateMethod = false;
+    private boolean isDirectory;
     private RunAlone mRunAlone;
 
-    public ModuleVisitor(ClassVisitor classVisitor, RunAlone runAlone) {
+    public ModuleVisitor(ClassVisitor classVisitor, RunAlone runAlone, boolean isDirectory) {
         super(Opcodes.ASM6, classVisitor);
         this.mRunAlone = runAlone;
+        this.isDirectory = isDirectory;
     }
 
     /**
@@ -29,10 +30,15 @@ public class ModuleVisitor extends ClassVisitor {
     public void visit(int version, int access, String name, String signature, String superName,
             String[] interfaces) {
         super.visit(version, access, name, signature, superName, interfaces);
-        isApplicationClass = superName.contains("Application");
+        isApplicationClass = superName.contains("Application") && isDirectory;
 
         System.out.println(
-                "isApplicationClass: " + superName + ", " + name + ", " + isApplicationClass);
+                "isApplicationClass: "
+                        + superName
+                        + ", "
+                        + name
+                        + ", isApplicationClass:"
+                        + isApplicationClass);
     }
 
     /**
@@ -42,8 +48,7 @@ public class ModuleVisitor extends ClassVisitor {
      */
     @Override
     public MethodVisitor visitMethod(final int access, final String name, final String desc,
-            final String signature,
-            String[] exceptions) {
+            final String signature, String[] exceptions) {
 
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
@@ -66,7 +71,7 @@ public class ModuleVisitor extends ClassVisitor {
 
         @Override protected void onMethodEnter() {
             if ("onCreate".equals(methodName)) {
-                hasOncreateMethod = true;
+                hasOnCreateMethod = true;
 
                 for (String s : mRunAlone.getApplication()) {
                     mv.visitLdcInsn(s);
@@ -77,7 +82,7 @@ public class ModuleVisitor extends ClassVisitor {
                 }
 
             } else {
-                hasOncreateMethod = false;
+                hasOnCreateMethod = false;
             }
 
             System.out.println(
@@ -85,11 +90,14 @@ public class ModuleVisitor extends ClassVisitor {
                             + methodName
                             + ", "
                             + "hasOncreateMethod:"
-                            + hasOncreateMethod);
+                            + hasOnCreateMethod);
         }
 
         @Override protected void onMethodExit(int opcode) {
         }
     }
 
+    public boolean hasOnCreateMethod() {
+        return hasOnCreateMethod;
+    }
 }
