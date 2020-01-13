@@ -4,6 +4,11 @@ import com.android.build.gradle.AppExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.reflect.TypeOf
+import org.gradle.internal.extensibility.ExtensionsStorage
+import java.io.File
+import java.io.FileInputStream
+import java.util.*
 
 
 /**
@@ -27,7 +32,6 @@ class ModulePlugin : Plugin<Project> {
             throw GradleException("ModulePlugin must be used in Android Application plugin")
         }
 
-
         val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
         println("moduleExtension: " + moduleExtension.modules)
 
@@ -36,20 +40,49 @@ class ModulePlugin : Plugin<Project> {
 
 
         project.afterEvaluate {
-            if (moduleExtension.modules.isNotEmpty() && assembleTask) {
-                println("moduleExtensionAfterEvaluate: " + moduleExtension.modules)
 
-                val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
-                for (dependency in runtimeOnlyConfiguration.dependencies) {
-                    println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
-                }
+            // extension插件配置
+//            if (moduleExtension.modules.isNotEmpty() && assembleTask) {
+//                println("moduleExtensionAfterEvaluate: " + moduleExtension.modules)
+//
+//                val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
+//                for (dependency in runtimeOnlyConfiguration.dependencies) {
+//                    println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
+//                }
+//
+//                for (module in moduleExtension.modules) {
+//                    println("addImplementation: $module")
+//
+//                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
+//                }
+//            }
 
-                for (module in moduleExtension.modules) {
+
+            // 文件配置
+            val moduleFile = File(project.projectDir, "module.properties")
+            if (!moduleFile.exists()) {
+                return@afterEvaluate
+            }
+
+            val prop = Properties()
+            prop.load(FileInputStream(moduleFile))
+            val implementModule = prop.getProperty("implementModule")
+            println("module.properties: $implementModule")
+
+            val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
+            for (dependency in runtimeOnlyConfiguration.dependencies) {
+                println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
+            }
+
+
+            implementModule.split(",").forEach {
+                it.replace("'", "").let { module ->
                     println("addImplementation: $module")
-
-                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
+                    runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(module.trim())))
                 }
             }
+
+
         }
 
         android.registerTransform(ModuleTransform(project))

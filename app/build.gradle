@@ -3,9 +3,6 @@ apply plugin: 'channel'
 apply from: '../buildSystem/tinker.gradle'
 
 apply plugin: 'com.baiiu.module'
-module {
-    implementModule(':component_daily', ':component_gank', ':component_setting')
-}
 
 def getTinkerIdValue() {
     return hasProperty("TINKER_ID") ? TINKER_ID : rootProject.ext.androidVersionConfig.versionCode
