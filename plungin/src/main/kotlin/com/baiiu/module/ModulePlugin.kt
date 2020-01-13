@@ -15,11 +15,10 @@ import org.gradle.api.Project
  */
 class ModulePlugin : Plugin<Project> {
 
-    var isFirst: Boolean = true
+//    var isFirst: Boolean = true
 
     override fun apply(project: Project) {
         val android = project.extensions.getByType(AppExtension::class.java)
-
 
         println("ModulePlugin#apply: " + project.name + ", " + project.displayName)
 
@@ -32,22 +31,13 @@ class ModulePlugin : Plugin<Project> {
         val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
         println("moduleExtension: " + moduleExtension.modules)
 
-        val assembleTask = getTaskInfo(project.gradle.startParameter.taskNames)
+        val assembleTask = isAssemble(project.gradle.startParameter.taskNames)
         println("taskNames: " + assembleTask + ", " + project.gradle.startParameter.taskNames)
 
 
-        project.configurations.all { configuration ->
-            val name = configuration.name
-
-            println("this configuration is $name")
-            println("dependencies is: " + configuration.dependencies)
-            println("allDependencies is: " + configuration.allDependencies)
-            println("==========================================================\n")
-
-            // assemble的时候添加runtime依赖
-            if (moduleExtension.modules.isNotEmpty() && isFirst && assembleTask) {
-                println("moduleExtension: " + moduleExtension.modules)
-                isFirst = false
+        project.afterEvaluate {
+            if (moduleExtension.modules.isNotEmpty() && assembleTask) {
+                println("moduleExtensionAfterEvaluate: " + moduleExtension.modules)
 
                 val runtimeOnlyConfiguration = project.configurations.getByName("runtimeOnly")
                 for (dependency in runtimeOnlyConfiguration.dependencies) {
@@ -66,7 +56,7 @@ class ModulePlugin : Plugin<Project> {
     }
 
 
-    private fun getTaskInfo(tasks: List<String>): Boolean {
+    private fun isAssemble(tasks: List<String>): Boolean {
 
         for (task in tasks) {
             if (

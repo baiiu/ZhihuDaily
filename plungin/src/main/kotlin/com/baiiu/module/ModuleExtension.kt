@@ -11,11 +11,7 @@ open class ModuleExtension {
 
 
     open fun implementModule(vararg string: String) {
-        println("implementModule --> $string")
-
         modules.addAll(string)
-
-        println("implementModule --> $modules")
     }
 
 }

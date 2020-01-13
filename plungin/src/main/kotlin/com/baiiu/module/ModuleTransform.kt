@@ -42,30 +42,6 @@ class ModuleTransform(project: Project) : Transform() {
         super.transform(transformInvocation)
 
         println("==============================TracePlugin visit start========================================")
-        val moduleExtension: ModuleExtension = project.extensions.getByType(ModuleExtension::class.java)
-        println("moduleExtension: " + moduleExtension.modules)
-
-        val implementationConfiguration = project.configurations.getByName("implementation")
-        for (dependency in implementationConfiguration.dependencies) {
-            println("implementationConfiguration: " + implementationConfiguration.dependencies + ", " + dependency)
-        }
-//        for (module in moduleExtension.modules) {
-//            println("addImplementation: $module")
-//
-//            implementationConfiguration.dependencies.add(project.dependencies.create(project.project(module)))
-//        }
-
-//        val apiConfiguration = project.configurations.getByName("api")
-//        for (dependency in implementationConfiguration.dependencies) {
-//            println("apiConfiguration: " + apiConfiguration.dependencies + ", " + dependency)
-//        }
-//
-//        val testImplementation = project.configurations.getByName("testImplementation")
-//        for (dependency in implementationConfiguration.dependencies) {
-//            println("testImplementation: " + testImplementation.dependencies + ", " + dependency)
-//        }
-
-
         val isIncremental = transformInvocation?.isIncremental
 
         //OutputProvider管理输出路径，如果消费型输入为空，你会发现OutputProvider == null
@@ -217,7 +193,7 @@ class ModuleTransform(project: Project) : Transform() {
             fileTreeWalk.forEach { file ->
                 val name = file.name
 
-                println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
+//                println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
 
                 //在这里进行代码处理
                 if (name.endsWith(".class") && !name.startsWith("R\$")
@@ -227,7 +203,7 @@ class ModuleTransform(project: Project) : Transform() {
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
                     val className = name.split(".class")[0]
 
-                    println("className: $className")
+//                    println("className: $className")
 
                     val classVisitor = ModuleVisitor(className, classWriter)
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
