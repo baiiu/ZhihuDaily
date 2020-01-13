@@ -1,6 +1,5 @@
 package com.baiiu.settiing.app;
 
-import com.baiiu.componentservice.Router;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
@@ -18,9 +17,5 @@ public class SettingApplication extends TinkerApplication {
 
     @Override public void onCreate() {
         super.onCreate();
-
-        Router.registerComponent("com.baiiu.daily.DailyApplicationDelegate");
-        Router.registerComponent("com.baiiu.gank.GankApplicationDelegate");
     }
-
 }

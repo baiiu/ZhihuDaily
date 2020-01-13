@@ -1,4 +1,4 @@
-include ':dao-generator', ':annotations'
+include ':dao-generator'
 
 // 组件
 include(
@@ -24,6 +24,7 @@ include(
 // 中间件
 include ':module_service'
 include ':plungin'
+//include ':annotations'
 
 //通用库
 include(

@@ -1,6 +1,5 @@
 package com.baiiu.zhihudaily;
 
-import com.baiiu.annotations.Module;
 import com.baiiu.library.LogUtil;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
@@ -10,14 +9,6 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
  * date: on 16/4/5 11:14
  * description:
  */
-@Module(
-
-        application = {
-                "com.baiiu.daily.DailyApplicationDelegate",
-                "com.baiiu.gank.GankApplicationDelegate",
-                "com.baiiu.setting.SettingApplicationDelegate"
-        }
-)
 public class MainApplication extends TinkerApplication {
 
     public MainApplication() {

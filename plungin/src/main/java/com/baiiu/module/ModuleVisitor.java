@@ -1,14 +1,11 @@
 package com.baiiu.module;
 
-import com.baiiu.annotations.Module;
 import java.util.ArrayList;
 import java.util.List;
-import org.checkerframework.checker.regex.RegexUtil;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
@@ -19,14 +16,15 @@ import org.objectweb.asm.commons.AdviceAdapter;
 public class ModuleVisitor extends ClassVisitor {
 
     private String className;
-    private String superName;
+    private RunAlone mRunAlone;
     private boolean isApplicationClass = false;
 
     private List<String> mApplicationAnnotation;
     private List<String> mDependenciesAnnotation;
 
-    public ModuleVisitor(String className, ClassVisitor classVisitor) {
+    public ModuleVisitor(String className, ClassVisitor classVisitor, RunAlone runAlone) {
         super(Opcodes.ASM6, classVisitor);
+        this.mRunAlone = runAlone;
     }
 
     /**
@@ -37,23 +35,24 @@ public class ModuleVisitor extends ClassVisitor {
             String[] interfaces) {
         super.visit(version, access, name, signature, superName, interfaces);
         this.className = name;
-        this.superName = superName;
+        isApplicationClass = superName.contains("Application");
+        System.out.println(
+                "isApplicationClass: " + superName + ", " + className + ", " + isApplicationClass);
     }
 
 
-    @Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
-        isApplicationClass = superName.contains("Application") &&
-                Type.getType(Module.class)
-                        .getDescriptor()
-                        .equals(descriptor);
-
-        if (isApplicationClass) {
-            return new ModuleAnnotationVisitor();
-        } else {
-            return super.visitAnnotation(descriptor, visible);
-        }
-
-    }
+    //@Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+    //    isApplicationClass = superName.contains("Application") &&
+    //            Type.getType(Module.class)
+    //                    .getDescriptor()
+    //                    .equals(descriptor);
+    //
+    //    if (isApplicationClass) {
+    //        return new ModuleAnnotationVisitor();
+    //    } else {
+    //        return super.visitAnnotation(descriptor, visible);
+    //    }
+    //}
 
     /**
      * ASM进入到类的方法时进行回调
@@ -133,16 +132,32 @@ public class ModuleVisitor extends ClassVisitor {
 
 
         @Override protected void onMethodEnter() {
-            if ("onCreate".equals(methodName) && mApplicationAnnotation != null) {
+            System.out.println("ModuleAdviceAdapter#onMethodEnter: " + methodName);
 
-                for (String s : mApplicationAnnotation) {
+            if ("onCreate".equals(methodName)) {
 
-                    mv.visitLdcInsn(s);
-                    mv.visitMethodInsn(INVOKESTATIC,
-                                       "com/baiiu/componentservice/Router",
-                                       "registerComponent", "(Ljava/lang/String;)V",
-                                       false);
+                if (mApplicationAnnotation != null) {
+
+                    for (String s : mApplicationAnnotation) {
+
+                        mv.visitLdcInsn(s);
+                        mv.visitMethodInsn(INVOKESTATIC,
+                                           "com/baiiu/componentservice/Router",
+                                           "registerComponent", "(Ljava/lang/String;)V",
+                                           false);
+                    }
                 }
+
+                if (mRunAlone != null) {
+                    for (String s : mRunAlone.getApplication()) {
+                        mv.visitLdcInsn(s);
+                        mv.visitMethodInsn(INVOKESTATIC,
+                                           "com/baiiu/componentservice/Router",
+                                           "registerComponent", "(Ljava/lang/String;)V",
+                                           false);
+                    }
+                }
+
             }
         }
 

@@ -2,7 +2,6 @@ package com.baiiu.module
 
 import com.android.build.api.transform.*
 import org.apache.commons.io.FileUtils
-import org.gradle.api.Project
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.File
@@ -13,8 +12,8 @@ import java.io.FileOutputStream
  * time: 2020-01-09
  * description:
  */
-class ModuleTransform(project: Project) : Transform() {
-    val project = project
+class ModuleTransform : Transform() {
+    var mRunalone: RunAlone? = null
 
 
     override fun getName(): String {
@@ -205,7 +204,7 @@ class ModuleTransform(project: Project) : Transform() {
 
 //                    println("className: $className")
 
-                    val classVisitor = ModuleVisitor(className, classWriter)
+                    val classVisitor = ModuleVisitor(className, classWriter, mRunalone)
                     classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
                     val code = classWriter.toByteArray()
                     val fos = FileOutputStream(file.parentFile.absoluteFile.toString() + File.separator + name)

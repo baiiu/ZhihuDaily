@@ -5,4 +5,4 @@ package com.baiiu.module
  * time: 2020-01-13
  * description:
  */
-data class RunAlone(var module: String, var implement: Set<String>)
+data class RunAlone(var module: String, var implement: Set<String>, var application: Set<String>)

@@ -37,6 +37,9 @@ class ModulePlugin : Plugin<Project> {
         println("taskNames: " + assembleTask + ", " + project.gradle.startParameter.taskNames)
 
 
+        val transfrom = ModuleTransform()
+
+
         project.afterEvaluate {
 
             // extension插件配置
@@ -99,6 +102,8 @@ class ModulePlugin : Plugin<Project> {
 
             list.forEach { item ->
                 if (project.name.contains(item.module, true)) {
+                    transfrom.mRunalone = item
+
                     item.implement.forEach {
                         println("addImplementation: $it")
                         runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(it)))
@@ -108,7 +113,7 @@ class ModulePlugin : Plugin<Project> {
 
         }
 
-        android.registerTransform(ModuleTransform(project))
+        android.registerTransform(transfrom)
     }
 
 
