@@ -6,6 +6,8 @@ import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.Label
+import org.objectweb.asm.Opcodes
 import java.io.File
 import java.io.FileOutputStream
 import java.util.jar.JarFile
@@ -150,8 +152,11 @@ class ModuleTransform : Transform() {
                     jarOutputStream.putNextEntry(zipEntry)
                     val classReader = ClassReader(IOUtils.toByteArray(inputStream))
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    val cv = ModuleVisitor(classWriter, mRunalone, false)
-                    classReader.accept(cv, ClassReader.EXPAND_FRAMES)
+                    val moduleVisitor = ModuleVisitor(classWriter, mRunalone, false)
+                    classReader.accept(moduleVisitor, ClassReader.EXPAND_FRAMES)
+
+                    addRouterMethod(moduleVisitor, classWriter)
+
                     val code = classWriter.toByteArray()
                     jarOutputStream.write(code)
                 } else {
@@ -243,14 +248,15 @@ class ModuleTransform : Transform() {
                 println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
 
                 //在这里进行代码处理
-                if (name.endsWith(".class") && !name.startsWith("R\$")
-                        && "R.class" != name && "BuildConfig.class" != name) {
-
+                if (name.endsWith(".class") && !name.startsWith("R\$") && "R.class" != name && "BuildConfig.class" != name) {
                     val classReader = ClassReader(file.readBytes())
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
 
-                    val classVisitor = ModuleVisitor(classWriter, mRunalone, true)
-                    classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES)
+                    val moduleVisitor = ModuleVisitor(classWriter, mRunalone, true)
+                    classReader.accept(moduleVisitor, ClassReader.EXPAND_FRAMES)
+
+                    addRouterMethod(moduleVisitor, classWriter)
+
                     val code = classWriter.toByteArray()
                     val fos = FileOutputStream(file.parentFile.absoluteFile.toString() + File.separator + name)
                     fos.write(code)
@@ -263,10 +269,6 @@ class ModuleTransform : Transform() {
         FileUtils.copyDirectory(directoryInput.file, dest)
     }
 
-    private fun transformSingleFile(inputFile: File, destFile: File, srcDirPath: String) {
-        FileUtils.copyFile(inputFile, destFile)
-    }
-
     private fun checkClassFile(name: String): Boolean {
         //只处理需要的class文件
         return (name.endsWith(".class")
@@ -276,4 +278,32 @@ class ModuleTransform : Transform() {
                 && !name.startsWith("android/support"))
     }
 
+    private fun addRouterMethod(moduleVisitor: ModuleVisitor, classWriter: ClassWriter) {
+        if (moduleVisitor.isAddRouter) {
+            val mv = classWriter.visitMethod(Opcodes.ACC_PUBLIC, "onCreate", "()V", null, null)
+            mv.visitCode()
+            val l0 = Label()
+            mv.visitLabel(l0)
+            mv.visitVarInsn(Opcodes.ALOAD, 0)
+            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "android/app/Application", "onCreate", "()V", false)
+
+
+            mRunalone?.application?.forEach {
+                mv.visitLdcInsn(it)
+                mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+                        "com/baiiu/componentservice/Router",
+                        "registerComponent", "(Ljava/lang/String;)V",
+                        false)
+            }
+
+            val l1 = Label()
+            mv.visitLabel(l1)
+            mv.visitInsn(Opcodes.RETURN)
+            val l2 = Label()
+            mv.visitLabel(l2)
+            mv.visitLocalVariable("this", "Lcom/baiiu/myapplication/MyApplication;", null, l0, l2, 0)
+            mv.visitMaxs(1, 1)
+            mv.visitEnd()
+        }
+    }
 }

@@ -70,6 +70,9 @@ public class ModuleVisitor extends ClassVisitor {
 
 
         @Override protected void onMethodEnter() {
+        }
+
+        @Override protected void onMethodExit(int opcode) {
             if ("onCreate".equals(methodName)) {
                 hasOnCreateMethod = true;
 
@@ -92,12 +95,9 @@ public class ModuleVisitor extends ClassVisitor {
                             + "hasOncreateMethod:"
                             + hasOnCreateMethod);
         }
-
-        @Override protected void onMethodExit(int opcode) {
-        }
     }
 
-    public boolean hasOnCreateMethod() {
-        return hasOnCreateMethod;
+    public boolean isAddRouter() {
+        return isApplicationClass && !hasOnCreateMethod;
     }
 }

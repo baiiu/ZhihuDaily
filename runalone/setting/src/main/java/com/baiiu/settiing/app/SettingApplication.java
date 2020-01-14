@@ -15,7 +15,4 @@ public class SettingApplication extends TinkerApplication {
               "com.tencent.tinker.loader.TinkerLoader", false);
     }
 
-    @Override public void onCreate() {
-        super.onCreate();
-    }
 }
