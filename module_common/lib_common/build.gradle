@@ -27,7 +27,6 @@ android {
         //            minifyEnabled false
         //        }
     }
-
 }
 
 dependencies {
@@ -42,7 +41,7 @@ dependencies {
     def rx = rootProject.ext.rx;
     api rx.rxJava as String
     api rx.rxAndroid as String
-//    api rx.rxLifecycle as String
+    //    api rx.rxLifecycle as String
     api rx.rxLlifecycleComponents as String
     api rx.rxBinding as String
 
@@ -58,11 +57,12 @@ dependencies {
     //    annotationProcessor majorFrame.aptButterKnifeCompiler as String
 
     def assistance = rootProject.ext.assistance;
-    api assistance.leakCanaryDebug as String
-//    releaseApi assistance.leakCanaryRelease as String
-//    testImplementation assistance.leakCanaryTest as String
-    debugApi assistance.stetho as String
-    debugApi assistance.stethoOkHttp as String
+    debugApi assistance.leakCanaryDebug as String
+    releaseApi assistance.leakCanaryRelease as String
+    //    releaseApi assistance.leakCanaryRelease as String
+    //    testImplementation assistance.leakCanaryTest as String
+    //    debugApi assistance.stetho as String
+    //    debugApi assistance.stethoOkHttp as String
 
     // 基础module引用基础库
     debugApi project(':module_common:lib_component:LogUtil')

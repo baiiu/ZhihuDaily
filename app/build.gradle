@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'channel'
 apply from: '../buildSystem/tinker.gradle'
 
 apply plugin: 'com.baiiu.module'
@@ -66,13 +65,11 @@ android {
             java.srcDirs = ['src/main/java']
         }
     }
-
-    channel {
-        channelFile = file("../channelDaily.txt")
-    }
-
-    rebuildChannel {
-        channelFile = file("../channelRebuild.txt")
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 

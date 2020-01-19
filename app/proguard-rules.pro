@@ -83,15 +83,26 @@
 -dontwarn com.darylteo.rx.**
 
 # RxJava 0.21
--keep class rx.schedulers.Schedulers {
-    public static <methods>;
+-keep class rx.** { *; }
+-dontwarn rx.**
+
+# keep
+-keep @android.support.annotation.Keep class *
+-keepclassmembers class * {
+    @android.support.annotation.Keep *;
 }
--keep class rx.schedulers.ImmediateScheduler {
-    public <methods>;
+
+# greendao
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
 }
--keep class rx.schedulers.TestScheduler {
-    public <methods>;
-}
--keep class rx.schedulers.Schedulers {
-    public static ** test();
-}
+-keep class **$Properties {*;}
+-dontwarn net.sqlcipher.database.**
+
+# tinker
+-keep class com.tencent.tinker.** { *; }
+
+# self
+-keep public class * implements com.baiiu.componentservice.ApplicationDelegate
+-keep class baiiu.greendao.gen.** { *; }
+-keep class com.baiiu.daily.data.bean.** { *; }

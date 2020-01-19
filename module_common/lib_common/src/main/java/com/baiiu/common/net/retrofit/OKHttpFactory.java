@@ -1,7 +1,7 @@
 package com.baiiu.common.net.retrofit;
 
+import com.baiiu.common.BaseApplication;
 import com.baiiu.common.net.retrofit.interceptor.UserAgentInterceptor;
-import com.baiiu.lib_common.BuildConfig;
 import com.baiiu.library.okHttpLog.HttpLoggingInterceptorM;
 import com.baiiu.library.okHttpLog.LogInterceptor;
 import java.util.concurrent.TimeUnit;
@@ -46,10 +46,9 @@ enum OKHttpFactory {
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
                 .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS);
 
-        if (BuildConfig.DEBUG) {
-            //builder.addNetworkInterceptor(new StethoInterceptor())
-            //        .addInterceptor(new HttpLoggingInterceptorM(LogInterceptor.INSTANCE).setLevel(
-            //                HttpLoggingInterceptorM.Level.BODY));
+        if (BaseApplication.isDebug) {
+            builder.addInterceptor(new HttpLoggingInterceptorM(LogInterceptor.INSTANCE).setLevel(
+                    HttpLoggingInterceptorM.Level.BODY));
         }
 
         okHttpClient = builder.build();

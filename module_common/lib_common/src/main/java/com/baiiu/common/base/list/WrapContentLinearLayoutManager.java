@@ -2,18 +2,14 @@ package com.baiiu.common.base.list;
 
 import android.content.Context;
 import android.graphics.PointF;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-
-import com.baiiu.library.BuildConfig;
+import com.baiiu.common.BaseApplication;
 import com.baiiu.library.LogUtil;
 
-/**
- * Created by shaozi on 16/3/15.
- */
 public class WrapContentLinearLayoutManager extends LinearLayoutManager {
     public WrapContentLinearLayoutManager(Context context) {
         super(context);
@@ -23,12 +19,14 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
         super(context, orientation, reverseLayout);
     }
 
-    public WrapContentLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public WrapContentLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
+            int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-        if (BuildConfig.DEBUG) {
+    @Override
+    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+        if (BaseApplication.isDebug) {
             super.onLayoutChildren(recycler, state);
             return;
         }
@@ -41,20 +39,24 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
     }
 
     @Override
-    public void smoothScrollToPosition(final RecyclerView recyclerView, RecyclerView.State state, int position) {
-        LinearSmoothScroller linearSmoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
-            @Override public PointF computeScrollVectorForPosition(int targetPosition) {
-                return WrapContentLinearLayoutManager.this.computeScrollVectorForPosition(targetPosition);
-            }
+    public void smoothScrollToPosition(final RecyclerView recyclerView, RecyclerView.State state,
+            int position) {
+        LinearSmoothScroller linearSmoothScroller =
+                new LinearSmoothScroller(recyclerView.getContext()) {
+                    @Override public PointF computeScrollVectorForPosition(int targetPosition) {
+                        return WrapContentLinearLayoutManager.this.computeScrollVectorForPosition(
+                                targetPosition);
+                    }
 
-            @Override protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                return super.calculateSpeedPerPixel(displayMetrics);
-            }
+                    @Override
+                    protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                        return super.calculateSpeedPerPixel(displayMetrics);
+                    }
 
-            @Override protected int calculateTimeForScrolling(int dx) {
-                return super.calculateTimeForScrolling(dx);
-            }
-        };
+                    @Override protected int calculateTimeForScrolling(int dx) {
+                        return super.calculateTimeForScrolling(dx);
+                    }
+                };
 
         linearSmoothScroller.setTargetPosition(position);
         startSmoothScroll(linearSmoothScroller);

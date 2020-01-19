@@ -112,10 +112,6 @@ ext {
             leakCanaryRelease: "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryVersion}",
             leakCanaryTest   : "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryVersion}",
 
-            //stetho
-            stetho           : "com.facebook.stetho:stetho:${stethoVersion}",
-            stethoOkHttp     : "com.facebook.stetho:stetho-okhttp3:${stethoVersion}",
-
             //bugly
             bugly            : "com.tencent.bugly:crashreport:latest.release",
             buglyNative      : "com.tencent.bugly:nativecrashreport:latest.release",

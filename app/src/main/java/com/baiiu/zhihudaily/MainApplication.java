@@ -1,5 +1,6 @@
 package com.baiiu.zhihudaily;
 
+import com.baiiu.common.BaseApplication;
 import com.baiiu.library.LogUtil;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
@@ -12,13 +13,14 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
 public class MainApplication extends TinkerApplication {
 
     public MainApplication() {
-        super(ShareConstants.TINKER_ENABLE_ALL, "com.baiiu.common.BaseApplication",
-              "com.tencent.tinker.loader.TinkerLoader", false);
+        super(ShareConstants.TINKER_ENABLE_ALL, "com.baiiu.common.BaseApplication");
     }
 
     @Override public void onCreate() {
         super.onCreate();
-        LogUtil.init(BuildConfig.DEBUG);
+        BaseApplication.isDebug = BuildConfig.DEBUG;
+
+        LogUtil.init(BaseApplication.isDebug);
     }
 
 }
