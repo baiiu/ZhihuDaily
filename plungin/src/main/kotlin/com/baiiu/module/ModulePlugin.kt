@@ -37,7 +37,7 @@ class ModulePlugin : Plugin<Project> {
             println("implementationConfiguration: " + runtimeOnlyConfiguration.dependencies + ", " + dependency)
         }
 
-        val jsonFile = File(project.rootDir, "runalone.json")
+        val jsonFile = File(project.rootDir, "/runalone/runalone.json")
         if (!jsonFile.exists()) {
             return
         }
