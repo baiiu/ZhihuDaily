@@ -44,7 +44,7 @@ As well, the project is continue refactoring.
 
   make the componentization more beautiful to run. every component can run alone, and can be run
   with other components, also each components is separate from each other.
-  完善组件化。各个组件能单独运行；各个组件能选取依赖项；各个组件互相隔离；
+  完善组件化。通过配置runalone.json使各个组件能单独运行；各个组件能选取依赖项；各个组件互相隔离；
 
 
 ## Branches

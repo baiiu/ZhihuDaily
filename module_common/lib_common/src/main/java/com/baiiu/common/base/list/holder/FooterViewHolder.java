@@ -30,7 +30,7 @@ public class FooterViewHolder extends BaseViewHolder<Integer> {
         super(UIUtil.inflate(context, R.layout.holder_footer));
         loadingView = itemView.findViewById(R.id.loading);
         errorView = itemView.findViewById(R.id.error);
-        errorView = itemView.findViewById(R.id.nomore);
+        noMoreView = itemView.findViewById(R.id.nomore);
         mRootView = itemView.findViewById(R.id.container);
     }
 
