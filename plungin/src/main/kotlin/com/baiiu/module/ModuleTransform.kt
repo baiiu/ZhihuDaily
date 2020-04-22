@@ -248,7 +248,7 @@ class ModuleTransform : Transform() {
                 println("DirectoryInputName: ${file.name}, file is: ${file.absolutePath}")
 
                 //在这里进行代码处理
-                if (name.endsWith(".class") && !name.startsWith("R\$") && "R.class" != name && "BuildConfig.class" != name) {
+                if (checkClassFile(name)) {
                     val classReader = ClassReader(file.readBytes())
                     val classWriter = ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
 
@@ -288,13 +288,13 @@ class ModuleTransform : Transform() {
             mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "android/app/Application", "onCreate", "()V", false)
 
 
-            mRunalone?.application?.forEach {
-                mv.visitLdcInsn(it)
-                mv.visitMethodInsn(Opcodes.INVOKESTATIC,
-                        "com/baiiu/componentservice/Router",
-                        "registerComponent", "(Ljava/lang/String;)V",
-                        false)
-            }
+//            mRunalone?.application?.forEach {
+//                mv.visitLdcInsn(it)
+//                mv.visitMethodInsn(Opcodes.INVOKESTATIC,
+//                        "com/baiiu/componentservice/Router",
+//                        "registerComponent", "(Ljava/lang/String;)V",
+//                        false)
+//            }
 
             val l1 = Label()
             mv.visitLabel(l1)

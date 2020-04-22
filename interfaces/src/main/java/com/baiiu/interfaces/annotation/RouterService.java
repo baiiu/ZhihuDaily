@@ -1,4 +1,4 @@
-package com.baiiu.annotations;
+package com.baiiu.interfaces.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,13 +7,14 @@ import java.lang.annotation.Target;
 
 /**
  * author: zhuzhe
- * time: 2020-01-09
- * description:
+ * time: 2020-04-21
+ * description: 模仿AutoService & WMRouter
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Module {
+@Retention(RetentionPolicy.CLASS)
+public @interface RouterService {
 
-    String[] application() default {};
+
+    Class<?>[] value();
 
 }

@@ -11,7 +11,7 @@ buildscript {
             url file(rootDir.absolutePath + '/repo/module')
         }
         maven {
-            url file(rootDir.absolutePath + '/repo/annotation')
+            url file(rootDir.absolutePath + '/repo/interfaces')
         }
     }
 
@@ -34,7 +34,7 @@ allprojects {
             url file(rootDir.absolutePath + '/repo/module')
         }
         maven {
-            url file(rootDir.absolutePath + '/repo/annotation')
+            url file(rootDir.absolutePath + '/repo/interfaces')
         }
     }
 }

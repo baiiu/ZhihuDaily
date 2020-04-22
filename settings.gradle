@@ -1,4 +1,4 @@
-include ':dao-generator'
+include ':dao-generator', ':interfaces'
 
 // 组件
 include(
@@ -14,9 +14,9 @@ include(
 // runalone
 include(
 
-        ':runalone:gank',
-        ':runalone:daily',
-        ':runalone:setting'
+//        ':runalone:gank',
+//        ':runalone:daily',
+//        ':runalone:setting'
 
 )
 

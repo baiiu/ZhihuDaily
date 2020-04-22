@@ -1,8 +1,11 @@
 package com.baiiu.module;
 
+import com.baiiu.interfaces.annotation.RouterService;
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
@@ -16,6 +19,7 @@ public class ModuleVisitor extends ClassVisitor {
     private boolean hasOnCreateMethod = false;
     private boolean isDirectory;
     private RunAlone mRunAlone;
+
 
     public ModuleVisitor(ClassVisitor classVisitor, RunAlone runAlone, boolean isDirectory) {
         super(Opcodes.ASM6, classVisitor);
@@ -33,12 +37,56 @@ public class ModuleVisitor extends ClassVisitor {
         isApplicationClass = superName.contains("Application") && isDirectory;
 
         System.out.println(
-                "isApplicationClass: "
-                        + superName
-                        + ", "
-                        + name
-                        + ", isApplicationClass:"
-                        + isApplicationClass);
+                "name: " + name
+                + ", superName: " + superName + ", "
+                + ", isDirectory: " + isDirectory
+                + ", isApplicationClass: " + isApplicationClass);
+    }
+
+    @Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+        System.out.println("visitAnnotation: " + descriptor + ", " + visible);
+
+        if (Type.getType(RouterService.class)
+                .getDescriptor()
+                .equals(descriptor)) {
+
+            return new ModuleAnnotationVisitor();
+        }
+
+        return super.visitAnnotation(descriptor, visible);
+    }
+
+    private class ModuleAnnotationVisitor extends AnnotationVisitor {
+
+        ModuleAnnotationVisitor() {
+            super(Opcodes.ASM6);
+        }
+
+        @Override public AnnotationVisitor visitArray(String name) {
+            System.out.println("ModuleAnnotationVisitor#visitArray" + name);
+            AnnotationVisitor av = super.visitArray(name);
+            return new ArrayAnnotationVisitor(av, name);
+        }
+
+        @Override public void visit(String name, Object value) {
+            System.out.println("ModuleAnnotationVisitor#visit: " + name + "," + value);
+            super.visit(name, value);
+        }
+    }
+
+    class ArrayAnnotationVisitor extends AnnotationVisitor {
+        final String name;
+
+        private ArrayAnnotationVisitor(AnnotationVisitor av, String name) {
+            super(Opcodes.ASM6, av);
+            this.name = name;
+        }
+
+        @Override public void visit(String name, Object value) {
+            super.visit(name, value);
+            System.out.println("ArrayAnnotationVisitor#visit: " + name + "," + value);
+        }
+
     }
 
     /**
@@ -53,7 +101,7 @@ public class ModuleVisitor extends ClassVisitor {
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
         if (isApplicationClass && mRunAlone != null) {
-            return new ModuleAdviceAdapter(Opcodes.ASM6, methodVisitor, access, name, desc);
+            return new ModuleAdviceAdapter(methodVisitor, access, name, desc);
         }
 
         return methodVisitor;
@@ -63,8 +111,8 @@ public class ModuleVisitor extends ClassVisitor {
         private String methodName;
 
 
-        ModuleAdviceAdapter(int api, MethodVisitor mv, int access, String name, String desc) {
-            super(api, mv, access, name, desc);
+        ModuleAdviceAdapter(MethodVisitor mv, int access, String name, String desc) {
+            super(Opcodes.ASM6, mv, access, name, desc);
             this.methodName = name;
         }
 
@@ -76,13 +124,13 @@ public class ModuleVisitor extends ClassVisitor {
             if ("onCreate".equals(methodName)) {
                 hasOnCreateMethod = true;
 
-                for (String s : mRunAlone.getApplication()) {
-                    mv.visitLdcInsn(s);
-                    mv.visitMethodInsn(INVOKESTATIC,
-                                       "com/baiiu/componentservice/Router",
-                                       "registerComponent", "(Ljava/lang/String;)V",
-                                       false);
-                }
+                //for (String s : mRunAlone.getApplication()) {
+                //    mv.visitLdcInsn(s);
+                //    mv.visitMethodInsn(INVOKESTATIC,
+                //                       "com/baiiu/componentservice/Router",
+                //                       "registerComponent", "(Ljava/lang/String;)V",
+                //                       false);
+                //}
 
             } else {
                 hasOnCreateMethod = false;
@@ -90,10 +138,10 @@ public class ModuleVisitor extends ClassVisitor {
 
             System.out.println(
                     "ModuleAdviceAdapter#onMethodEnter: "
-                            + methodName
-                            + ", "
-                            + "hasOncreateMethod:"
-                            + hasOnCreateMethod);
+                    + methodName
+                    + ", "
+                    + "hasOncreateMethod:"
+                    + hasOnCreateMethod);
         }
     }
 

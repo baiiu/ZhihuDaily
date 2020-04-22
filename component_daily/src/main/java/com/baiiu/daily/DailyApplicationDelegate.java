@@ -5,12 +5,14 @@ import com.baiiu.componentservice.ApplicationDelegate;
 import com.baiiu.componentservice.Router;
 import com.baiiu.componentservice.service.DailyService;
 import com.baiiu.daily.serviceImpl.DailyServiceImpl;
+import com.baiiu.interfaces.annotation.RouterService;
 
 /**
  * auther: baiiu
  * time: 17/10/30 30 22:55
  * description:
  */
+@RouterService(ApplicationDelegate.class)
 public class DailyApplicationDelegate implements ApplicationDelegate {
 
     @Override public void onCreate() {

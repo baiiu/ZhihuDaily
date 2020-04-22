@@ -4,15 +4,24 @@ apply plugin: 'maven'
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api gradleApi()
-    api localGroovy()
 
     //    implementation 'com.android.tools.build:gradle-api:3.5.3'
     api 'com.android.tools.build:gradle:3.5.3'
     api 'org.ow2.asm:asm:7.1'
+
+    //    api project(":interfaces")
+    api "com.baiiu.plugin:interfaces:1.0-SNAPSHOT"
+
     //    implementation 'org.ow2.asm:asm-commons:5.0.3'
 
     //    api 'com.baiiu.plugin:annotations:1.0-SNAPSHOT'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url uri('../repo/interfaces') }
 }
 
 //设置maven deployer
