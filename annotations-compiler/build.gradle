@@ -1,0 +1,15 @@
+import org.gradle.internal.jvm.Jvm
+
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api 'com.google.auto.service:auto-service:1.0-rc6'
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
+
+    api 'com.squareup:javapoet:1.11.1'
+    api files(Jvm.current().getToolsJar())
+
+    api project(":annotations")
+}

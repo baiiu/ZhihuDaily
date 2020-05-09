@@ -43,5 +43,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
 
-    annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
+    annotationProcessor project(":annotations-compiler")
 }

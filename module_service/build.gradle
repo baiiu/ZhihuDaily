@@ -22,10 +22,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    //    api project(":annotations")
-    //    implementation project(':module_common:lib_component:LogUtil')
+    implementation rootProject.ext.support.appcompat
 
-    api "com.google.auto.service:auto-service-annotations:1.0-rc6"
-    annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
+//    api "com.google.auto.service:auto-service-annotations:1.0-rc6"
+//    annotationProcessor "com.google.auto.service:auto-service:1.0-rc6"
+
+    api project(":annotations")
+
 }

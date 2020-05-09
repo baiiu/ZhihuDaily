@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Module {
+public @interface RouterService {
 
-    String[] application() default {};
+    Class<?>[] value();
 
 }

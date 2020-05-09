@@ -24,7 +24,8 @@ include(
 // 中间件
 include ':module_service'
 include ':plungin'
-//include ':annotations'
+include ':annotations'
+include ':annotations-compiler'
 
 //通用库
 include(
