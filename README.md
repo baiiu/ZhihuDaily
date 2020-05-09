@@ -9,28 +9,13 @@ As well, the project is continue refactoring.
 
 
 ## Version
-- v1.0
 
-    version 1.0,all codes are in the Activity and with no fragments, the basic code for all variants.
-    全部代码在Activity中,作为重构的基础
+- v1.5
 
-- v1.1
+  make the componentization more beautiful to run. every component can run alone, and can be run
+  with other components, also each components is separate from each other.
+  完善组件化。通过配置runalone.json使各个组件能单独运行；各个组件能选取依赖项；各个组件互相隔离；
 
-    pull all codes out from activity into fragment
-    将部分代码抽离到Fragment中,为下一步打基础
-
-- v1.2
-
-    review with mvp,making the View and Logic separating from each other.It is so great,and looks more elegant.
-    使用MVP重构,List页面参考Google samples的三层架构,Detail页面没有把remote和locale分开,你可以看到这两者的区别.
-
-- v1.3
-
-    review with RxJava, based on the MVP,also with Retrofit
-    在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit.
-
-     - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
-     - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
 
 - v1.4
 
@@ -40,11 +25,33 @@ As well, the project is continue refactoring.
     将项目初步进行组件化。
     这种结构下的组件化不能做到组件依赖其他组件运行。因为当前项目运行的状态要么是全是application，或者是一个application和其他module.
 
-- v1.5
 
-  make the componentization more beautiful to run. every component can run alone, and can be run
-  with other components, also each components is separate from each other.
-  完善组件化。通过配置runalone.json使各个组件能单独运行；各个组件能选取依赖项；各个组件互相隔离；
+- v1.3
+
+    review with RxJava, based on the MVP,also with Retrofit
+    在MVP基础上使用RxJava重构,同时网络框架替换为Retrofit.
+
+     - 添加Presenter生命周期方法,attachView()和 detachView()方法对 `Subscription` 解绑.
+     - 此中不把Activity当做Controller,因为这样做限制太大,直接在Fragment中进行创建和attachView
+
+
+- v1.2
+
+    review with mvp,making the View and Logic separating from each other.It is so great,and looks more elegant.
+    使用MVP重构,List页面参考Google samples的三层架构,Detail页面没有把remote和locale分开,你可以看到这两者的区别.
+
+
+- v1.1
+
+    pull all codes out from activity into fragment
+    将部分代码抽离到Fragment中,为下一步打基础
+
+
+- v1.0
+
+    version 1.0,all codes are in the Activity and with no fragments, the basic code for all variants.
+    全部代码在Activity中,作为重构的基础
+
 
 
 ## Branches

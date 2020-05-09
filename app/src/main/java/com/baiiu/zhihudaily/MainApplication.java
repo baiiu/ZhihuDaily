@@ -1,9 +1,12 @@
 package com.baiiu.zhihudaily;
 
 import com.baiiu.common.BaseApplication;
+import com.baiiu.componentservice.ApplicationDelegate;
+import com.baiiu.componentservice.Router;
 import com.baiiu.library.LogUtil;
 import com.tencent.tinker.loader.app.TinkerApplication;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
+import java.util.ServiceLoader;
 
 /**
  * author: baiiu
@@ -21,6 +24,12 @@ public class MainApplication extends TinkerApplication {
         BaseApplication.isDebug = BuildConfig.DEBUG;
 
         LogUtil.init(BaseApplication.isDebug);
+
+        ServiceLoader<ApplicationDelegate> loaders = ServiceLoader.load(ApplicationDelegate.class);
+        for (ApplicationDelegate loader : loaders) {
+            Router.registerComponent(loader.getClass().getName());
+        }
+
     }
 
 }

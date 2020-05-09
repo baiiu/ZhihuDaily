@@ -52,7 +52,7 @@ class ModulePlugin : Plugin<Project> {
                 transfrom.mRunalone = item
 
                 item.implement.forEach {
-                    println("addImplementation: $it")
+                    println("${project.displayName} addImplementation: $it")
                     runtimeOnlyConfiguration.dependencies.add(project.dependencies.create(project.project(it)))
                 }
             }

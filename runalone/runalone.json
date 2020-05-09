@@ -5,20 +5,12 @@
       ":component_daily",
       ":component_gank",
       ":component_setting"
-    ],
-    "application": [
-      "com.baiiu.daily.DailyApplicationDelegate",
-      "com.baiiu.gank.GankApplicationDelegate",
-      "com.baiiu.setting.SettingApplicationDelegate"
     ]
   },
   {
     "module": "setting",
     "implement": [
       ":component_gank"
-    ],
-    "application": [
-      "com.baiiu.gank.GankApplicationDelegate"
     ]
   }
 ]

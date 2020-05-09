@@ -1,5 +1,6 @@
 package com.baiiu.module;
 
+import java.util.Set;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -34,11 +35,11 @@ public class ModuleVisitor extends ClassVisitor {
 
         System.out.println(
                 "isApplicationClass: "
-                        + superName
-                        + ", "
-                        + name
-                        + ", isApplicationClass:"
-                        + isApplicationClass);
+                + superName
+                + ", "
+                + name
+                + ", isApplicationClass:"
+                + isApplicationClass);
     }
 
     /**
@@ -76,7 +77,16 @@ public class ModuleVisitor extends ClassVisitor {
             if ("onCreate".equals(methodName)) {
                 hasOnCreateMethod = true;
 
-                for (String s : mRunAlone.getApplication()) {
+                Set<String> applications = mRunAlone.getApplication();
+                if (applications == null || applications.size() == 0) {
+                    return;
+                }
+
+                for (String s : applications) {
+                    if (s == null || s.length() == 0) {
+                        continue;
+                    }
+
                     mv.visitLdcInsn(s);
                     mv.visitMethodInsn(INVOKESTATIC,
                                        "com/baiiu/componentservice/Router",
@@ -90,10 +100,10 @@ public class ModuleVisitor extends ClassVisitor {
 
             System.out.println(
                     "ModuleAdviceAdapter#onMethodEnter: "
-                            + methodName
-                            + ", "
-                            + "hasOncreateMethod:"
-                            + hasOnCreateMethod);
+                    + methodName
+                    + ", "
+                    + "hasOncreateMethod:"
+                    + hasOnCreateMethod);
         }
     }
 
